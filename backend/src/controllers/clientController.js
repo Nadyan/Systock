@@ -4,8 +4,8 @@ module.exports = {
     async create(request, response) {
 
         const { nome, tipo, cpfCnpj, email, endereco, bairro, cidade, cep, uf, inscricaoEst, telefone} = request.body;
-
-        const [ id ] = await connection('products').insert({
+        
+        const [ id ] = await connection('clients').insert({
             nome, 
             tipo, 
             cpfCnpj,
