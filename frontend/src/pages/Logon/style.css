@@ -12,18 +12,19 @@
 
 h1 {
     font-size: x-large;
+    font-weight: bold;
 }
 
 section {
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
     align-items: center;
     justify-content: center;
 }
 
 img {
-    width: 50%;
-    margin-bottom: 50px;
+    width: 100%;
+    max-width: 340px;
 }
 
 form {
@@ -31,6 +32,7 @@ form {
     flex-direction: column;
     align-items: center;
     justify-content: center;
+    margin-left: 100px;
 }
 
 input {
@@ -38,8 +40,15 @@ input {
 }
 
 button {
-    margin-top: 15px;
-    margin-right: 15px;
+    margin-top: 25px;
+}
+
+button:hover {
+    filter: brightness(90%);
+}
+
+button + button {
+    margin-left: 15px;
 }
 
 .buttons-div {
