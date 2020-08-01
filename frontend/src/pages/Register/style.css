@@ -1,0 +1,56 @@
+.register-container {
+    width: 100%;
+    max-width: 1120px;
+    height: 100vh;
+    margin: 0 auto;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.register-container .content {
+    width: 100%;
+    padding: 96px;
+
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.register-container .content section {
+    width: 100%;
+    max-width: 380px;
+    display: table-column;
+}
+
+.register-container .content section h1 {
+    margin: 64px 0 32px;
+    font-size: 32px;
+}
+
+.register-container .content section p {
+    font-size: 18px;
+}
+
+.register-container .content section img {
+    margin-left: -7%;
+}
+
+.register-container .content form {
+    width: 100%;
+    max-width: 450px;
+}
+
+.register-container .content form .input-group {
+    width: 100%;
+    display: flex;
+}
+
+.input-field {
+    width: 100%;
+}
+
+.input-group .input-field + .input-field {
+    margin-left: 10px;
+}

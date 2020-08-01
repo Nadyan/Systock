@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 
 import './style.css';
 
@@ -15,12 +16,12 @@ export default function Logon() {
                     <input type="password" placeholder="Senha" />
                     
                     <div className="buttons-div">
-                        <button class="btn waves-effect waves-light green darken-1" type="submit" name="entrar">Entrar
-                            <i class="material-icons left">check</i>
-                        </button>
-                        <button class="btn waves-effect waves-light blue darken-1" type="submit" name="cadastrar">Cadastrar
-                            <i class="material-icons left">exit_to_app</i>
-                        </button>
+                        <Link className="button btn waves-effect waves-light blue darken-1" to="/register" >Cadastrar
+                            <i className="material-icons left">exit_to_app</i>
+                        </Link>
+                        <Link className="button btn waves-effect waves-light green darken-1" to="/home" >Entrar
+                            <i className="material-icons left">check</i>
+                        </Link>
                     </div>
                 </form>
             </section>

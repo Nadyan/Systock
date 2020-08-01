@@ -39,15 +39,15 @@ input {
     margin-top: 15px
 }
 
-button {
+.button {
     margin-top: 25px;
 }
 
-button:hover {
+.button:hover {
     filter: brightness(90%);
 }
 
-button + button {
+.button + .button {
     margin-left: 15px;
 }
 
