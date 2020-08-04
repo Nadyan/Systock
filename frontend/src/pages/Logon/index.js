@@ -11,10 +11,17 @@ export default function Logon() {
             <section>
                 <img src={systock_logo} alt="Systock" />
                 <form>
-                    <h1>Faça seu Login</h1>
-                    <input type="text" placeholder="Usuário" />
-                    <input type="password" placeholder="Senha" />
-                    
+                    <h1>Faça seu login</h1>
+                    <div className="input-field">
+                            <i className="material-icons prefix">account_circle</i>
+                            <input id="usuario" type="text"/>
+                            <label for="usuario">Usuário</label>
+                    </div>
+                    <div className="input-field">
+                            <i className="material-icons prefix">lock</i>
+                            <input id="senha" type="password"/>
+                            <label for="senha">Senha</label>
+                    </div>
                     <div className="buttons-div">
                         <Link className="button btn waves-effect waves-light blue darken-1" to="/register" >Cadastrar
                             <i className="material-icons left">exit_to_app</i>
