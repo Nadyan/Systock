@@ -3,7 +3,7 @@ import React from 'react';
 import M from 'materialize-css/dist/js/materialize.min.js';
 import './style.css';
 
-import logo from '../../assets/systock_logo.png';
+import logo from '../../assets/SYStock_logo_branco.png';
 
 export default function Home() {
 
