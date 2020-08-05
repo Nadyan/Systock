@@ -31,19 +31,19 @@ export default function Menu() {
 
             <ul id="slide-out" className="sidenav">
                 <li>
-                    <div className="background center-align">
+                    <div className="background center-align" style={{marginBottom:"15px"}}>
                         <img className="center-align sidenav-logo" src={rocket_white}/>
                     </div>
                 </li>
                 <li><a className="subheader">Cadastro</a></li>
                 <li><a href="" className="waves-effect"><i className="material-icons">people</i>Cliente</a></li>
                 <li><a href="" className="waves-effect"><i className="material-icons">view_quilt</i>Produto</a></li>
-                <li><div className="divider"></div></li>
+                
                 <li><a className="subheader">Operação</a></li>
                 <li><a href="" className="waves-effect"><i className="material-icons">list</i>Orçamento</a></li>
                 <li><a href="" className="waves-effect"><i className="material-icons">shopping_cart</i>Venda</a></li>
                 <li><a href="" className="waves-effect"><i className="material-icons">play_for_work</i>Entrada</a></li>
-                <li><div className="divider"></div></li>
+                
                 <li><a className="subheader">Relatório</a></li>
                 <li><a href="" className="waves-effect"><i className="material-icons">timeline</i>Vendas</a></li>
                 <li><a href="" className="waves-effect"><i className="material-icons">toc</i>Clientes</a></li>
