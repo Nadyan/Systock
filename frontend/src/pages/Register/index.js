@@ -48,7 +48,7 @@ export default function Register() {
                         </div>
                     </div>
 
-                    <button className="btn waves-effect waves-light green darken-1" type="submit">Cadastrar
+                    <button className="button btn waves-effect waves-light green darken-1" type="submit">Cadastrar
                         <i className="material-icons left">check</i>
                     </button>
                 </form>

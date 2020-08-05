@@ -1,0 +1,21 @@
+.navbar-logo {
+    width: 130px;
+    margin-top: 17px;
+}
+
+.nav-wrapper {
+    background-color: #232931;
+}
+
+.background {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    
+    height: 140px;
+    background-color: #232931;
+}
+
+.sidenav-logo {
+    width: 90px;
+}

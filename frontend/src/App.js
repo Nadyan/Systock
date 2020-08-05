@@ -6,13 +6,11 @@ import Routes from './routes';
 
 import './global.css';
 
-function App() {
+export default function App() {
 
   M.AutoInit();
-  
+
   return (
     <Routes />
   );
 }
-
-export default App;
