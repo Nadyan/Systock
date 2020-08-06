@@ -1,6 +1,7 @@
 import React from 'react';
 import 'materialize-css/dist/css/materialize.min.css';
 import M from "materialize-css";
+import { Link } from 'react-router-dom';
 
 import './style.css';
 
@@ -9,11 +10,20 @@ import rocket_white from '../../assets/rocket_white.png';
 
 export default function Menu() {
 
-  document.addEventListener('DOMContentLoaded', function() {
-    var elems = document.querySelectorAll('.sidenav');
-    var instances = M.Sidenav.init(elems, {});
-  });
+    document.addEventListener('DOMContentLoaded', function() {
+        var elems = document.querySelectorAll('.sidenav');
+        var instances = M.Sidenav.init(elems, {});
 
+        var elems = document.querySelectorAll('.tooltipped');
+        var options = {
+            inDuration: 100, 
+            outDuration: 100,
+            margin: 0,
+            exitDelay: 0,
+            enterDelay: 0
+        }
+        var instances = M.Tooltip.init(elems, options);
+    });
     return(
         <div>
             <nav>
@@ -22,9 +32,10 @@ export default function Menu() {
                         <li><a href=""><i data-target="slide-out" className="material-icons sidenav-trigger">menu</i></a></li>
                         <li><img src={logo} className="navbar-logo"/></li>
                     </ul>
-                    <ul className="right">
-                        <li><a href=""><i className="material-icons">search</i></a></li>
-                        <li><a href=""><i className="material-icons">refresh</i></a></li>
+                    <ul className="right" style={{marginRight: "25px"}}>
+                        <li><a href="/home" className="tooltipped" data-position="bottom" data-tooltip="Ir para a página inicial"><i className="material-icons">home</i></a></li>
+                        <li><a href="" className="tooltipped" data-position="bottom" data-tooltip="Pesquisar"><i className="material-icons">search</i></a></li>
+                        <li><a href="" className="tooltipped" data-position="bottom" data-tooltip="Sair"><i className="material-icons">power_settings_new</i></a></li>
                     </ul>
                 </div>
             </nav>
@@ -37,7 +48,7 @@ export default function Menu() {
                 </li>
                 <li><a className="subheader">Cadastro</a></li>
                 <li><a href="" className="waves-effect"><i className="material-icons">people</i>Cliente</a></li>
-                <li><a href="" className="waves-effect"><i className="material-icons">view_quilt</i>Produto</a></li>
+                <li><a href="/products" className="waves-effect"><i className="material-icons">view_quilt</i>Produto</a></li>
                 
                 <li><a className="subheader">Operação</a></li>
                 <li><a href="" className="waves-effect"><i className="material-icons">list</i>Orçamento</a></li>
