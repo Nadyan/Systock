@@ -63,7 +63,8 @@ export default function NewProduct() {
 
             </div>
             <div className="modal-footer">
-                <a href="#!" className="modal-close waves-effect waves-green btn">Agree</a>
+                <a href="#!" className="modal-close waves-effect btn botao-cancelar"><i className="material-icons left">clear</i>Cancelar</a>
+                <a href="#!" className="modal-close waves-effect btn botao-confirmar"><i className="material-icons left">check</i>Confirmar</a>
             </div>
         </div>
     );
