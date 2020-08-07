@@ -1,0 +1,29 @@
+.modal-produto {
+    width: 100%;
+    max-width: 1000px;
+}
+
+.input-field {
+    width: 97%;
+}
+
+.modal-content h1 {
+    margin-bottom: 50px;
+}
+
+.input-group {
+    display: flex;
+    width: 97%;
+}
+
+/* Retirar flechas number input */ 
+/* Chrome, Safari, Edge, Opera */
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+/* Firefox */
+input[type=number] {
+  -moz-appearance: textfield;
+}
