@@ -10,7 +10,7 @@ export default function Home() {
 
     document.addEventListener('DOMContentLoaded', function() {
         var elems = document.querySelectorAll('.fixed-action-btn');
-        var instances = M.FloatingActionButton.init(elems, {});
+        var instances = M.FloatingActionButton.init(elems, {direction: 'up', hoverEnabled: true});
 
         var elems = document.querySelectorAll('.modal');
         var instances = M.Modal.init(elems, {dismissible: false});
@@ -108,9 +108,14 @@ export default function Home() {
             </div>
 
             <div className="fixed-action-btn">
-                <a className="btn-floating btn-large tooltipped fab modal-trigger" data-position="left" data-tooltip="Cadastrar novo produto" href="#modalNewProduct">
-                    <i className="large material-icons">library_add</i>
+                <a className="btn-floating btn-large fab">
+                    <i className="large material-icons">list</i>
                 </a>
+                <ul>
+                    <li><a class="btn-floating red modal-trigger tooltipped" href="#modalNewType" data-position="left" data-tooltip="Administrar tipos de produtos"><i class="material-icons">library_books</i></a></li>
+                    <li><a class="btn-floating green modal-trigger tooltipped" href="#modalNewProvider" data-position="left" data-tooltip="Administrar fornecedores"><i class="material-icons">business</i></a></li>
+                    <li><a class="btn-floating blue modal-trigger tooltipped" href="#modalNewProduct" data-position="left" data-tooltip="Cadastrar novo produto"><i class="material-icons">library_add</i></a></li>
+                </ul>
                 <NewProduct />
             </div>
         </div>

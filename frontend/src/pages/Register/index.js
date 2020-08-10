@@ -1,10 +1,36 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 
-import './style.css';
+import api from '../../services/api';
 import systock_logo from '../../assets/systock_logo.png';
 
+import './style.css';
+
 export default function Register() {
+
+    const [nome, setNome] = useState('');
+    const [email, setEmail] = useState('');
+    const [telefone, setTelefone] = useState('');
+    const [senha, setSenha] = useState('');
+    const [confSenha, setConfSenha] = useState('');
+
+    function handleRegister(event) {
+        event.preventDefault(); // não atualiza a pagina após enviar formulario
+
+        if(senha !== confSenha) {
+            alert('Campo de confirmação de senha não confere com campo senha!');
+        } else {
+            const data = {
+                nome,
+                email,
+                telefone,
+                senha
+            };
+
+            api.post('users', data); // FAZER
+        }
+    }
+
     return (
         <div className="register-container">
             <div className="content">
@@ -20,30 +46,51 @@ export default function Register() {
                     </Link>
                 </section>
 
-                <form>
+                <form onSubmit={handleRegister}>
                     <div className="input-field">
                         <i className="material-icons prefix">account_circle</i>
-                        <input id="nome" class="validate"/>
+                        <input 
+                            id="nome" 
+                            className="validate"
+                            value={nome}
+                            onChange={e => setNome(e.target.value)}
+                        />
                         <label for="nome">Nome</label>
                     </div>
                     <div className="input-field">
                         <i className="material-icons prefix">email</i>
-                        <input id="email" class="validate"/>
+                        <input 
+                            id="email" 
+                            className="validate"
+                            value={email}
+                            onChange={e => setEmail(e.target.value)}/>
                         <label for="email">e-mail</label>
                     </div>
                     <div className="input-field">
                         <i className="material-icons prefix">local_phone</i>
-                        <input id="telefone" class="validate"/>
+                        <input 
+                            id="telefone" 
+                            className="validate"
+                            value={telefone}
+                            onChange={e => setTelefone(e.target.value)}/>
                         <label for="telefone">Telefone</label>
                     </div>
                     <div className="input-group">
                         <div className="input-field">
                             <i className="material-icons prefix">lock</i>
-                            <input id="senha" type="password"/>
+                            <input 
+                                id="senha" 
+                                type="password"
+                                value={senha}
+                                onChange={e => setSenha(e.target.value)}/>
                             <label for="senha">Senha</label>
                         </div>
                         <div className="input-field">
-                            <input id="confSenha" type="password"/>
+                            <input 
+                                id="confSenha" 
+                                type="password"
+                                value={confSenha}
+                                onChange={e => setConfSenha(e.target.value)}/>
                             <label for="confSenha">Confirmar Senha</label>
                         </div>
                     </div>
