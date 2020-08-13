@@ -1,12 +1,16 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import M from "materialize-css";
 
 import Menu from '../Menu';
 import NewProduct from './NewProduct';
+import api from '../../services/api';
 
 import './style.css'
 
 export default function Home() {
+
+    const [produtos, setProdutos] = useState([]);
+    const [atualizaProdutos, setAtualizaProdutos] = useState(false);
 
     document.addEventListener('DOMContentLoaded', function() {
         var elems = document.querySelectorAll('.fixed-action-btn');
@@ -15,6 +19,21 @@ export default function Home() {
         var elems = document.querySelectorAll('.modal');
         var instances = M.Modal.init(elems, {dismissible: false});
     });
+
+    useEffect(() => {
+        api.get('products').then(response => {
+            setProdutos(response.data);
+        })
+    }, [atualizaProdutos]);
+
+    async function handleDeleteProduct(id) {
+        try {
+            await api.delete(`products/${id}`);
+            setProdutos(produtos.filter(produto => produto.id !== id));
+        } catch (err) {
+            alert('Erro ao deletar produto.');
+        }
+    }
 
     return(
         <div>
@@ -25,85 +44,32 @@ export default function Home() {
                 <h1>Produtos Cadastrados</h1>
 
                 <ul>
-                    <li>
-                        <strong>CASO:</strong>
-                        <p>Caso teste</p>
+                    {produtos.map(produto => (
+                        <li key={produto.id}>
+                            <strong>Tipo</strong>
+                            <p>{produto.tipo}</p>
 
-                        <strong>DESCRIÇÃO:</strong>
-                        <p>Descrição teste</p>
+                            <strong>Marca</strong>
+                            <p>{produto.marca}</p>
 
-                        <strong>VALOR:</strong>
-                        <p>Valor teste</p>
+                            <strong>Modelo</strong>
+                            <p>{produto.modelo}</p>
 
-                        <div className="option-button">
-                            <a href="" className="tooltipped" data-position="bottom" data-tooltip="Editar">
-                                <i className="material-icons edit">create</i>
-                            </a>
-                            <a href="" className="tooltipped" data-position="bottom" data-tooltip="Excluir">
-                                <i className="material-icons delete">delete</i>
-                            </a>
-                        </div>
-                    </li>
+                            <strong>Valor Compra</strong>
+                            <p>{produto.valorCompra}</p>
 
-                    <li>
-                        <strong>CASO:</strong>
-                        <p>Caso teste</p>
+                            <p>{produto.descricao}</p>
 
-                        <strong>DESCRIÇÃO:</strong>
-                        <p>Descrição teste</p>
-
-                        <strong>VALOR:</strong>
-                        <p>Valor teste</p>
-
-                        <div className="option-button">
-                            <a href="" className="tooltipped" data-position="bottom" data-tooltip="Editar">
-                                <i className="material-icons edit">create</i>
-                            </a>
-                            <a href="" className="tooltipped" data-position="bottom" data-tooltip="Excluir">
-                                <i className="material-icons delete">delete</i>
-                            </a>
-                        </div>
-                    </li>
-
-                    <li>
-                        <strong>CASO:</strong>
-                        <p>Caso teste</p>
-
-                        <strong>DESCRIÇÃO:</strong>
-                        <p>Descrição teste</p>
-
-                        <strong>VALOR:</strong>
-                        <p>Valor teste</p>
-
-                        <div className="option-button">
-                            <a href="" className="tooltipped" data-position="bottom" data-tooltip="Editar">
-                                <i className="material-icons edit">create</i>
-                            </a>
-                            <a href="" className="tooltipped" data-position="bottom" data-tooltip="Excluir">
-                                <i className="material-icons delete">delete</i>
-                            </a>
-                        </div>
-                    </li>
-
-                    <li>
-                        <strong>CASO:</strong>
-                        <p>Caso teste</p>
-
-                        <strong>DESCRIÇÃO:</strong>
-                        <p>Descrição teste</p>
-
-                        <strong>VALOR:</strong>
-                        <p>Valor teste</p>
-
-                        <div className="option-button">
-                            <a href="" className="tooltipped" data-position="bottom" data-tooltip="Editar">
-                                <i className="material-icons edit">create</i>
-                            </a>
-                            <a href="" className="tooltipped" data-position="bottom" data-tooltip="Excluir">
-                                <i className="material-icons delete">delete</i>
-                            </a>
-                        </div>
-                    </li>
+                            <div className="option-button">
+                                <button className="tooltipped" data-position="bottom" data-tooltip="Editar">
+                                    <i className="material-icons edit">create</i>
+                                </button>
+                                <button onClick={() => handleDeleteProduct(produto.id)} className="tooltipped" data-position="bottom" data-tooltip="Excluir">
+                                    <i className="material-icons delete">delete</i>
+                                </button>
+                            </div>
+                        </li>
+                    ))}
                 </ul>
             </div>
 

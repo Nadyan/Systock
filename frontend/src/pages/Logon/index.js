@@ -1,26 +1,60 @@
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 
 import './style.css';
 
 import systock_logo from '../../assets/systock_logo.png';
 
 export default function Logon() {
+
+    const [usuario, setUsuario] = useState('');
+    const [senha, setSenha] = useState('');
+
+    const history = useHistory();
+
+    async function handleLogin(event) {
+        event.preventDefault();
+
+        try {
+            // FAZER
+
+            //const response = await api.post('sessions', { usuario, senha });
+
+            // salva no storage do navegador
+            //localStorage.setItem('userId', usuario);
+            //localStorage.setItem('userName', reponse.data.nome); 
+
+            history.push('/home');
+        } catch (err) {
+            alert('Erro ao logar, tente novamente.');
+        }
+    }
+
     return (
         <div className="logon-container">
             <section>
                 <img src={systock_logo} alt="Systock" />
-                <form>
+                <form onSubmit={handleLogin}>
                     <h1>Faça seu login</h1>
                     <div className="input-field">
-                            <i className="material-icons prefix">account_circle</i>
-                            <input id="usuario" type="text"/>
-                            <label for="usuario">Usuário</label>
+                        <i className="material-icons prefix">account_circle</i>
+                        <input 
+                            id="usuario" 
+                            type="text"
+                            value={usuario}
+                            onChange={e => setUsuario(e.target.value)}
+                        />
+                        <label for="usuario">Usuário</label>
                     </div>
                     <div className="input-field">
-                            <i className="material-icons prefix">lock</i>
-                            <input id="senha" type="password"/>
-                            <label for="senha">Senha</label>
+                        <i className="material-icons prefix">lock</i>
+                        <input 
+                            id="senha" 
+                            type="password"
+                            value={senha}
+                            onChange={e => setSenha(e.target.value)}
+                        />
+                        <label for="senha">Senha</label>
                     </div>
                     <div className="buttons-div">
                         <Link className="button btn waves-effect waves-light blue darken-1" to="/register" >Cadastrar

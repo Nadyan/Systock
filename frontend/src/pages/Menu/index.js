@@ -1,7 +1,7 @@
 import React from 'react';
 import 'materialize-css/dist/css/materialize.min.css';
 import M from "materialize-css";
-import { Link } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 
 import './style.css';
 
@@ -9,6 +9,8 @@ import logo from '../../assets/SYStock_logo_branco.png';
 import rocket_white from '../../assets/rocket_white.png';
 
 export default function Menu() {
+
+    const history = useHistory();
 
     document.addEventListener('DOMContentLoaded', function() {
         var elems = document.querySelectorAll('.sidenav');
@@ -24,8 +26,14 @@ export default function Menu() {
         }
         var instances = M.Tooltip.init(elems, options);
     });
+
+    function handleLogout() {
+        localStorage.clear();
+        history.push('/');
+    }
+
     return(
-        <div>
+        <div className="menu-container">
             <nav>
                 <div className="nav-wrapper">
                     <ul className="left">
@@ -35,7 +43,7 @@ export default function Menu() {
                     <ul className="right" style={{marginRight: "25px"}}>
                         <li><a href="/home" className="tooltipped" data-position="bottom" data-tooltip="Ir para a página inicial"><i className="material-icons">home</i></a></li>
                         <li><a href="" className="tooltipped" data-position="bottom" data-tooltip="Pesquisar"><i className="material-icons">search</i></a></li>
-                        <li><a href="" className="tooltipped" data-position="bottom" data-tooltip="Sair"><i className="material-icons">power_settings_new</i></a></li>
+                        <li><button onClick={handleLogout} className="tooltipped" data-position="bottom" data-tooltip="Sair"><i className="material-icons">power_settings_new</i></button></li>
                     </ul>
                 </div>
             </nav>
