@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import M from "materialize-css";
+import Swal from 'sweetalert2';
 
 import Menu from '../Menu';
 import NewProduct from './NewProduct';
@@ -18,7 +19,23 @@ export default function Home() {
 
         var elems = document.querySelectorAll('.modal');
         var instances = M.Modal.init(elems, {dismissible: false});
+
+        var elems = document.querySelectorAll('.tooltipped');
+        var options = {
+            inDuration: 100, 
+            outDuration: 100,
+            margin: 0,
+            exitDelay: 0,
+            enterDelay: 0
+        }
+        var instances = M.Tooltip.init(elems, options);
     });
+
+    function refreshProductList() {
+        api.get('products').then(response => {
+            setProdutos(response.data);
+        })
+    }
 
     useEffect(() => {
         api.get('products').then(response => {
@@ -26,12 +43,38 @@ export default function Home() {
         })
     }, [atualizaProdutos]);
 
-    async function handleDeleteProduct(id) {
+    function handleDeleteProduct(id) {
         try {
-            await api.delete(`products/${id}`);
-            setProdutos(produtos.filter(produto => produto.id !== id));
+            Swal.fire({
+                title: 'Excluir produto?',
+                text: "Essa ação não poderá ser desfeita!",
+                type: 'warning',
+                showCancelButton: true,
+                cancelButtonText: "Não",
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Sim, excluir!'
+            }).then((result) => {
+                if (result.value) {
+                    api.delete(`products/${id}`);
+                
+                    Swal.fire({
+                        title: 'Produto excluído com sucesso',
+                        type: 'success',
+                        timer: 1800,
+                        showConfirmButton: false
+                    });
+                    setProdutos(produtos.filter(produto => produto.id !== id));
+                }
+            });
         } catch (err) {
-            alert('Erro ao deletar produto.');
+            Swal.fire({
+                type: 'error',
+                title: 'Erro ao excluir produto',
+                text: 'Tente novamente',
+                showConfirmButton: true,
+                confirmButtonText: "OK"
+            });
         }
     }
 
@@ -61,10 +104,10 @@ export default function Home() {
                             <p>{produto.descricao}</p>
 
                             <div className="option-button">
-                                <button className="tooltipped" data-position="bottom" data-tooltip="Editar">
-                                    <i className="material-icons edit">create</i>
+                                <button>
+                                    <i className="material-icons edit tooltiped">create</i>
                                 </button>
-                                <button onClick={() => handleDeleteProduct(produto.id)} className="tooltipped" data-position="bottom" data-tooltip="Excluir">
+                                <button onClick={() => handleDeleteProduct(produto.id)}>
                                     <i className="material-icons delete">delete</i>
                                 </button>
                             </div>
@@ -78,11 +121,11 @@ export default function Home() {
                     <i className="large material-icons">list</i>
                 </a>
                 <ul>
-                    <li><a class="btn-floating red modal-trigger tooltipped" href="#modalNewType" data-position="left" data-tooltip="Administrar tipos de produtos"><i class="material-icons">library_books</i></a></li>
-                    <li><a class="btn-floating green modal-trigger tooltipped" href="#modalNewProvider" data-position="left" data-tooltip="Administrar fornecedores"><i class="material-icons">business</i></a></li>
-                    <li><a class="btn-floating blue modal-trigger tooltipped" href="#modalNewProduct" data-position="left" data-tooltip="Cadastrar novo produto"><i class="material-icons">library_add</i></a></li>
+                    <li><a className="btn-floating red modal-trigger tooltipped" href="#modalNewType" data-position="left" data-tooltip="Administrar tipos de produtos"><i className="material-icons">library_books</i></a></li>
+                    <li><a className="btn-floating green modal-trigger tooltipped" href="#modalNewProvider" data-position="left" data-tooltip="Administrar fornecedores"><i className="material-icons">business</i></a></li>
+                    <li><a className="btn-floating blue modal-trigger tooltipped" href="#modalNewProduct" data-position="left" data-tooltip="Cadastrar novo produto"><i className="material-icons">library_add</i></a></li>
                 </ul>
-                <NewProduct />
+                <NewProduct refreshProductList={refreshProductList}/>
             </div>
         </div>
     );

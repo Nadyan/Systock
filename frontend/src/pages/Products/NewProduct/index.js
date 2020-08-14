@@ -1,9 +1,10 @@
 import React, { useState } from 'react';
+import Swal from 'sweetalert2';
 
 import './style.css';
 import api from '../../../services/api';
 
-export default function NewProduct() {
+export default function NewProduct(props) {
 
     const [tipo, setTipo] = useState('');
     const [fornecedor, setFornecedor] = useState('');
@@ -28,7 +29,13 @@ export default function NewProduct() {
 
         try {
             const response = await api.post('products', data);
-            alert(`Produto ${marca} ${modelo} cadastrado com sucesso.`);
+
+            Swal.fire({
+                type: 'success',
+                title: `Produto ${marca} ${modelo} cadastrado com sucesso`,
+                timer: 1800,
+                showConfirmButton: false
+            });
             
             setTipo('');
             setFornecedor('');
@@ -38,10 +45,16 @@ export default function NewProduct() {
             setCfop('');
             setDescricao('');
             
-            // Aqui atualizar a lista de produtos cadastrados
+           props.refreshProductList(); // atualiza a lista de produtos cadastrados
 
         } catch (err) {
-            alert(`Erro ao cadastrar produto ${marca} ${modelo}`);
+            Swal.fire({
+                type: 'error',
+                title: `Erro ao cadastrar produto ${marca} ${modelo}`,
+                text: 'Tente novamente',
+                showConfirmButton: true,
+                confirmButtonText: "OK"
+            });
         } 
     }
 
@@ -60,7 +73,7 @@ export default function NewProduct() {
                             value={tipo}
                             onChange={e => setTipo(e.target.value)}
                         />
-                        <label for="tipo">Tipo</label>
+                        <label htmlFor="tipo">Tipo</label>
                     </div>
 
                     <div className="input-field">
@@ -71,7 +84,7 @@ export default function NewProduct() {
                             className="validate"
                             value={fornecedor}
                             onChange={e => setFornecedor(e.target.value)}/>
-                        <label for="fornecedor">Fornecedor</label>
+                        <label htmlFor="fornecedor">Fornecedor</label>
                     </div>
                 </div>
 
@@ -84,7 +97,7 @@ export default function NewProduct() {
                             className="validate"
                             value={marca}
                             onChange={e => setMarca(e.target.value)}/>
-                        <label for="marca">Marca</label>
+                        <label htmlFor="marca">Marca</label>
                     </div>
 
                     <div className="input-field">
@@ -95,7 +108,7 @@ export default function NewProduct() {
                             className="validate"
                             value={modelo}
                             onChange={e => setModelo(e.target.value)}/>
-                        <label for="modelo">Modelo</label>
+                        <label htmlFor="modelo">Modelo</label>
                     </div>
                 </div>
 
@@ -108,7 +121,7 @@ export default function NewProduct() {
                             className="validate"
                             value={valorCompra}
                             onChange={e => setValorCompra(e.target.value)}/>
-                        <label for="valor">Valor de Compra</label>
+                        <label htmlFor="valor">Valor de Compra</label>
                     </div>
 
                     <div className="input-field">
@@ -119,7 +132,7 @@ export default function NewProduct() {
                             className="validate"
                             value={cfop}
                             onChange={e => setCfop(e.target.value)}/>
-                        <label for="cfop">CFOP</label>
+                        <label htmlFor="cfop">CFOP</label>
                     </div>
                 </div>
 
@@ -132,7 +145,7 @@ export default function NewProduct() {
                         value={descricao}
                         onChange={e => setDescricao(e.target.value)}
                     />
-                    <label for="descricao">Descrição</label>
+                    <label htmlFor="descricao">Descrição</label>
                 </div>
 
             </div>
