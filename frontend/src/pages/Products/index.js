@@ -89,20 +89,32 @@ export default function Home() {
                 <ul>
                     {produtos.map(produto => (
                         <li key={produto.id}>
-                            <strong>Tipo</strong>
-                            <p>{produto.tipo}</p>
-
-                            <strong>Marca</strong>
-                            <p>{produto.marca}</p>
-
-                            <strong>Modelo</strong>
-                            <p>{produto.modelo}</p>
-
-                            <strong>Valor Compra</strong>
-                            <p>{produto.valorCompra}</p>
-
+                            <strong className="header-info">{produto.codigo}</strong>
+                            <strong className="header-info">{`${produto.marca} ${produto.modelo}`}</strong>
+                            <div class="divider"></div>
+                            <div className="info-container">
+                                <strong>Tipo:</strong>
+                                <p>{produto.tipo}</p>
+                            </div>
+                            <div className="info-container">
+                                <strong>Fornecedor:</strong>
+                                <p>{produto.fornecedor}</p>
+                            </div>
+                            <div className="info-container">
+                                <strong>Valor Compra:</strong>
+                                <p>
+                                    {
+                                        Intl.NumberFormat(
+                                            'pt-BR', 
+                                            {
+                                                style: 'currency',
+                                                currency:'BRL'
+                                            }
+                                        ).format(produto.valorCompra)
+                                    }
+                                </p>
+                            </div>
                             <p>{produto.descricao}</p>
-
                             <div className="option-button">
                                 <button>
                                     <i className="material-icons edit tooltiped">create</i>

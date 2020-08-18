@@ -1,11 +1,13 @@
 import React, { useState } from 'react';
 import Swal from 'sweetalert2';
+import M from "materialize-css";
 
 import './style.css';
 import api from '../../../services/api';
 
 export default function NewProduct(props) {
 
+    const [codigo, setCodigo] = useState('');
     const [tipo, setTipo] = useState('');
     const [fornecedor, setFornecedor] = useState('');
     const [marca, setMarca] = useState('');
@@ -14,10 +16,24 @@ export default function NewProduct(props) {
     const [cfop, setCfop] = useState('');
     const [descricao, setDescricao] = useState('');
 
+    function resetFields() {
+        setCodigo('');
+        setTipo('');
+        setFornecedor('');
+        setMarca('');
+        setModelo('');
+        setValorCompra('');
+        setCfop('');
+        setDescricao('');
+
+         //M.updateTextFields;
+    }
+
     async function handleNewProduct(event) {
         event.preventDefault();
 
         const data = {
+            codigo,
             modelo, 
             marca, 
             descricao, 
@@ -37,6 +53,7 @@ export default function NewProduct(props) {
                 showConfirmButton: false
             });
             
+            setCodigo('');
             setTipo('');
             setFornecedor('');
             setMarca('');
@@ -64,6 +81,18 @@ export default function NewProduct(props) {
                 <h1>Cadastrar novo produto</h1>
 
                 <div className="input-group">
+                    <div className="input-field">
+                        <i className="material-icons prefix">label</i>
+                        <input 
+                            id="codigo"
+                            type="text"
+                            className="validate"
+                            value={codigo}
+                            onChange={e => setCodigo(e.target.value)}
+                        />
+                        <label htmlFor="codigo">Código</label>
+                    </div>
+
                     <div className="input-field">
                         <i className="material-icons prefix">class</i>
                         <input 
@@ -150,7 +179,7 @@ export default function NewProduct(props) {
 
             </div>
             <div className="modal-footer">
-                <a href="#" className="modal-close waves-effect btn botao-cancelar"><i className="material-icons left">clear</i>Sair</a>
+                <a href="#" onClick={resetFields} className="modal-close waves-effect btn botao-cancelar"><i className="material-icons left">clear</i>Sair</a>
                 <a href="#" onClick={handleNewProduct} className="waves-effect btn botao-confirmar"><i className="material-icons left">check</i>Confirmar</a>
             </div>
         </div>

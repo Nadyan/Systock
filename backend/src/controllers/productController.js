@@ -2,15 +2,16 @@ const connection = require('../database/connection');
 
 module.exports = {
     async create(request, response) {
-        const { modelo, marca, descricao, tipo, fornecedor, valorCompra, cfop } = request.body;
+        const { codigo, modelo, marca, descricao, tipo, fornecedor, valorCompra, cfop } = request.body;
     
         const [ id ] = await connection('products').insert({
-            modelo, 
-            marca, 
-            descricao, 
-            tipo, 
-            fornecedor, 
-            valorCompra, 
+            codigo,
+            modelo,
+            marca,
+            descricao,
+            tipo,
+            fornecedor,
+            valorCompra,
             cfop
         });
     

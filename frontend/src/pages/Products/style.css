@@ -62,7 +62,7 @@
 
 .product-container ul li strong {
     display: block;
-    /*margin-bottom: 16px;*/
+    margin-right: 5px;
     color: #41414d;
     font-weight: bold;
 }
@@ -75,4 +75,18 @@
 
 button {
     margin-left: 10px;
+}
+
+.header-info {
+    margin-bottom: 10px;
+    font-size: large;
+}
+
+.info-container {
+    display: flex;
+
+}
+
+.divider {
+    margin-bottom: 10px;
 }

@@ -2,6 +2,7 @@
 exports.up = function(knex) {
     return knex.schema.createTable('products', function(table) {
         table.increments('id').primary();
+        table.string('codigo').notNullable();
         table.string('modelo').notNullable();
         table.string('marca').notNullable();
         table.string('descricao');
