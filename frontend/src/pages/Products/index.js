@@ -91,7 +91,7 @@ export default function Home() {
                         <li key={produto.id}>
                             <strong className="header-info">{produto.codigo}</strong>
                             <strong className="header-info">{`${produto.marca} ${produto.modelo}`}</strong>
-                            <div class="divider"></div>
+                            <div className="divider"></div>
                             <div className="info-container">
                                 <strong>Tipo:</strong>
                                 <p>{produto.tipo}</p>
