@@ -1,0 +1,73 @@
+.modal-cliente {
+    width: 100%;
+    max-width: 1000px;
+    color: #41414d;
+}
+
+.input-field {
+    width: 97%;
+}
+
+.modal-content h1 {
+    margin: 20px 0 50px 0;
+}
+
+.input-group {
+    display: flex;
+    width: 97%;
+}
+
+/* Retirar flechas number input */ 
+/* Chrome, Safari, Edge, Opera */
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+/* Firefox */
+input[type=number] {
+  -moz-appearance: textfield;
+}
+
+.botao-cancelar {
+  background: #dd3333;
+  margin-right: 15px !important;
+  box-shadow: 0;
+}
+
+.botao-confirmar {
+  background: #3085d6;
+  box-shadow: 0;
+}
+
+.botao-cancelar:hover {
+  background: #dd3333;
+  background-image: linear-gradient(rgba(0,0,0,.1),rgba(0,0,0,.1));
+}
+
+.botao-confirmar:hover {
+  background: #3085d6;
+  background-image: linear-gradient(rgba(0,0,0,.1),rgba(0,0,0,.1));
+}
+
+.modal-footer {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 30px;
+}
+
+/* label focus color */
+.input-field input:focus + label {
+  color: #3085d6 !important;
+}
+/* label underline focus color */
+.input-field input:focus {
+  border-bottom: 1px solid #3085d6 !important;
+  box-shadow: 0 1px 0 0 #3085d6 !important;
+}
+
+/* icon prefix focus color */
+.input-field .prefix.active {
+  color: #3085d6;
+}
+     

@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import Swal from 'sweetalert2';
-import CurrencyInput from 'react-currency-masked-input'
+import CurrencyInput from 'react-currency-masked-input';
 
 import './style.css';
 import api from '../../../services/api';
@@ -31,7 +31,6 @@ export default function NewProduct(props) {
 
     function verifyFields(pCodigo, pModelo, pMarca, pDescricao, pTipo, pFornecedor, pValorCompra, pCfop) {
         var blancField = '';
-        alert(pValorCompra);
 
         if (pCodigo === '') {
             blancField += 'Código';
@@ -119,17 +118,8 @@ export default function NewProduct(props) {
                     showConfirmButton: false
                 });
                 
-                setCodigo('');
-                setTipo('');
-                setFornecedor('');
-                setMarca('');
-                setModelo('');
-                setValorCompra('');
-                setCfop('');
-                setDescricao('');
-                
-               props.refreshProductList(); // atualiza a lista de produtos cadastrados
-    
+                resetFields();
+                props.refreshProductList(); // atualiza a lista de produtos cadastrados
             } catch (err) {
                 Swal.fire({
                     type: 'error',

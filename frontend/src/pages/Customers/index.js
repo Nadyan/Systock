@@ -7,6 +7,7 @@ import Menu from '../Menu';
 import api from '../../services/api';
 
 import './style.css'
+import NewCustomer from './NewCustomer';
 
 export default function Customers() {
     const [clientes, setCustomers] = useState([]);
@@ -28,6 +29,9 @@ export default function Customers() {
             enterDelay: 0
         }
         var instances = M.Tooltip.init(elems, options);
+
+        var elems = document.querySelectorAll('select');
+        var instances = M.FormSelect.init(elems, '');
     });
 
     function refreshCustomerList() {
@@ -129,15 +133,10 @@ export default function Customers() {
             </div>
 
             <div className="fixed-action-btn">
-                <a className="btn-floating btn-large fab">
-                    <i className="large material-icons">list</i>
-                </a>
-                <ul>
-                    <li><a className="btn-floating red modal-trigger tooltipped" href="#modalNewType" data-position="left" data-tooltip="Administrar tipos de produtos"><i className="material-icons">library_books</i></a></li>
-                    <li><a className="btn-floating green modal-trigger tooltipped" href="#modalNewProvider" data-position="left" data-tooltip="Administrar fornecedores"><i className="material-icons">business</i></a></li>
-                    <li><a className="btn-floating blue modal-trigger tooltipped" href="#modalNewProduct" data-position="left" data-tooltip="Cadastrar novo produto"><i className="material-icons">library_add</i></a></li>
-                </ul>
-                
+                    <a className="btn-floating btn-large fab modal-trigger tooltipped" href="#modalNewCustomer" data-position="left" data-tooltip="Cadastrar novo cliente">
+                        <i className="material-icons">library_add</i>
+                    </a>
+                <NewCustomer refreshCustomerList={refreshCustomerList}/>
             </div>
         </div>
     );
