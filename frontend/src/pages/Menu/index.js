@@ -55,7 +55,7 @@ export default function Menu() {
                     </div>
                 </li>
                 <li><a className="subheader">Cadastro</a></li>
-                <li><a href="" className="waves-effect"><i className="material-icons">people</i>Cliente</a></li>
+                <li><a href="/customers" className="waves-effect"><i className="material-icons">people</i>Cliente</a></li>
                 <li><a href="/products" className="waves-effect"><i className="material-icons">view_quilt</i>Produto</a></li>
                 
                 <li><a className="subheader">Operação</a></li>

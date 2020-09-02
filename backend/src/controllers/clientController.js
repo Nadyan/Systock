@@ -28,8 +28,8 @@ module.exports = {
         const [ count ] = await connection('clients').count();
 
         const products = await connection('clients')
-            .limit(5)
-            .offset((page-1)*5)
+            //.limit(5)
+            //.offset((page-1)*5)
             .select('*');
     
         response.header('X-Total-Count-Cli', count['count(*)']);

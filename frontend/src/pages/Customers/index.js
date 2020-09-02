@@ -3,15 +3,14 @@ import M from "materialize-css";
 import Swal from 'sweetalert2';
 
 import Menu from '../Menu';
-import NewProduct from './NewProduct';
+//import NewCustomer from './NewCustomer';
 import api from '../../services/api';
 
 import './style.css'
 
-export default function Products() {
-
-    const [produtos, setProdutos] = useState([]);
-    const [atualizaProdutos, setAtualizaProdutos] = useState(false);
+export default function Customers() {
+    const [clientes, setCustomers] = useState([]);
+    const [atualizaClientes, setAtualizaClientes] = useState(false);
 
     document.addEventListener('DOMContentLoaded', function() {
         var elems = document.querySelectorAll('.fixed-action-btn');
@@ -31,22 +30,22 @@ export default function Products() {
         var instances = M.Tooltip.init(elems, options);
     });
 
-    function refreshProductList() {
-        api.get('products').then(response => {
-            setProdutos(response.data);
+    function refreshCustomerList() {
+        api.get('clients').then(response => {
+            setCustomers(response.data);
         })
     }
 
     useEffect(() => {
-        api.get('products').then(response => {
-            setProdutos(response.data);
+        api.get('clients').then(response => {
+            setCustomers(response.data);
         })
-    }, [atualizaProdutos]);
+    }, [atualizaClientes]);
 
-    function handleDeleteProduct(id) {
+    function handleDeleteCustomer(id) {
         try {
             Swal.fire({
-                title: 'Excluir produto?',
+                title: 'Excluir cliente?',
                 text: "Essa ação não poderá ser desfeita!",
                 type: 'warning',
                 showCancelButton: true,
@@ -56,21 +55,21 @@ export default function Products() {
                 confirmButtonText: 'Sim, excluir!'
             }).then((result) => {
                 if (result.value) {
-                    api.delete(`products/${id}`);
+                    api.delete(`clients/${id}`);
                 
                     Swal.fire({
-                        title: 'Produto excluído com sucesso',
+                        title: 'Cliente excluído com sucesso',
                         type: 'success',
                         timer: 1800,
                         showConfirmButton: false
                     });
-                    setProdutos(produtos.filter(produto => produto.id !== id));
+                    setCustomers(clientes.filter(cliente => cliente.id !== id));
                 }
             });
         } catch (err) {
             Swal.fire({
                 type: 'error',
-                title: 'Erro ao excluir produto',
+                title: 'Erro ao excluir cliente',
                 text: 'Tente novamente',
                 showConfirmButton: true,
                 confirmButtonText: "OK"
@@ -78,48 +77,49 @@ export default function Products() {
         }
     }
 
+    function handleLocateOnMap(endereco, bairro, cidade, uf) {
+        // TO DO
+        // Locate customer address on google maps and show on screen
+    }
+
     return(
         <div>
             <Menu />
             
-            <div className="product-container">
+            <div className="customer-container">
 
-                <h1>Produtos Cadastrados</h1>
+                <h1>Clientes Cadastrados</h1>
 
                 <ul>
-                    {produtos.map(produto => (
-                        <li key={produto.id}>
-                            <strong className="header-info">{produto.codigo}</strong>
-                            <strong className="header-info">{`${produto.marca} ${produto.modelo}`}</strong>
+                    {clientes.map(cliente => (
+                        <li key={cliente.id}>
+                            <strong className="header-info">{cliente.nome}</strong>
                             <div className="divider"></div>
                             <div className="info-container">
-                                <strong>Tipo:</strong>
-                                <p>{produto.tipo}</p>
+                                <strong>Endereço:</strong>
+                                <p>{`${cliente.endereco} - ${cliente.bairro} - ${cliente.cidade} - ${cliente.uf}`}</p>
                             </div>
                             <div className="info-container">
-                                <strong>Fornecedor:</strong>
-                                <p>{produto.fornecedor}</p>
-                            </div>
-                            <div className="info-container">
-                                <strong>Valor Compra:</strong>
-                                <p>
-                                    {
-                                        Intl.NumberFormat(
-                                            'pt-BR', 
-                                            {
-                                                style: 'currency',
-                                                currency:'BRL'
-                                            }
-                                        ).format(produto.valorCompra)
+                                {(
+                                    () => {
+                                        if (cliente.tipo === 'F') {
+                                            return <strong>CPF:</strong>
+                                        } else {
+                                            return <strong>CNPJ:</strong>
+                                        }
                                     }
-                                </p>
+                                )()}
+                                <p>{cliente.cpfCnpj}</p>
                             </div>
-                            <p>{produto.descricao}</p>
+                            <p>{cliente.email}</p>
                             <div className="option-button">
-                                <button>
+                                <button title="Localizar no mapa" onClick={() => handleLocateOnMap(cliente.endereco, cliente.bairro, cliente.cidade, cliente.uf)} className="tooltipped" data-position="bottom" data-tooltip="I am a tooltip">
+                                    <i className="material-icons location">location_on</i>
+                                </button>
+                                <button title="Editar">
                                     <i className="material-icons edit tooltiped">create</i>
                                 </button>
-                                <button onClick={() => handleDeleteProduct(produto.id)}>
+                                <button onClick={() => handleDeleteCustomer(cliente.id)} title="Excluir">
                                     <i className="material-icons delete">delete</i>
                                 </button>
                             </div>
@@ -137,7 +137,7 @@ export default function Products() {
                     <li><a className="btn-floating green modal-trigger tooltipped" href="#modalNewProvider" data-position="left" data-tooltip="Administrar fornecedores"><i className="material-icons">business</i></a></li>
                     <li><a className="btn-floating blue modal-trigger tooltipped" href="#modalNewProduct" data-position="left" data-tooltip="Cadastrar novo produto"><i className="material-icons">library_add</i></a></li>
                 </ul>
-                <NewProduct refreshProductList={refreshProductList}/>
+                
             </div>
         </div>
     );
