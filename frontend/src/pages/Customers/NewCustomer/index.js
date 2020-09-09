@@ -17,6 +17,8 @@ export default function NewCustomer(props) {
     const [uf, setUf] = useState('');
     const [inscricaoEst, setInsricaoEst] = useState('');
     const [telefone, setTelefone] = useState('');
+    const [labelCpfCnpj, setLabelCpfCnpj] = useState('CPF');
+    const [labelNomeRazaoSocial, setLabelNomeRazao] = useState('Nome');
 
     document.addEventListener('DOMContentLoaded', function() {
         var elems = document.querySelectorAll('select');
@@ -35,6 +37,7 @@ export default function NewCustomer(props) {
         setUf('');
         setInsricaoEst('');
         setTelefone('');
+        setLabelCpfCnpj('CPF');
 
         //M.updateTextFields;
     }
@@ -187,45 +190,58 @@ export default function NewCustomer(props) {
             <div className="modal-content">
                 <h1>Cadastrar novo cliente</h1>
 
+                <div className="input-field">
+                    <p>
+                        <label>
+                            <input 
+                                name="grupoTipo" 
+                                checked
+                                id="tipoF"
+                                type="radio"
+                                value="F"
+                                onFocus={e => {setTipo(e.target.value); setLabelCpfCnpj('CPF'); setLabelNomeRazao('Nome')}}
+                                className="with-gap"
+                            />
+                            <span>Pessoa Física</span>
+                        </label>
+                    </p>
+                    <p>
+                        <label>
+                            <input
+                                name="grupoTipo" 
+                                id="tipoJ"
+                                type="radio"
+                                value="J"
+                                onFocus={e => {setTipo(e.target.value); setLabelCpfCnpj('CNPJ'); setLabelNomeRazao('Razão Social')}}
+                                className="with-gap"
+                            />
+                            <span>Pessoa Jurídica</span>
+                        </label>
+                    </p>
+                </div>
+                <div className="input-field">
+                    <i className="material-icons prefix">label</i>
+                    <input 
+                        id="nome"
+                        type="text"
+                        className="validate"
+                        value={nome}
+                        onChange={e => setNome(e.target.value)}
+                    />
+                    <label htmlFor="nome">{labelNomeRazaoSocial}</label>
+                </div>
+                
                 <div className="input-group">
                     <div className="input-field">
-                        <i className="material-icons prefix">label</i>
+                        <i className="material-icons prefix">call_to_action</i>
                         <input 
-                            id="codigo"
+                            id="cpfCnpj"
                             type="text"
                             className="validate"
-                            value={nome}
-                            onChange={e => setNome(e.target.value)}
+                            value={cpfCnpj}
+                            onChange={e => setCpfCnpj(e.target.value)}
                         />
-                        <label htmlFor="nome">Nome</label>
-                    </div>
-
-                    <div className="input-field">
-                        <p>
-                            <label>
-                                <input 
-                                    name="grupoTipo" 
-                                    checked
-                                    id="tipoF"
-                                    type="radio"
-                                    value="F"
-                                    onFocus={e => setTipo(e.target.value)}
-                                />
-                                <span>Pessoa Física</span>
-                            </label>
-                        </p>
-                        <p>
-                            <label>
-                                <input
-                                    name="grupoTipo" 
-                                    id="tipoJ"
-                                    type="radio"
-                                    value="J"
-                                    onFocus={e => setTipo(e.target.value)}
-                                />
-                                <span>Pessoa Jurídica</span>
-                            </label>
-                        </p>
+                        <label htmlFor="cpfCnpj">{labelCpfCnpj}</label>
                     </div>
                 </div>
             </div>
