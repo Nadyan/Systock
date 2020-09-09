@@ -1,12 +1,13 @@
 import React, { useState } from 'react';
 import Swal from 'sweetalert2';
+import M from "materialize-css";
 
 import './style.css';
 import api from '../../../services/api';
 
 export default function NewCustomer(props) {
     const [nome, setNome] = useState('');
-    const [tipo, setTipo] = useState('');
+    const [tipo, setTipo] = useState('F');
     const [cpfCnpj, setCpfCnpj] = useState('');
     const [email, setEmail] = useState('');
     const [endereco, setEndereco] = useState('');
@@ -17,9 +18,14 @@ export default function NewCustomer(props) {
     const [inscricaoEst, setInsricaoEst] = useState('');
     const [telefone, setTelefone] = useState('');
 
+    document.addEventListener('DOMContentLoaded', function() {
+        var elems = document.querySelectorAll('select');
+        var instances = M.FormSelect.init(elems, '');
+    });
+
     function resetFields() {
         setNome('');
-        setTipo('');
+        setTipo('F');
         setCpfCnpj('');
         setEmail('');
         setEndereco('');
@@ -110,6 +116,9 @@ export default function NewCustomer(props) {
     async function handleNewCustomer(event) {
         event.preventDefault();
 
+        alert(tipo);
+
+            /*
         const blancFields = verifyFields(nome, tipo, cpfCnpj, email, endereco, bairro, cidade, cep, uf, inscricaoEst, telefone);
         if (blancFields) {
             Swal.fire({
@@ -133,7 +142,7 @@ export default function NewCustomer(props) {
                 inscricaoEst, 
                 telefone
             };
-    
+            
             try {
                 const response = await api.post('clients', data);
     
@@ -156,6 +165,7 @@ export default function NewCustomer(props) {
                 });
             } 
         }
+        */
     }
 
     /* 
@@ -191,12 +201,31 @@ export default function NewCustomer(props) {
                     </div>
 
                     <div className="input-field">
-                        <i className="material-icons prefix">label</i>
-                        <select id="tipo">
-                            <option value="F">Pessoa Física</option>
-                            <option value="J">Pessoa Jurídica</option>
-                        </select>
-                        <label htmlFor="tipo">Tipo de pessoa</label>
+                        <p>
+                            <label>
+                                <input 
+                                    name="grupoTipo" 
+                                    checked
+                                    id="tipoF"
+                                    type="radio"
+                                    value="F"
+                                    onFocus={e => setTipo(e.target.value)}
+                                />
+                                <span>Pessoa Física</span>
+                            </label>
+                        </p>
+                        <p>
+                            <label>
+                                <input
+                                    name="grupoTipo" 
+                                    id="tipoJ"
+                                    type="radio"
+                                    value="J"
+                                    onFocus={e => setTipo(e.target.value)}
+                                />
+                                <span>Pessoa Jurídica</span>
+                            </label>
+                        </p>
                     </div>
                 </div>
             </div>
