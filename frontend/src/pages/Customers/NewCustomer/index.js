@@ -65,6 +65,7 @@ export default function NewCustomer(props) {
             }
         }
         if (pEmail === '') {
+            // TO DO: verificar se o formato está certo
             if (blancField !== '') {
                 blancField += ', ';
             }
@@ -119,9 +120,6 @@ export default function NewCustomer(props) {
     async function handleNewCustomer(event) {
         event.preventDefault();
 
-        alert(tipo);
-
-            /*
         const blancFields = verifyFields(nome, tipo, cpfCnpj, email, endereco, bairro, cidade, cep, uf, inscricaoEst, telefone);
         if (blancFields) {
             Swal.fire({
@@ -168,7 +166,6 @@ export default function NewCustomer(props) {
                 });
             } 
         }
-        */
     }
 
     /* 
@@ -185,50 +182,64 @@ export default function NewCustomer(props) {
                 telefone
     */
 
+    function atualizaControles(pTipoPessoa) {
+        if (pTipoPessoa === 'F') { // pessoa fisica
+            setLabelCpfCnpj('CPF');
+            setLabelNomeRazao('Nome');
+            document.getElementById('inscricaoEst').disabled = true;
+        } else { // pessoa juridica
+            setLabelCpfCnpj('CNPJ');
+            setLabelNomeRazao('Razão Social');
+            document.getElementById('inscricaoEst').disabled = false;
+        }
+    }
+
     return(
         <div id="modalNewCustomer" className="modal modal-cliente">
             <div className="modal-content">
                 <h1>Cadastrar novo cliente</h1>
 
-                <div className="input-field">
-                    <p>
-                        <label>
-                            <input 
-                                name="grupoTipo" 
-                                checked
-                                id="tipoF"
-                                type="radio"
-                                value="F"
-                                onFocus={e => {setTipo(e.target.value); setLabelCpfCnpj('CPF'); setLabelNomeRazao('Nome')}}
-                                className="with-gap"
-                            />
-                            <span>Pessoa Física</span>
-                        </label>
-                    </p>
-                    <p>
-                        <label>
-                            <input
-                                name="grupoTipo" 
-                                id="tipoJ"
-                                type="radio"
-                                value="J"
-                                onFocus={e => {setTipo(e.target.value); setLabelCpfCnpj('CNPJ'); setLabelNomeRazao('Razão Social')}}
-                                className="with-gap"
-                            />
-                            <span>Pessoa Jurídica</span>
-                        </label>
-                    </p>
-                </div>
-                <div className="input-field">
-                    <i className="material-icons prefix">label</i>
-                    <input 
-                        id="nome"
-                        type="text"
-                        className="validate"
-                        value={nome}
-                        onChange={e => setNome(e.target.value)}
-                    />
-                    <label htmlFor="nome">{labelNomeRazaoSocial}</label>
+                <div className="input-group">
+                    <div className="input-radio">
+                        <p>
+                            <label>
+                                <input 
+                                    name="grupoTipo" 
+                                    checked
+                                    id="tipoF"
+                                    type="radio"
+                                    value="F"
+                                    onFocus={e => {setTipo(e.target.value); atualizaControles(e.target.value);}}
+                                    className="with-gap"
+                                />
+                                <span>Pessoa Física</span>
+                            </label>
+                        </p>
+                        <p>
+                            <label>
+                                <input
+                                    name="grupoTipo" 
+                                    id="tipoJ"
+                                    type="radio"
+                                    value="J"
+                                    onFocus={e => {setTipo(e.target.value); atualizaControles(e.target.value);}}
+                                    className="with-gap"
+                                />
+                                <span>Pessoa Jurídica</span>
+                            </label>
+                        </p>
+                    </div>
+                    <div className="input-field">
+                        <i className="material-icons prefix">people</i>
+                        <input 
+                            id="nome"
+                            type="text"
+                            className="validate"
+                            value={nome}
+                            onChange={e => setNome(e.target.value)}
+                        />
+                        <label htmlFor="nome">{labelNomeRazaoSocial}</label>
+                    </div>
                 </div>
                 
                 <div className="input-group">
@@ -242,6 +253,102 @@ export default function NewCustomer(props) {
                             onChange={e => setCpfCnpj(e.target.value)}
                         />
                         <label htmlFor="cpfCnpj">{labelCpfCnpj}</label>
+                    </div>
+
+                    <div className="input-field">
+                        <i className="material-icons prefix">email</i>
+                        <input 
+                            id="email"
+                            type="email"
+                            className="validate"
+                            value={email}
+                            onChange={e => setEmail(e.target.value)}
+                        />
+                        <label htmlFor="email">Email</label>
+                    </div>
+                </div>
+                <div className="input-group">
+                    <div className="input-field">
+                        <i className="material-icons prefix">local_phone</i>
+                        <input 
+                            id="telefone"
+                            type="text"
+                            className="validate"
+                            value={telefone}
+                            onChange={e => setTelefone(e.target.value)}
+                        />
+                        <label htmlFor="telefone">Telefone</label>
+                    </div>
+                    <div className="input-field">
+                        <i className="material-icons prefix">power_input</i>
+                        <input 
+                            id="inscricaoEst"
+                            type="text"
+                            disabled
+                            className="validate"
+                            value={inscricaoEst}
+                            onChange={e => setInsricaoEst(e.target.value)}
+                        />
+                        <label htmlFor="inscricaoEst">Inscrição Estadual</label>
+                    </div>
+                </div>
+                <div className="input-group">
+                    <div className="input-field">
+                        <i className="material-icons prefix">location_on</i>
+                        <input 
+                            id="endereco"
+                            type="text"
+                            className="validate"
+                            value={endereco}
+                            onChange={e => setEndereco(e.target.value)}
+                        />
+                        <label htmlFor="endereco">Endereço</label>
+                    </div>
+                    <div className="input-field">
+                        <i className="material-icons prefix">location_on</i>
+                        <input 
+                            id="bairro"
+                            type="text"
+                            className="validate"
+                            value={bairro}
+                            onChange={e => setBairro(e.target.value)}
+                        />
+                        <label htmlFor="bairro">Bairro</label>
+                    </div>
+                </div>
+                <div className="input-group">
+                    <div className="input-field">
+                        <i className="material-icons prefix">location_on</i>
+                        <input 
+                            id="cidade"
+                            type="text"
+                            className="validate"
+                            value={cidade}
+                            onChange={e => setCidade(e.target.value)}
+                        />
+                        <label htmlFor="cidade">Cidade</label>
+                    </div>
+                    <div className="input-field">
+                        <i className="material-icons prefix">location_on</i>
+                        <input 
+                            id="uf"
+                            type="text"
+                            className="validate"
+                            value={uf}
+                            onChange={e => setUf(e.target.value)}
+                        />
+                        <label htmlFor="uf">UF</label>
+                    </div>
+                    <div className="input-field">
+                        <i className="material-icons prefix">more</i>
+                        <input 
+                            id="cep"
+                            type="text"
+                            className="validate"
+                            value={cep}
+                            onChange={e => setCep(e.target.value)}
+                        />
+                        <label htmlFor="cep">CEP</label>
                     </div>
                 </div>
             </div>

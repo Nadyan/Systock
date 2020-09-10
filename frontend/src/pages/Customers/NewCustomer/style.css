@@ -17,6 +17,15 @@
     width: 97%;
 }
 
+.input-radio {
+  display: flex;
+  width: 100%;
+}
+
+.input-radio p {
+  margin: auto auto auto 0px;
+}
+
 /* Retirar flechas number input */ 
 /* Chrome, Safari, Edge, Opera */
 input::-webkit-outer-spin-button,
