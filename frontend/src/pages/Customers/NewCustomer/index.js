@@ -38,8 +38,9 @@ export default function NewCustomer(props) {
         setInsricaoEst('');
         setTelefone('');
         setLabelCpfCnpj('CPF');
+        setLabelNomeRazao('Nome');
 
-        //M.updateTextFields;
+        M.updateTextFields();
     }
 
     function verifyFields(pNome, pTipo, pCpfCnpj, pEmail, pEndereco, pBairro, pCidade, pCep, pUf, pInscricaoEst, pTelefone) {
@@ -167,20 +168,6 @@ export default function NewCustomer(props) {
             } 
         }
     }
-
-    /* 
-                nome, 
-                tipo, 
-                cpfCnpj, 
-                email, 
-                endereco, 
-                bairro, 
-                cidade, 
-                cep, 
-                uf, 
-                inscricaoEst, 
-                telefone
-    */
 
     function atualizaControles(pTipoPessoa) {
         if (pTipoPessoa === 'F') { // pessoa fisica

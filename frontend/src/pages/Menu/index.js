@@ -59,7 +59,7 @@ export default function Menu() {
                 <li><a href="/products" className="waves-effect"><i className="material-icons">view_quilt</i>Produto</a></li>
                 
                 <li><a className="subheader">Operação</a></li>
-                <li><a href="" className="waves-effect"><i className="material-icons">list</i>Orçamento</a></li>
+                <li><a href="/negotiation" className="waves-effect"><i className="material-icons">list</i>Orçamento</a></li>
                 <li><a href="" className="waves-effect"><i className="material-icons">shopping_cart</i>Venda</a></li>
                 <li><a href="" className="waves-effect"><i className="material-icons">play_for_work</i>Entrada</a></li>
                 
