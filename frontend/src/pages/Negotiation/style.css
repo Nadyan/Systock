@@ -1,0 +1,34 @@
+
+.container {
+    width: 100%;
+    max-width: 1180px;
+    padding: 0 30px;
+    margin: 32px auto;
+}
+
+.container h1 {
+    margin: 40px 0 0 0;
+}
+
+.negotiation-container {
+    display: flex;
+    max-width: 90%;
+	margin: 25px auto;
+    border: 1px solid #ccc;
+    
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-around;
+}
+
+.negotiation-container .item-container {
+    display: block;
+    background: tomato;
+    width: 100%;
+}
+
+.negotiation-container .value-container {
+    display: block;
+    background: teal;
+    width: 50%;
+}

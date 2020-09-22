@@ -13,9 +13,17 @@ export default function Negotiation() {
     return(
         <div>
             <Menu />
-            
+            <div className="container">
+                <h1>Elaboração de Orçamento</h1>
+            </div>
             <div className="negotiation-container">
-                
+                <div className="item-container">
+                    1
+                </div>
+                <div className="value-container">
+                    <p>Produtos:</p>
+                    <p>Serviços:</p>
+                </div>
 
             </div>
         </div>
