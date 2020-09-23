@@ -1,3 +1,4 @@
+const { select } = require('../database/connection');
 const connection = require('../database/connection');
 
 module.exports = {
@@ -23,18 +24,25 @@ module.exports = {
     },
 
     async index(request, response)  {
-        const { page = 1 } = request.query;
+        //const { page = 1 } = request.query;
 
         const [ count ] = await connection('clients').count();
 
-        const products = await connection('clients')
+        const clients = await connection('clients')
             //.limit(5)
             //.offset((page-1)*5)
             .select('*');
     
         response.header('X-Total-Count-Cli', count['count(*)']);
 
-        return response.json(products);
+        return response.json(clients);
+    },
+
+    async select(request, response) {
+        const items = await connection('clients')
+            .select('id as value','nome as label');
+
+        return response.json(items);
     },
 
     async delete(request, response) {

@@ -11,6 +11,7 @@ routes.post('/products', productController.create);
 routes.delete('/products/:id', productController.delete);
 
 routes.get('/clients', clientController.index);
+routes.get('/clients/select', clientController.select);
 routes.post('/clients', clientController.create);
 routes.delete('/clients/:id', clientController.delete);
 
