@@ -13,15 +13,17 @@ export default function Negotiation() {
 
     const [itens, setItens] = useState([]);
     const [atualizaItens, setAtualizaItens] = useState(false);
-    const [atualizaCliente, setAtualizaCliente] = useState(false);
     const [cliente, setCliente] = useState(''); //cliete.value, cliente.label
     const [listaClientes, setListaClientes] = useState([]);
 
     useEffect(() => {
         api.get('clients/select').then(response => {
             setListaClientes(response.data);
-        })
-    }, [atualizaCliente]);
+        });
+        api.get('products').then(response => {
+            setItens(response.data);
+        });
+    }, [atualizaItens]);
 
     function handleDeleteItem(id) {
         try {
@@ -105,6 +107,10 @@ export default function Negotiation() {
                                 </li>
                             ))}
                         </ul>
+                        <div className="option-buttons-container">
+                            <a class="waves-effect waves-light btn botao-produto light-blue accent-4"><i class="material-icons left">add</i>Adicionar Produto</a>
+                            <a class="waves-effect waves-light btn botao-servico green"><i class="material-icons left">add</i>Adicionar Serviço</a>
+                        </div>
                     </div>
 
                     <div className="value-container">
