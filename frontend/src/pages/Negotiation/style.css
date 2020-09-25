@@ -27,17 +27,22 @@
 
 .negotiation-container .value-container {
     display: block;
-    background: rgb(231, 231, 231);
+    background: rgb(245, 245, 245);
     width: 50%;
-    border-left: 5px solid #29b6f6;
+    border-left: 5px solid #ffa726;
     padding: 15px;
     border-radius: 8px;
     margin-top: 15px;
 }
 
+.negotiation-container .value-container .value-item {
+    display: flex;
+    justify-content: space-between;
+}
+
 .item-container ul li {
-    background: #eeeeee;
-    padding: 24px;
+    background: rgb(245, 245, 245);
+    padding: 15px;
     border-radius: 8px;
     position: relative;
     border-left: 5px solid #007bff;
@@ -46,8 +51,8 @@
 
 .item-container ul li .option-button {
     position: absolute;
-    top: 24px;
-    right: 24px;
+    top: 15px;
+    right: 15px;
     border: 0;
 }
 
@@ -90,7 +95,7 @@
 
 .item-container ul li p {
     display: block;
-    margin-bottom: 10px;
+    margin-bottom: 3px;
     color: #737380;
 }
 
@@ -104,7 +109,7 @@
 }
 
 .divider {
-    margin-bottom: 10px;
+    margin: 7px 0 7px 0;
 }
 
 .input-field {

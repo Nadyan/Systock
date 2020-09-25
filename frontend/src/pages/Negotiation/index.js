@@ -16,6 +16,10 @@ export default function Negotiation() {
     const [cliente, setCliente] = useState(''); //cliete.value, cliente.label
     const [listaClientes, setListaClientes] = useState([]);
 
+    const [valorTotal, setValorTotal] = useState(0);
+    const [valorProdutos, setValorProdutos] = useState(10.58);
+    const [valorServicos, setValorServicos] = useState(112.76);
+
     useEffect(() => {
         api.get('clients/select').then(response => {
             setListaClientes(response.data);
@@ -74,8 +78,7 @@ export default function Negotiation() {
                         <ul>
                             {itens.map(item => (
                                 <li key={item.id}>
-                                    <strong className="header-info">{item.codigo}</strong>
-                                    <strong className="header-info">{`${item.marca} ${item.modelo}`}</strong>
+                                    <strong className="header-info">{`${item.codigo} - ${item.marca} ${item.modelo}`}</strong>
                                     <div className="divider"></div>
                                     <div className="info-container">
                                         <strong>Fornecedor:</strong>
@@ -95,7 +98,6 @@ export default function Negotiation() {
                                             }
                                         </p>
                                     </div>
-                                    <p>{item.descricao}</p>
                                     <div className="option-button">
                                         <button>
                                             <i className="material-icons edit tooltiped">create</i>
@@ -114,8 +116,49 @@ export default function Negotiation() {
                     </div>
 
                     <div className="value-container">
-                        <p>Produtos:</p>
-                        <p>Serviços:</p>
+                        <div className="value-item">
+                            <p>Produtos:</p>
+                            <strong>
+                                {
+                                    Intl.NumberFormat(
+                                        'pt-BR', 
+                                        {
+                                            style: 'currency',
+                                            currency:'BRL'
+                                        }
+                                    ).format(valorProdutos)
+                                }
+                            </strong>
+                        </div>
+                        <div className="value-item">
+                            <p>Serviços:</p>
+                            <strong>
+                                {
+                                    Intl.NumberFormat(
+                                        'pt-BR', 
+                                        {
+                                            style: 'currency',
+                                            currency:'BRL'
+                                        }
+                                    ).format(valorServicos)
+                                }
+                            </strong>
+                        </div>
+                        <div className="divider"></div>
+                        <div className="value-item">
+                            <p>Total:</p>
+                            <strong>
+                                {
+                                    Intl.NumberFormat(
+                                        'pt-BR', 
+                                        {
+                                            style: 'currency',
+                                            currency:'BRL'
+                                        }
+                                    ).format(valorTotal)
+                                }
+                            </strong>
+                        </div>
                     </div>
 
                 </div>
