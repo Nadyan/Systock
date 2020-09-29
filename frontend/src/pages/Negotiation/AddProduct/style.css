@@ -1,0 +1,10 @@
+.modal-add-produto {
+    width: 100%;
+    max-width: 1000px;
+    color: #41414d;
+}
+
+.input-field {
+    width: 100%;
+    margin: 50px 0 15px 0;
+}

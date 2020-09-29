@@ -18,6 +18,13 @@ module.exports = {
         return response.json({ id, modelo });
     },
 
+    async select(request, response) {
+        const items = await connection('products')
+            .select('codigo as value','modelo as label').distinct();
+
+        return response.json(items);
+    },
+
     async index(request, response)  {
         const { page = 1 } = request.query;
 

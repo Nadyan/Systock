@@ -49,6 +49,10 @@
     margin: 15px 15px 0 0;
 }
 
+.item-container ul li:hover {
+    background: rgb(235, 235, 235);
+}
+
 .item-container ul li .option-button {
     position: absolute;
     top: 15px;
