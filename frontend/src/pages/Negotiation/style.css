@@ -40,7 +40,7 @@
     justify-content: space-between;
 }
 
-.item-container ul li {
+.negotiation-container .item-container ul li {
     background: rgb(245, 245, 245);
     padding: 15px;
     border-radius: 8px;
@@ -49,22 +49,22 @@
     margin: 15px 15px 0 0;
 }
 
-.item-container ul li:hover {
+.negotiation-container .item-container ul li:hover {
     background: rgb(235, 235, 235);
 }
 
-.item-container ul li .option-button {
+.negotiation-container .item-container ul li .option-button {
     position: absolute;
     top: 15px;
     right: 15px;
     border: 0;
 }
 
-.item-container ul li .option-button a {
+.negotiation-container .item-container ul li .option-button a {
     margin: 3px;
 }
 
-.item-container ul li .option-button i {
+.negotiation-container .item-container ul li .option-button i {
     color: #232931;
     padding: 2px;
     border-radius: 5px;
@@ -72,12 +72,12 @@
     /*transition: color 0.1s;*/
 }
 
-.item-container ul li .option-button .delete:hover {
+.negotiation-container .item-container ul li .option-button .delete:hover {
     background-color: #dc3545;
     color: #eeeeee;
 }
 
-.item-container ul li .option-button .edit:hover {
+.negotiation-container .item-container ul li .option-button .edit:hover {
     background-color: #17a2b8;
     color: #eeeeee;
 }

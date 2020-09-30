@@ -23,10 +23,23 @@ export default function AddProduct(props) {
     useEffect(() => {
         if (produtoInput !== '') {
             refreshFornecList(produtoInput.value);
+            setProduto('');
         } else {
             refreshFornecList('');
+            setProduto('');
         }
     }, [produtoInput]);
+
+    function chamaSetProduto(pId) {
+        setProduto(pId);
+        
+        var elems = document.getElementsByClassName('choose-fornec-li');
+        for (var i = 0; i < elems.length; i++) {
+            elems[i].style.border = '2px solid #ebebeb';
+        }
+
+        document.getElementById(`li_${pId}`).style.border = "2px solid #007bff";
+    }
 
     function refreshFornecList(pCodProduto) {
         if (pCodProduto === '') {
@@ -102,7 +115,7 @@ export default function AddProduct(props) {
                 <div className="fornecs-group">
                     <ul>
                         {fornecedores.map(fornecedor => (
-                            <li key={fornecedor.id} onClick={() => setProduto(fornecedor.id)}>
+                            <li key={fornecedor.id} onClick={() => chamaSetProduto(fornecedor.id)} id={`li_${fornecedor.id}`} className="choose-fornec-li">
                                 <strong className="header-info">{fornecedor.codigo}</strong>
                                 <strong className="header-info">{`${fornecedor.marca} ${fornecedor.modelo}`}</strong>
                                 <div className="divider"></div>

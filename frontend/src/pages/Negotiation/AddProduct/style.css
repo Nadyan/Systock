@@ -1,5 +1,5 @@
 .modal-add-produto {
-    width: 100%;
+    width: 70%;
     height: 100%;
     max-width: 1000px;
     color: #41414d;
@@ -12,3 +12,35 @@
 .modal-content .input-field .select {
     width: 100%;
 }
+
+.fornecs-group ul {
+    display: flex;
+    justify-content: flex-start;
+}
+
+.fornecs-group ul .choose-fornec-li {
+    background: #ebebeb;
+    padding: 24px;
+    border-radius: 8px;
+    position: relative;
+    margin: 0 15px 0 0;
+    border: 2px solid #ebebeb;
+}
+
+.fornecs-group ul .choose-fornec-li strong {
+    display: block;
+    margin-right: 5px;
+    color: #41414d;
+    font-weight: bold;
+}
+
+.fornecs-group ul .choose-fornec-li p {
+    display: block;
+    margin-bottom: 3px;
+    color: #737380;
+}
+
+.fornecs-group ul .choose-fornec-li:hover {
+    background:  #e6e5e5;
+}
+

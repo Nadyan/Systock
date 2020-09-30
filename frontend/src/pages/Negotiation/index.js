@@ -124,7 +124,6 @@ export default function Negotiation() {
                         <div className="option-buttons-container">
                             <a className="waves-effect waves-light btn botao-produto light-blue accent-4 modal-trigger" href="#modalAddProduct"><i className="material-icons left">add</i>Adicionar Produto</a>
                             <a className="waves-effect waves-light btn botao-servico green modal-trigger" href="#modalAddMO"><i className="material-icons left">add</i>Adicionar Serviço</a>
-                            <AddProduct refreshProductList={refreshProductList} listaProdutos={listaProdutos}/>
                         </div>
                     </div>
 
@@ -176,6 +175,7 @@ export default function Negotiation() {
 
                 </div>
             </div>
+            <AddProduct refreshProductList={refreshProductList} listaProdutos={listaProdutos}/>
         </div>
     );
 }
