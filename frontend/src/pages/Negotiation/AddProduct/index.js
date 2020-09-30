@@ -102,7 +102,7 @@ export default function AddProduct(props) {
                 <div className="fornecs-group">
                     <ul>
                         {fornecedores.map(fornecedor => (
-                            <li key={fornecedor.id} onClick={() => setProduto(fornecedor)}>
+                            <li key={fornecedor.id} onClick={() => setProduto(fornecedor.id)}>
                                 <strong className="header-info">{fornecedor.codigo}</strong>
                                 <strong className="header-info">{`${fornecedor.marca} ${fornecedor.modelo}`}</strong>
                                 <div className="divider"></div>
