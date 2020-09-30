@@ -24,19 +24,18 @@ export default function AddProduct(props) {
         if (produtoInput !== '') {
             refreshFornecList(produtoInput.value);
         } else {
-            refreshFornecList([]);
+            refreshFornecList('');
         }
     }, [produtoInput]);
 
     function refreshFornecList(pCodProduto) {
         if (pCodProduto === '') {
-            setFornecedores('');
+            setFornecedores([]);
         } else {
-            api.get(`products/getFornecs/${produtoInput.value}`).then(response => {
-                // busca os produtos que tem o código 'produto.value'
+            api.get(`products/getFornecs/${pCodProduto}`).then(response => {
+                // busca os produtos que tem o código 'produtoInput.value'
                 // dessa forma irá trazer o produto com seus diferentes fornecedores
                 setFornecedores(response.data);
-                console.log(response.data);
             });
         }
     }
@@ -103,7 +102,7 @@ export default function AddProduct(props) {
                 <div className="fornecs-group">
                     <ul>
                         {fornecedores.map(fornecedor => (
-                            <li key={fornecedor.id} onClick={setProduto(fornecedor)}>
+                            <li key={fornecedor.id} onClick={() => setProduto(fornecedor)}>
                                 <strong className="header-info">{fornecedor.codigo}</strong>
                                 <strong className="header-info">{`${fornecedor.marca} ${fornecedor.modelo}`}</strong>
                                 <div className="divider"></div>
