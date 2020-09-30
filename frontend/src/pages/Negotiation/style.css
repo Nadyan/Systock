@@ -134,3 +134,7 @@
 .botao-servico:hover, .botao-produto:hover {
     opacity: 0.9;
 }
+
+.select {
+    z-index: 1000;
+}

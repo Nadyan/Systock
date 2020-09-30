@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Swal from 'sweetalert2';
 import Select from 'react-select';
 
@@ -7,20 +7,44 @@ import api from '../../../services/api';
 
 export default function AddProduct(props) {
     
-    const [produto, setProduto] = useState('');
-    const [fornecedor, setFornecedor] = useState('');
+    const [produtoInput, setProdutoInput] = useState(''); // produto selecionado no campo select
+    const [fornecedores, setFornecedores] = useState([]);
+
+    const [produto, setProduto] = useState(''); // produto escolhido através do fornecedor
     
     function resetFields() {
+        setProdutoInput('');
+        setFornecedores([]);
         setProduto('');
-        setFornecedor('');
 
         //M.updateTextFields;
+    }
+
+    useEffect(() => {
+        if (produtoInput !== '') {
+            refreshFornecList(produtoInput.value);
+        } else {
+            refreshFornecList([]);
+        }
+    }, [produtoInput]);
+
+    function refreshFornecList(pCodProduto) {
+        if (pCodProduto === '') {
+            setFornecedores('');
+        } else {
+            api.get(`products/getFornecs/${produtoInput.value}`).then(response => {
+                // busca os produtos que tem o código 'produto.value'
+                // dessa forma irá trazer o produto com seus diferentes fornecedores
+                setFornecedores(response.data);
+                console.log(response.data);
+            });
+        }
     }
 
     async function handleAddProduct(event) {
         event.preventDefault();
 
-        if (produto === '') {
+        if (produtoInput === '') {
             Swal.fire({
                 type: 'warning',
                 title: `Selecione um produto para ser adicionado ao orçamento.`,
@@ -68,12 +92,49 @@ export default function AddProduct(props) {
 
                 <div className="input-field">
                     <Select
+                        className="select"
                         options={props.listaProdutos}
-                        onChange={setProduto}
-                        defaultValue={produto}
+                        onChange={setProdutoInput}
+                        defaultValue={produtoInput}
                         placeholder="Escolher produto..."
                     />
                 </div>
+
+                <div className="fornecs-group">
+                    <ul>
+                        {fornecedores.map(fornecedor => (
+                            <li key={fornecedor.id} onClick={setProduto(fornecedor)}>
+                                <strong className="header-info">{fornecedor.codigo}</strong>
+                                <strong className="header-info">{`${fornecedor.marca} ${fornecedor.modelo}`}</strong>
+                                <div className="divider"></div>
+                                <div className="info-container">
+                                    <strong>Tipo:</strong>
+                                    <p>{fornecedor.tipo}</p>
+                                </div>
+                                <div className="info-container">
+                                    <strong>Fornecedor:</strong>
+                                    <p>{fornecedor.fornecedor}</p>
+                                </div>
+                                <div className="info-container">
+                                    <strong>Valor Compra:</strong>
+                                    <p>
+                                        {
+                                            Intl.NumberFormat(
+                                                'pt-BR', 
+                                                {
+                                                    style: 'currency',
+                                                    currency:'BRL'
+                                                }
+                                            ).format(fornecedor.valorCompra)
+                                        }
+                                    </p>
+                                </div>
+                                <p>{fornecedor.descricao}</p>
+                            </li>
+                        ))}
+                    </ul>
+                </div>
+
             </div>
         </div>
     );

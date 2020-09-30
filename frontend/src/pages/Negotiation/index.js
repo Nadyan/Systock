@@ -76,7 +76,7 @@ export default function Negotiation() {
             <div className="container">
                 <h1>Elaboração de Orçamento</h1>
             
-                <div className="input-field">
+                <div className="input-field select">
                     <Select
                         options={listaClientes}
                         onChange={setCliente}

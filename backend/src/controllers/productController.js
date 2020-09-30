@@ -25,6 +25,13 @@ module.exports = {
         return response.json(items);
     },
 
+    async getFornecs(request, response) {
+        const { codigo } = request.params;
+        const items = await connection('products').select('*').where('codigo', codigo);
+
+        return response.json(items);
+    },
+
     async index(request, response)  {
         const { page = 1 } = request.query;
 
