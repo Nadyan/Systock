@@ -1,21 +1,22 @@
 .modal-add-produto {
     width: 70%;
-    height: 100%;
+    
     max-width: 1000px;
     color: #41414d;
 }
 
 .modal-content h1 {
-    margin: 20px 0 20px 0 !important;
-}
-
-.modal-content .input-field .select {
-    width: 100%;
+    margin: 20px 0 0 0 !important;
 }
 
 .fornecs-group ul {
     display: flex;
     justify-content: flex-start;
+}
+
+.modal-add-produto .modal-content .input-field {
+    margin-top: 25px;
+    margin-bottom: 25px;
 }
 
 .fornecs-group ul .choose-fornec-li {
@@ -44,3 +45,6 @@
     background:  #e6e5e5;
 }
 
+.modal-add-produto .modal-footer {
+    position: static;
+}

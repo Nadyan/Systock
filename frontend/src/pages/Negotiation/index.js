@@ -122,7 +122,7 @@ export default function Negotiation() {
                             ))}
                         </ul>
                         <div className="option-buttons-container">
-                            <a className="waves-effect waves-light btn botao-produto light-blue accent-4 modal-trigger" href="#modalAddProduct"><i className="material-icons left">add</i>Adicionar Produto</a>
+                            <a className="waves-effect waves-light btn botao-produto light-blue accent-4 modal-trigger" href="#modalAddProduct"><i className="material-icons left">add_shopping_cart</i>Adicionar Produto</a>
                             <a className="waves-effect waves-light btn botao-servico green modal-trigger" href="#modalAddMO"><i className="material-icons left">add</i>Adicionar Serviço</a>
                         </div>
                     </div>

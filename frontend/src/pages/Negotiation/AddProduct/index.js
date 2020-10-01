@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import Swal from 'sweetalert2';
 import Select from 'react-select';
+import M from "materialize-css";
 
 import './style.css';
 import api from '../../../services/api';
@@ -11,13 +12,20 @@ export default function AddProduct(props) {
     const [fornecedores, setFornecedores] = useState([]);
 
     const [produto, setProduto] = useState(''); // produto escolhido através do fornecedor
+    const [quantidade, setQuantidade] = useState('');
     
     function resetFields() {
         setProdutoInput('');
         setFornecedores([]);
         setProduto('');
+        setQuantidade('');
 
-        //M.updateTextFields;
+        var elems = document.getElementsByClassName('choose-fornec-li');
+        for (var i = 0; i < elems.length; i++) {
+            elems[i].style.border = '2px solid #ebebeb';
+        }
+
+        M.updateTextFields();
     }
 
     useEffect(() => {
@@ -107,9 +115,21 @@ export default function AddProduct(props) {
                         className="select"
                         options={props.listaProdutos}
                         onChange={setProdutoInput}
-                        defaultValue={produtoInput}
                         placeholder="Escolher produto..."
+                        defaultValue=""
                     />
+                </div>
+                
+                <div className="input-field">
+                    <i className="material-icons prefix">add_shopping_cart</i>
+                    <input 
+                        id="quantidade" 
+                        type="number" 
+                        className="validate"
+                        value={quantidade}
+                        onChange={e => setQuantidade(e.target.value)}
+                    />
+                    <label htmlFor="quantidade">Quantidade</label>
                 </div>
 
                 <div className="fornecs-group">
@@ -147,6 +167,12 @@ export default function AddProduct(props) {
                     </ul>
                 </div>
 
+            </div>
+            <div className="modal-footer">
+                <div className="fixed-action-btn">
+                    <a href="#" onClick={resetFields} className="modal-close waves-effect btn botao-cancelar"><i className="material-icons left">clear</i>Sair</a>
+                    <a href="#" className="waves-effect btn botao-confirmar"><i className="material-icons left">check</i>Confirmar</a>
+                </div>
             </div>
         </div>
     );
