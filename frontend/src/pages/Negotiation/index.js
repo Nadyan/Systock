@@ -36,7 +36,7 @@ export default function Negotiation() {
     }, [atualizaItens]);
 
     function refreshProductList() {
-        api.get('negotiation_temp').then(response => {
+        api.get('negotiation_temp').then(response => { // TODO: Criar uma negotiation_temp/select com os campos desejados
             setItens(response.data);
         });
     }

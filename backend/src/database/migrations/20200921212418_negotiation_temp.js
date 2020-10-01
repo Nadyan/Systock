@@ -7,9 +7,10 @@ exports.up = function(knex) {
         table.string('tipo'); // S = Serviço, P = Produto 
 
         table.string('produto');
+        table.integer('quantidade').unsigned();
 
         table.string('servico');
-        table.float('valor_servico');
+        table.float('valorServico');
 
         table.foreign('produto').references('id').inTable('products');
 

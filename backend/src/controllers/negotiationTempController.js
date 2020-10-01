@@ -2,12 +2,13 @@ const connection = require('../database/connection');
 
 module.exports = {
     async create(request, response) {
-        const { tipo, produto, servico, valorServico } = request.body;
-    
+        const { tipo, produto, quantidade, servico, valorServico } = request.body;
+
         const [ id ] = await connection('negotiation_temp').insert({
             tipo, //S = Serviço, P = Produto
             produto, //ID da tabela produto
-            servico, //String descrevendo o produto
+            quantidade, // Quantidade do produto
+            servico, //String descrevendo o servico
             valorServico, // valor em float
         });
     

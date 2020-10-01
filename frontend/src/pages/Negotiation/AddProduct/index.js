@@ -64,29 +64,37 @@ export default function AddProduct(props) {
     async function handleAddProduct(event) {
         event.preventDefault();
 
-        if (produtoInput === '') {
+        if (produtoInput === '' || produto === '') {
             Swal.fire({
                 type: 'warning',
-                title: `Selecione um produto para ser adicionado ao orçamento.`,
+                title: 'Selecione um produto para ser adicionado ao orçamento',
                 showConfirmButton: true,
-                confirmButtonText: "OK"
+                confirmButtonText: 'OK'
+            });
+        } else if (quantidade === '' || quantidade === 0) {
+            Swal.fire({
+                type: 'warning',
+                title: 'Informe uma quantidade válida',
+                showConfirmButton: true,
+                confirmButtonText: 'OK'
             });
         } else {
             const tipo = 'P', servico = '', valorServico = 0;
-
+            
             const data = {
                 tipo,
                 produto, // ID do produto
+                quantidade,
                 servico,
                 valorServico
             };
-    
+            
             try {
                 const response = await api.post('negotiation_temp', data);
-    
+
                 Swal.fire({
                     type: 'success',
-                    title: `Produto adicionado com sucesso`,
+                    title: `Produto adicionado ao orçamento`,
                     timer: 1800,
                     showConfirmButton: false
                 });
@@ -96,10 +104,10 @@ export default function AddProduct(props) {
             } catch (err) {
                 Swal.fire({
                     type: 'error',
-                    title: `Erro ao adicionar produto`,
+                    title: 'Erro ao adicionar produto',
                     text: 'Tente novamente',
                     showConfirmButton: true,
-                    confirmButtonText: "OK"
+                    confirmButtonText: 'OK'
                 });
             } 
         }
@@ -171,7 +179,7 @@ export default function AddProduct(props) {
             <div className="modal-footer">
                 <div className="fixed-action-btn">
                     <a href="#" onClick={resetFields} className="modal-close waves-effect btn botao-cancelar"><i className="material-icons left">clear</i>Sair</a>
-                    <a href="#" className="waves-effect btn botao-confirmar"><i className="material-icons left">check</i>Confirmar</a>
+                    <a href="#" onClick={handleAddProduct} className="waves-effect btn botao-confirmar"><i className="material-icons left">check</i>Confirmar</a>
                 </div>
             </div>
         </div>
