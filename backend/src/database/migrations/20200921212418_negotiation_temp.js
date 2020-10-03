@@ -2,9 +2,9 @@
 exports.up = function(knex) {
     return knex.schema.createTable('negotiation_temp', function(table) {
         
-        table.increments('id').primary();
+        table.increments('idTemp').primary();
 
-        table.string('tipo'); // S = Serviço, P = Produto 
+        table.string('tipoItem'); // S = Serviço, P = Produto 
 
         table.string('produto');
         table.integer('quantidade').unsigned();

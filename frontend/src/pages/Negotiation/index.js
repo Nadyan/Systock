@@ -36,7 +36,7 @@ export default function Negotiation() {
     }, [atualizaItens]);
 
     function refreshProductList() {
-        api.get('negotiation_temp').then(response => { // TODO: Criar uma negotiation_temp/select com os campos desejados
+        api.get('negotiation_temp').then(response => {
             setItens(response.data);
         });
     }
@@ -54,8 +54,8 @@ export default function Negotiation() {
                 confirmButtonText: 'Sim, excluir!'
             }).then((result) => {
                 if (result.value) {
-                    api.delete(`negotiation_temp/${id}`);
-                    setItens(itens.filter(item => item.id !== id));
+                    api.delete(`negotiation_temp/delete/${id}`);
+                    setItens(itens.filter(item => item.idTemp !== id));
                 }
             });
         } catch (err) {
@@ -89,7 +89,7 @@ export default function Negotiation() {
                     <div className="item-container">
                         <ul>
                             {itens.map(item => (
-                                <li key={item.id}>
+                                <li key={item.idTemp}>
                                     <strong className="header-info">{`${item.codigo} - ${item.marca} ${item.modelo}`}</strong>
                                     <div className="divider"></div>
                                     <div className="info-container">
@@ -106,15 +106,18 @@ export default function Negotiation() {
                                                         style: 'currency',
                                                         currency:'BRL'
                                                     }
-                                                ).format(item.valor)
+                                                ).format(item.valorCompra)
                                             }
                                         </p>
+                                    </div>
+                                    <div className="info-container">
+                                        <p>{item.descricao}</p>
                                     </div>
                                     <div className="option-button">
                                         <button>
                                             <i className="material-icons edit tooltiped">create</i>
                                         </button>
-                                        <button onClick={() => handleDeleteItem(item.id)}>
+                                        <button onClick={() => handleDeleteItem(item.idTemp)}>
                                             <i className="material-icons delete">delete</i>
                                         </button>
                                     </div>

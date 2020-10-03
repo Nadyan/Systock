@@ -19,6 +19,7 @@ routes.delete('/clients/:id', clientController.delete);
 
 routes.get('/negotiation_temp', negotiationTempController.index);
 routes.post('/negotiation_temp', negotiationTempController.create);
-routes.delete('/negotiation_temp/:id', negotiationTempController.delete);
+routes.delete('/negotiation_temp/delete/:idTemp', negotiationTempController.delete);
+routes.delete('/negotiation_temp/deleteAll', negotiationTempController.deleteAll);
 
 module.exports = routes;

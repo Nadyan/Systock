@@ -79,10 +79,10 @@ export default function AddProduct(props) {
                 confirmButtonText: 'OK'
             });
         } else {
-            const tipo = 'P', servico = '', valorServico = 0;
+            const tipoItem = 'P', servico = '', valorServico = 0;
             
             const data = {
-                tipo,
+                tipoItem,
                 produto, // ID do produto
                 quantidade,
                 servico,
