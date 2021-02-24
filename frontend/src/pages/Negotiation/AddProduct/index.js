@@ -56,6 +56,7 @@ export default function AddProduct(props) {
             api.get(`products/getFornecs/${pCodProduto}`).then(response => {
                 // busca os produtos que tem o código 'produtoInput.value'
                 // dessa forma irá trazer o produto com seus diferentes fornecedores
+                                
                 setFornecedores(response.data);
             });
         }
@@ -116,7 +117,7 @@ export default function AddProduct(props) {
     return (
         <div id="modalAddProduct" className="modal modal-add-produto">
             <div className="modal-content">
-                <h1>Cadastrar novo produto</h1>
+                <h1>Adicionar novo produto</h1>
 
                 <div className="input-field">
                     <Select

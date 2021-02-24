@@ -1,16 +1,16 @@
 
-.container {
+.negotiation_container {
     width: 100%;
     max-width: 1180px;
     padding: 0 30px;
     margin: 32px auto;
 }
 
-.container h1 {
+.negotiation_container h1 {
     margin: 40px 0 0 0;
 }
 
-.negotiation-container {
+.negotiation_negotiation-container {
     display: flex;
     width: 100%;
 	margin: 25px auto;
@@ -20,12 +20,12 @@
     align-items: flex-start;
 }
 
-.negotiation-container .item-container {
+.negotiation_negotiation-container .negotiation_item-container {
     display: block;
     width: 100%;
 }
 
-.negotiation-container .value-container {
+.negotiation_negotiation-container .negotiation_value-container {
     display: block;
     background: rgb(245, 245, 245);
     width: 50%;
@@ -35,12 +35,12 @@
     margin-top: 15px;
 }
 
-.negotiation-container .value-container .value-item {
+.negotiation_negotiation-container .negotiation_value-container .negotiation_value-item {
     display: flex;
     justify-content: space-between;
 }
 
-.negotiation-container .item-container ul li {
+.negotiation_negotiation-container .negotiation_item-container ul li {
     background: rgb(245, 245, 245);
     padding: 15px;
     border-radius: 8px;
@@ -49,22 +49,22 @@
     margin: 15px 15px 0 0;
 }
 
-.negotiation-container .item-container ul li:hover {
+.negotiation_negotiation-container .negotiation_item-container ul li:hover {
     background: rgb(235, 235, 235);
 }
 
-.negotiation-container .item-container ul li .option-button {
+.negotiation_negotiation-container .negotiation_item-container ul li .negotiation_option-button {
     position: absolute;
     top: 15px;
     right: 15px;
     border: 0;
 }
 
-.negotiation-container .item-container ul li .option-button a {
+.negotiation_negotiation-container .negotiation_item-container ul li .negotiation_option-button a {
     margin: 3px;
 }
 
-.negotiation-container .item-container ul li .option-button i {
+.negotiation_negotiation-container .negotiation_item-container ul li .negotiation_option-button i {
     color: #232931;
     padding: 2px;
     border-radius: 5px;
@@ -72,43 +72,35 @@
     /*transition: color 0.1s;*/
 }
 
-.negotiation-container .item-container ul li .option-button .delete:hover {
+.negotiation_negotiation-container .negotiation_item-container ul li .negotiation_option-button .delete:hover {
     background-color: #dc3545;
     color: #eeeeee;
 }
 
-.negotiation-container .item-container ul li .option-button .edit:hover {
+.negotiation_negotiation-container .negotiation_item-container ul li .negotiation_option-button .edit:hover {
     background-color: #17a2b8;
     color: #eeeeee;
 }
 
-.fab {
-    background-color: #232931;
-}
-
-.fab:hover {
-    background-color: #47515e;
-}
-
-.item-container ul li strong {
+.negotiation_item-container ul li strong {
     display: block;
     margin-right: 5px;
     color: #41414d;
     font-weight: bold;
 }
 
-.item-container ul li p {
+.negotiation_item-container ul li p {
     display: block;
     margin-bottom: 3px;
     color: #737380;
 }
 
-.header-info {
+.negotiation_header-info {
     margin-bottom: 10px;
     font-size: large;
 }
 
-.info-container {
+.negotiation_info-container {
     display: flex;
 }
 
@@ -116,25 +108,26 @@
     margin: 7px 0 7px 0;
 }
 
-.input-field {
+.negotiation_input-field {
     width: 100%;
     margin: 50px 0 15px 0;
 }
 
-.option-buttons-container {
+.negotiation_option-buttons-container {
     display: flex;
     justify-content: center;
     padding: 15px;
 }
 
-.botao-servico {
+.negotiation_botao-servico {
     margin-left: 15px !important;
+    z-index: 1;
   }
 
-.botao-servico:hover, .botao-produto:hover {
+.negotiation_botao-servico:hover, .negotiation_botao-produto:hover {
     opacity: 0.9;
 }
 
-.select {
-    z-index: 100;
+.negotiation_select {
+    z-index: 9999;
 }

@@ -33,6 +33,7 @@ export default function Negotiation() {
         api.get('products/select').then(response => {
             setListaProdutos(response.data);
         });
+        api.delete('negotiation_temp/deleteAll'); // init the negotiation temp table
     }, [atualizaItens]);
 
     function refreshProductList() {
@@ -73,11 +74,14 @@ export default function Negotiation() {
         <div>
             <Menu />
             
-            <div className="container">
+            <div className="negotiation_container">
                 <h1>Elaboração de Orçamento</h1>
             
-                <div className="input-field select">
+                <div className="negotiation_input-field negotiation_select">
                     <Select
+                        styles={{
+                            menu: provided => ({ ...provided, zIndex: 9999 })
+                        }}
                         options={listaClientes}
                         onChange={setCliente}
                         defaultValue={cliente}
@@ -85,18 +89,18 @@ export default function Negotiation() {
                     />
                 </div>
                 
-                <div className="negotiation-container">
-                    <div className="item-container">
+                <div className="negotiation_negotiation-container">
+                    <div className="negotiation_item-container">
                         <ul>
                             {itens.map(item => (
                                 <li key={item.idTemp}>
-                                    <strong className="header-info">{`${item.codigo} - ${item.marca} ${item.modelo}`}</strong>
+                                    <strong className="negotiation_header-info">{`${item.codigo} - ${item.marca} ${item.modelo}`}</strong>
                                     <div className="divider"></div>
-                                    <div className="info-container">
+                                    <div className="negotiation_info-container">
                                         <strong>Fornecedor:</strong>
                                         <p>{item.fornecedor}</p>
                                     </div>
-                                    <div className="info-container">
+                                    <div className="negotiation_info-container">
                                         <strong>Valor:</strong>
                                         <p>
                                             {
@@ -110,10 +114,10 @@ export default function Negotiation() {
                                             }
                                         </p>
                                     </div>
-                                    <div className="info-container">
+                                    <div className="negotiation_info-container">
                                         <p>{item.descricao}</p>
                                     </div>
-                                    <div className="option-button">
+                                    <div className="negotiation_option-button">
                                         <button>
                                             <i className="material-icons edit tooltiped">create</i>
                                         </button>
@@ -124,14 +128,14 @@ export default function Negotiation() {
                                 </li>
                             ))}
                         </ul>
-                        <div className="option-buttons-container">
-                            <a className="waves-effect waves-light btn botao-produto light-blue accent-4 modal-trigger" href="#modalAddProduct"><i className="material-icons left">add_shopping_cart</i>Adicionar Produto</a>
-                            <a className="waves-effect waves-light btn botao-servico green modal-trigger" href="#modalAddMO"><i className="material-icons left">add</i>Adicionar Serviço</a>
+                        <div className="negotiation_option-buttons-container">
+                            <a className="waves-effect waves-light btn negotiation_botao-produto light-blue accent-4 modal-trigger" href="#modalAddProduct"><i className="material-icons left">add_shopping_cart</i>Adicionar Produto</a>
+                            <a className="waves-effect waves-light btn negotiation_botao-servico green modal-trigger" href="#modalAddMO"><i className="material-icons left">add</i>Adicionar Serviço</a>
                         </div>
                     </div>
 
-                    <div className="value-container">
-                        <div className="value-item">
+                    <div className="negotiation_value-container">
+                        <div className="negotiation_value-item">
                             <p>Produtos:</p>
                             <strong>
                                 {
@@ -145,7 +149,7 @@ export default function Negotiation() {
                                 }
                             </strong>
                         </div>
-                        <div className="value-item">
+                        <div className="negotiation_value-item">
                             <p>Serviços:</p>
                             <strong>
                                 {
@@ -160,7 +164,7 @@ export default function Negotiation() {
                             </strong>
                         </div>
                         <div className="divider"></div>
-                        <div className="value-item">
+                        <div className="negotiation_value-item">
                             <p>Total:</p>
                             <strong>
                                 {
