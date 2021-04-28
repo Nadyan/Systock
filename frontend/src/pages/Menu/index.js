@@ -61,6 +61,9 @@ export default function Menu() {
                 <li><a className="subheader">Operação</a></li>
                 <li><a href="/negotiation" className="waves-effect"><i className="material-icons">list</i>Orçamento</a></li>
                 
+                <li><a className="subheader">Configuração</a></li>
+                <li><a href="/parameters" className="waves-effect"><i className="material-icons">settings</i>Parâmetros</a></li>
+
                 {
                     /*
                         <li><a href="" className="waves-effect"><i className="material-icons">shopping_cart</i>Venda</a></li>
