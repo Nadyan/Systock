@@ -7,8 +7,8 @@ const clientController = require('./controllers/clientController');
 const negotiationTempController = require('./controllers/negotiationTempController');
 
 routes.get('/products', productController.index);
-routes.get('/products/select', productController.select);
-routes.get('/products/getFornecs/:codigo', productController.getFornecs);
+routes.get('/products/select', productController.selectField);
+routes.get('/products/getFornecs/:codigo', productController.getProduct);
 routes.post('/products', productController.create);
 routes.delete('/products/:id', productController.delete);
 

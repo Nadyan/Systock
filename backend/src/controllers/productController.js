@@ -22,7 +22,7 @@ module.exports = {
         } 
     },
 
-    async select(request, response) {
+    async selectField(request, response) {
         try {
             const items = await connection('products')
                 .select('codigo as value','modelo as label').distinct();
@@ -33,7 +33,7 @@ module.exports = {
         } 
     },
 
-    async getFornecs(request, response) {
+    async getProduct(request, response) {
         try {
             const { codigo } = request.params;
             const items = await connection('products').select('*').where('codigo', codigo);
