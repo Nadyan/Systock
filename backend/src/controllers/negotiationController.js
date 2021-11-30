@@ -5,7 +5,7 @@ module.exports = {
         try {
             const { tipoItem, produto, quantidade, servico, valorServico } = request.body;
 
-            const [ id ] = await connection('negotiation_temp').insert({
+            const [ id ] = await connection('negociacao').insert({
                 tipoItem, //S = Serviço, P = Produto
                 produto, //ID da tabela produto
                 quantidade, // Quantidade do produto
@@ -23,9 +23,9 @@ module.exports = {
         try {
             const { page = 1 } = request.query;
 
-            const [ count ] = await connection('negotiation_temp').count();
+            const [ count ] = await connection('negociacao').count();
 
-            const items = await connection('negotiation_temp')
+            const items = await connection('negociacao')
                 //.limit(5)
                 //.offset((page-1)*5)
                 .select(
@@ -58,7 +58,7 @@ module.exports = {
     async delete(request, response) {
         try {
             const { idTemp } = request.params;
-            await connection('negotiation_temp').where('idTemp', idTemp).delete();
+            await connection('negociacao').where('id', idTemp).delete();
 
             return response.status(204).send(); // sucesso sem conteudo
         } catch (err) {
@@ -68,7 +68,7 @@ module.exports = {
 
     async deleteAll(request, response) {
         try {
-            await connection('negotiation_temp').delete();
+            await connection('negociacao').delete();
 
             return response.status(204).send();
         } catch (err) {

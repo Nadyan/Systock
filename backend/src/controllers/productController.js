@@ -3,14 +3,14 @@ const connection = require('../database/connection');
 module.exports = {
     async create(request, response) {
         try {
-            const { codigo, modelo, marca, descricao, tipo, fornecedor, valorCompra, cfop } = request.body;
+            const { codigo, tipo, marca, modelo, descricao, fornecedor, valorCompra, cfop } = request.body;
         
-            const [ id ] = await connection('products').insert({
+            const [ id ] = await connection('produtos').insert({
                 codigo,
-                modelo,
-                marca,
-                descricao,
                 tipo,
+                marca,
+                modelo,
+                descricao,
                 fornecedor,
                 valorCompra,
                 cfop
@@ -24,7 +24,7 @@ module.exports = {
 
     async selectField(request, response) {
         try {
-            const items = await connection('products')
+            const items = await connection('produtos')
                 .select('codigo as value','modelo as label').distinct();
 
             return response.status(200).json(items);
@@ -36,7 +36,18 @@ module.exports = {
     async getProduct(request, response) {
         try {
             const { codigo } = request.params;
-            const items = await connection('products').select('*').where('codigo', codigo);
+            const item = await connection('produtos').select('*').where('codigo', codigo);
+            
+            return response.status(200).json(item);
+        } catch (err) {
+            return response.status(500).json(err);
+        }
+    },
+
+    async getFornecs(request, response) {
+        try {
+            const { codigo } = request.params;
+            const items = await connection('produtos').select('*').where('codigo', codigo);
 
             return response.status(200).json(items);
         } catch (err) {
@@ -48,9 +59,9 @@ module.exports = {
         try {
             const { page = 1 } = request.query;
 
-            const [ count ] = await connection('products').count();
+            const [ count ] = await connection('produtos').count();
 
-            const products = await connection('products')
+            const products = await connection('produtos')
                 //.limit(5)
                 //.offset((page-1)*5)
                 .select('*');
@@ -66,7 +77,7 @@ module.exports = {
     async delete(request, response) {
         try {
             const { id } = request.params;
-            await connection('products').where('id', id).delete();
+            await connection('produtos').where('id', id).delete();
 
             return response.status(204).send(); // sucesso sem conteudo
         } catch (err) {

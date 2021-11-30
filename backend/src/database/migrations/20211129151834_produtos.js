@@ -10,7 +10,7 @@ exports.up = function(knex) {
         table.float('valor_compra', 2);
         table.int('cfop');
 
-        table.string('id_fornecedor').notNullable();
+        table.integer('id_fornecedor').notNullable();
         table.foreign('id_fornecedor').references('id').inTable('fornecedores');
 
         table.timestamps(true, true);
@@ -26,5 +26,6 @@ exports.down = function(knex) {
         - Câmera;
         - Central;
         - Sensor;
+        - Cabo;
         - etc.
 */

@@ -33,11 +33,11 @@ export default function Negotiation() {
         api.get('products/select').then(response => {
             setListaProdutos(response.data);
         });
-        api.delete('negotiation_temp/deleteAll'); // init the negotiation temp table
+        api.delete('negotiation/deleteAll'); // init the negotiation temp table
     }, [atualizaItens]);
 
     function refreshProductList() {
-        api.get('negotiation_temp').then(response => {
+        api.get('negotiation').then(response => {
             setItens(response.data);
         });
     }

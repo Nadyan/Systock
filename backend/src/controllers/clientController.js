@@ -1,24 +1,26 @@
-const { select } = require('../database/connection');
 const connection = require('../database/connection');
 
 module.exports = {
     async create(request, response) {
         try {
-            const { nome, tipo, cpfCnpj, email, endereco, bairro, cidade, cep, uf, inscricaoEst, telefone} = request.body;
-        
-            const [ id ] = await connection('clients').insert({
+            const { nome, tipo, cpf, cnpj, email, endereco, bairro, cidade, cep, uf, inscr_estadual, telefone } = request.body;
+            
+            const dados = {
                 nome, 
                 tipo, 
-                cpfCnpj,
+                cpf,
+                cnpj,
                 email,
                 endereco,
                 bairro,
                 cidade,
                 cep,
                 uf,
-                inscricaoEst,
-                telefone
-            });
+                inscr_estadual,
+                telefone,
+            }
+
+            const [ id ] = await connection('clientes').insert(dados);
         
             return response.status(200).json({ id, nome });
         } catch (err) {
@@ -29,9 +31,9 @@ module.exports = {
     async index(request, response)  {
         //const { page = 1 } = request.query;
         try {
-            const [ count ] = await connection('clients').count();
+            const [ count ] = await connection('clientes').count();
 
-            const clients = await connection('clients')
+            const clients = await connection('clientes')
                 //.limit(5)
                 //.offset((page-1)*5)
                 .select('*');
@@ -46,7 +48,7 @@ module.exports = {
 
     async select(request, response) {
         try {
-            const items = await connection('clients')
+            const items = await connection('clientes')
                 .select('id as value','nome as label');
 
             return response.status(200).json(items);
@@ -58,7 +60,7 @@ module.exports = {
     async delete(request, response) {
         try {
             const { id } = request.params;
-            await connection('clients').where('id', id).delete();
+            await connection('clientes').where('id', id).delete();
 
             return response.status(204).send(); // sucesso, mas sem conteudo
         } catch (err) {

@@ -107,13 +107,12 @@ export default function Customers() {
                                 {(
                                     () => {
                                         if (cliente.tipo === 'F') {
-                                            return <strong>CPF:</strong>
+                                            return <div><strong>CPF:</strong><p>{cliente.cpf}</p></div>
                                         } else {
-                                            return <strong>CNPJ:</strong>
+                                            return <div><strong>CNPJ:</strong><p>{cliente.cnpj}</p></div>
                                         }
                                     }
                                 )()}
-                                <p>{cliente.cpfCnpj}</p>
                             </div>
                             <p>{cliente.email}</p>
                             <div className="option-button">

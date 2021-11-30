@@ -8,16 +8,16 @@ import api from '../../../services/api';
 export default function NewCustomer(props) {
     const [nome, setNome] = useState('');
     const [tipo, setTipo] = useState('F');
-    const [cpfCnpj, setCpfCnpj] = useState('');
+    const [cpf, setCpf] = useState('');
+    const [cnpj, setCnpj] = useState('');
     const [email, setEmail] = useState('');
     const [endereco, setEndereco] = useState('');
     const [bairro, setBairro] = useState('');
     const [cidade, setCidade] = useState('');
     const [cep, setCep] = useState('');
     const [uf, setUf] = useState('');
-    const [inscricaoEst, setInsricaoEst] = useState('');
+    const [inscr_estadual, setInsricaoEst] = useState('');
     const [telefone, setTelefone] = useState('');
-    const [labelCpfCnpj, setLabelCpfCnpj] = useState('CPF');
     const [labelNomeRazaoSocial, setLabelNomeRazao] = useState('Nome');
 
     document.addEventListener('DOMContentLoaded', function() {
@@ -28,7 +28,8 @@ export default function NewCustomer(props) {
     function resetFields() {
         setNome('');
         setTipo('F');
-        setCpfCnpj('');
+        setCpf('');
+        setCnpj('');
         setEmail('');
         setEndereco('');
         setBairro('');
@@ -37,13 +38,12 @@ export default function NewCustomer(props) {
         setUf('');
         setInsricaoEst('');
         setTelefone('');
-        setLabelCpfCnpj('CPF');
         setLabelNomeRazao('Nome');
 
         M.updateTextFields();
     }
 
-    function verifyFields(pNome, pTipo, pCpfCnpj, pEmail, pEndereco, pBairro, pCidade, pCep, pUf, pInscricaoEst, pTelefone) {
+    function verifyFields(pNome, pTipo, pCpf, pCnpj, pEmail, pEndereco, pBairro, pCidade, pCep, pUf, pInscr_estadual, pTelefone) {
         var blancField = '';
 
         if (pNome === '') {
@@ -55,13 +55,18 @@ export default function NewCustomer(props) {
             }
             blancField += 'Tipo';
         }
-        if (pCpfCnpj === '') {
-            if (blancField !== '') {
-                blancField += ', ';
-            }
-            if (pTipo === 'F') {
+        if (pTipo === 'F') {
+            if (pCpf === '') {
+                if (blancField !== '') {
+                    blancField += ', ';
+                }
                 blancField += 'CPF'
-            } else {
+            }
+        } else {
+            if (pCnpj === '') {
+                if (blancField !== '') {
+                    blancField += ', ';
+                }
                 blancField += 'CNPJ';
             }
         }
@@ -102,7 +107,7 @@ export default function NewCustomer(props) {
             }
             blancField += 'UF';
         }
-        if (pInscricaoEst === '' && pTipo === 'J') {
+        if (pInscr_estadual === '' && pTipo === 'J') {
             if (blancField !== '') {
                 blancField += ', ';
             }
@@ -121,7 +126,7 @@ export default function NewCustomer(props) {
     async function handleNewCustomer(event) {
         event.preventDefault();
 
-        const blancFields = verifyFields(nome, tipo, cpfCnpj, email, endereco, bairro, cidade, cep, uf, inscricaoEst, telefone);
+        const blancFields = verifyFields(nome, tipo, cpf, cnpj, email, endereco, bairro, cidade, cep, uf, inscr_estadual, telefone);
         if (blancFields) {
             Swal.fire({
                 type: 'warning',
@@ -134,14 +139,15 @@ export default function NewCustomer(props) {
             const data = {
                 nome, 
                 tipo, 
-                cpfCnpj, 
+                cpf,
+                cnpj, 
                 email, 
                 endereco, 
                 bairro, 
                 cidade, 
                 cep, 
                 uf, 
-                inscricaoEst, 
+                inscr_estadual, 
                 telefone
             };
             
@@ -160,8 +166,8 @@ export default function NewCustomer(props) {
             } catch (err) {
                 Swal.fire({
                     type: 'error',
-                    title: `Erro ao cadastrar cliente ${nome}`,
-                    text: 'Tente novamente',
+                    title: `Erro ao cadastrar cliente ${nome}, tente novamente`,
+                    text: err,
                     showConfirmButton: true,
                     confirmButtonText: "OK"
                 });
@@ -171,13 +177,11 @@ export default function NewCustomer(props) {
 
     function atualizaControles(pTipoPessoa) {
         if (pTipoPessoa === 'F') { // pessoa fisica
-            setLabelCpfCnpj('CPF');
             setLabelNomeRazao('Nome');
-            document.getElementById('inscricaoEst').disabled = true;
+            document.getElementById('inscr_estadual').disabled = true;
         } else { // pessoa juridica
-            setLabelCpfCnpj('CNPJ');
             setLabelNomeRazao('Razão Social');
-            document.getElementById('inscricaoEst').disabled = false;
+            document.getElementById('inscr_estadual').disabled = false;
         }
     }
 
@@ -233,13 +237,25 @@ export default function NewCustomer(props) {
                     <div className="input-field">
                         <i className="material-icons prefix">call_to_action</i>
                         <input 
-                            id="cpfCnpj"
+                            id="cpf"
                             type="text"
                             className="validate"
-                            value={cpfCnpj}
-                            onChange={e => setCpfCnpj(e.target.value)}
+                            value={cpf}
+                            onChange={e => setCpf(e.target.value)}
                         />
-                        <label htmlFor="cpfCnpj">{labelCpfCnpj}</label>
+                        <label htmlFor="cpf">CPF</label>
+                    </div>
+
+                    <div className="input-field">
+                        <i className="material-icons prefix">call_to_action</i>
+                        <input 
+                            id="cnpj"
+                            type="text"
+                            className="validate"
+                            value={cnpj}
+                            onChange={e => setCnpj(e.target.value)}
+                        />
+                        <label htmlFor="cpf">CNPJ</label>
                     </div>
 
                     <div className="input-field">
@@ -269,14 +285,14 @@ export default function NewCustomer(props) {
                     <div className="input-field">
                         <i className="material-icons prefix">power_input</i>
                         <input 
-                            id="inscricaoEst"
+                            id="inscr_estadual"
                             type="text"
                             disabled
                             className="validate"
-                            value={inscricaoEst}
+                            value={inscr_estadual}
                             onChange={e => setInsricaoEst(e.target.value)}
                         />
-                        <label htmlFor="inscricaoEst">Inscrição Estadual</label>
+                        <label htmlFor="inscr_estadual">Inscrição Estadual</label>
                     </div>
                 </div>
                 <div className="input-group">
