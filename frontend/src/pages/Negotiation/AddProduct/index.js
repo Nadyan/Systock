@@ -154,7 +154,7 @@ export default function AddProduct(props) {
                                 </div>
                                 <div className="info-container">
                                     <strong>Fornecedor:</strong>
-                                    <p>{fornecedor.fornecedor}</p>
+                                    <p>{fornecedor.nome_fornec}</p>
                                 </div>
                                 <div className="info-container">
                                     <strong>Valor Compra:</strong>
@@ -166,7 +166,7 @@ export default function AddProduct(props) {
                                                     style: 'currency',
                                                     currency:'BRL'
                                                 }
-                                            ).format(fornecedor.valorCompra)
+                                            ).format(fornecedor.valor_compra)
                                         }
                                     </p>
                                 </div>

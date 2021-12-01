@@ -3,7 +3,7 @@ const connection = require('../database/connection');
 module.exports = {
     async create(request, response) {
         try {
-            const { codigo, tipo, marca, modelo, descricao, fornecedor, valorCompra, cfop } = request.body;
+            const { codigo, tipo, marca, modelo, descricao, valor_compra, cfop, id_fornecedor } = request.body;
         
             const [ id ] = await connection('produtos').insert({
                 codigo,
@@ -11,9 +11,9 @@ module.exports = {
                 marca,
                 modelo,
                 descricao,
-                fornecedor,
-                valorCompra,
-                cfop
+                valor_compra,
+                cfop,
+                id_fornecedor
             });
         
             return response.status(200).json({ id, modelo });
@@ -47,12 +47,21 @@ module.exports = {
     async getFornecs(request, response) {
         try {
             const { codigo } = request.params;
-            const items = await connection('produtos').select('*').where('codigo', codigo);
+            
+            const items = await connection('produtos')
+                .select('produtos.codigo as codigo', 
+                        'produtos.marca as marca',
+                        'produtos.modelo as modelo',
+                        'produtos.valor_compra as valor_compra',
+                        'produtos.descricao as descricao', 
+                        'fornecedores.nome as nome_fornec')
+                .where('produtos.codigo', codigo)
+                .join('fornecedores', 'produtos.id_fornecedor', '=', 'fornecedores.id');
 
             return response.status(200).json(items);
         } catch (err) {
             return response.status(500).json(err);
-        } 
+        }
     },
 
     async index(request, response)  {

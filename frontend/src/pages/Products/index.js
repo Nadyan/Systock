@@ -97,7 +97,7 @@ export default function Products() {
                                 <p>{produto.tipo}</p>
                             </div>
                             <div className="info-container">
-                                <strong>Fornecedor:</strong>
+                                <strong>Fornecedores:</strong>
                                 <p>{produto.fornecedor}</p>
                             </div>
                             <div className="info-container">
@@ -110,7 +110,7 @@ export default function Products() {
                                                 style: 'currency',
                                                 currency:'BRL'
                                             }
-                                        ).format(produto.valorCompra)
+                                        ).format(produto.valor_compra)
                                     }
                                 </p>
                             </div>

@@ -9,10 +9,10 @@ export default function NewProduct(props) {
 
     const [codigo, setCodigo] = useState('');
     const [tipo, setTipo] = useState('');
-    const [fornecedor, setFornecedor] = useState('');
+    const [id_fornecedor, setFornecedor] = useState('');
     const [marca, setMarca] = useState('');
     const [modelo, setModelo] = useState('');
-    const [valorCompra, setValorCompra] = useState('');
+    const [valor_compra, setValorCompra] = useState('');
     const [cfop, setCfop] = useState('');
     const [descricao, setDescricao] = useState('');
 
@@ -86,7 +86,7 @@ export default function NewProduct(props) {
     async function handleNewProduct(event) {
         event.preventDefault();
 
-        const blancFields = verifyFields(codigo, modelo, marca, descricao, tipo, fornecedor, valorCompra, cfop);
+        const blancFields = verifyFields(codigo, modelo, marca, descricao, tipo, id_fornecedor, valor_compra, cfop);
 
         if (blancFields) {
             Swal.fire({
@@ -99,13 +99,13 @@ export default function NewProduct(props) {
         } else {
             const data = {
                 codigo,
-                modelo, 
-                marca, 
-                descricao, 
-                tipo, 
-                fornecedor, 
-                valorCompra, 
-                cfop
+                tipo,
+                marca,
+                modelo,
+                descricao,
+                valor_compra,
+                cfop,
+                id_fornecedor
             };
     
             try {
@@ -123,8 +123,8 @@ export default function NewProduct(props) {
             } catch (err) {
                 Swal.fire({
                     type: 'error',
-                    title: `Erro ao cadastrar produto ${marca} ${modelo}`,
-                    text: 'Tente novamente',
+                    title: `Erro ao cadastrar produto ${marca} ${modelo}. Tente novamente`,
+                    text: err,
                     showConfirmButton: true,
                     confirmButtonText: "OK"
                 });
@@ -168,7 +168,7 @@ export default function NewProduct(props) {
                             id="fornecedor" 
                             type="text" 
                             className="validate"
-                            value={fornecedor}
+                            value={id_fornecedor}
                             onChange={e => setFornecedor(e.target.value)}/>
                         <label htmlFor="fornecedor">Fornecedor</label>
                     </div>
