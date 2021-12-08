@@ -19,3 +19,8 @@ input, button, textarea {
 button {
     cursor: pointer;
 }
+
+.modal { 
+    width: 75% !important;
+    max-height: 100% !important;
+}

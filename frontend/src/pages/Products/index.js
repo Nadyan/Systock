@@ -4,6 +4,7 @@ import Swal from 'sweetalert2';
 
 import Menu from '../Menu';
 import NewProduct from './NewProduct';
+import NewType from './NewType';
 import api from '../../services/api';
 
 import './style.css'
@@ -34,13 +35,13 @@ export default function Products() {
     function refreshProductList() {
         api.get('products').then(response => {
             setProdutos(response.data);
-        })
+        });
     }
 
     useEffect(() => {
         api.get('products').then(response => {
             setProdutos(response.data);
-        })
+        });
     }, [atualizaProdutos]);
 
     function handleDeleteProduct(id) {
@@ -138,6 +139,7 @@ export default function Products() {
                     <li><a className="btn-floating blue modal-trigger tooltipped" href="#modalNewProduct" data-position="left" data-tooltip="Cadastrar novo produto"><i className="material-icons">library_add</i></a></li>
                 </ul>
                 <NewProduct refreshProductList={refreshProductList}/>
+                <NewType />
             </div>
         </div>
     );

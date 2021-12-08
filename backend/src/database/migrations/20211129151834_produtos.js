@@ -6,7 +6,7 @@ exports.up = function(knex) {
         table.string('marca').notNullable();
         table.string('modelo').notNullable();
         table.string('descricao');
-        table.float('valor_compra', 2);
+        table.float('valor_compra', 2).notNullable();
         table.int('cfop');
 
         table.integer('id_tipo').notNullable();

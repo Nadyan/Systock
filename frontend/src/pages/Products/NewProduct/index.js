@@ -1,4 +1,5 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import Select from 'react-select';
 import Swal from 'sweetalert2';
 import CurrencyInput from 'react-currency-masked-input';
 
@@ -8,13 +9,24 @@ import api from '../../../services/api';
 export default function NewProduct(props) {
 
     const [codigo, setCodigo] = useState('');
-    const [tipo, setTipo] = useState('');
+    const [id_tipo, setTipo] = useState('');
     const [id_fornecedor, setFornecedor] = useState('');
     const [marca, setMarca] = useState('');
     const [modelo, setModelo] = useState('');
     const [valor_compra, setValorCompra] = useState('');
     const [cfop, setCfop] = useState('');
     const [descricao, setDescricao] = useState('');
+    const [listaTipos, setListaTipos] = useState([]);
+    const [listaFornecedores, setListaFornecedores] = useState([]);
+
+    useEffect(() => {
+        api.get('tipos_prod/select').then(response => {
+            setListaTipos(response.data);
+        });
+        api.get('fornecedores/select').then(response => {
+            setListaFornecedores(response.data);
+        });
+    }, [codigo]);
 
     function resetFields() {
         setCodigo('');
@@ -29,7 +41,7 @@ export default function NewProduct(props) {
         //M.updateTextFields;
     }
 
-    function verifyFields(pCodigo, pModelo, pMarca, pDescricao, pTipo, pFornecedor, pValorCompra, pCfop) {
+    function verifyFields(pCodigo, pModelo, pMarca, pTipo, pFornecedor, pValorCompra, pCfop) {
         var blancField = '';
 
         if (pCodigo === '') {
@@ -65,20 +77,12 @@ export default function NewProduct(props) {
             }
             blancField += 'Valor de Compra';
         }
-        if (pCfop === '' && !Number.isInteger(pCfop)) {
+        if (!Number.isInteger(pCfop)) {
             if (blancField !== '') {
                 blancField += ', ';
             }
             blancField += 'CFOP';
         }
-        /*
-        if (pDescricao === '') {
-            if (blancField !== '') {
-                blancField += ', ';
-            }
-            blancField += 'Descrição';
-        }
-        */
 
         return blancField;
     }
@@ -86,7 +90,7 @@ export default function NewProduct(props) {
     async function handleNewProduct(event) {
         event.preventDefault();
 
-        const blancFields = verifyFields(codigo, modelo, marca, descricao, tipo, id_fornecedor, valor_compra, cfop);
+        const blancFields = verifyFields(codigo, modelo, marca, id_tipo, id_fornecedor, valor_compra, cfop);
 
         if (blancFields) {
             Swal.fire({
@@ -99,12 +103,12 @@ export default function NewProduct(props) {
         } else {
             const data = {
                 codigo,
-                tipo,
                 marca,
                 modelo,
                 descricao,
                 valor_compra,
                 cfop,
+                id_tipo,
                 id_fornecedor
             };
     
@@ -148,29 +152,6 @@ export default function NewProduct(props) {
                             onChange={e => setCodigo(e.target.value)}
                         />
                         <label htmlFor="codigo">Código</label>
-                    </div>
-
-                    <div className="input-field">
-                        <i className="material-icons prefix">class</i>
-                        <input 
-                            id="tipo" 
-                            type="text" 
-                            className="validate"
-                            value={tipo}
-                            onChange={e => setTipo(e.target.value)}
-                        />
-                        <label htmlFor="tipo">Tipo</label>
-                    </div>
-
-                    <div className="input-field">
-                        <i className="material-icons prefix">business_center</i>
-                        <input 
-                            id="fornecedor" 
-                            type="text" 
-                            className="validate"
-                            value={id_fornecedor}
-                            onChange={e => setFornecedor(e.target.value)}/>
-                        <label htmlFor="fornecedor">Fornecedor</label>
                     </div>
                 </div>
 
@@ -231,6 +212,32 @@ export default function NewProduct(props) {
                         onChange={e => setDescricao(e.target.value)}
                     />
                     <label htmlFor="descricao">Descrição</label>
+                </div>
+
+                <div className="input-group">
+                    <div className="input-field">
+                        <Select
+                            styles={{
+                                menu: provided => ({ ...provided, zIndex: 9999 })
+                            }}
+                            options={listaTipos}
+                            onChange={setTipo}
+                            defaultValue={id_tipo}
+                            placeholder="Escolher tipo..."
+                        />
+                    </div>
+
+                    <div className="input-field">
+                        <Select
+                            styles={{
+                                menu: provided => ({ ...provided, zIndex: 9999 })
+                            }}
+                            options={listaFornecedores}
+                            onChange={setFornecedor}
+                            defaultValue={id_fornecedor}
+                            placeholder="Escolher fornecedor..."
+                        />
+                    </div>
                 </div>
 
             </div>
