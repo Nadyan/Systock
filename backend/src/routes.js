@@ -8,6 +8,13 @@ const negotiationController = require('./controllers/negotiationController');
 const fornecedorController = require('./controllers/fornecedorController');
 const servicosController = require('./controllers/servicoController');
 const tiposProdController = require('./controllers/tiposProdController');
+const userController = require('./controllers/userController');
+
+routes.post('/users', userController.create);
+routes.get('/users', userController.index);
+routes.get('/users/id/:id', userController.getUserById);
+routes.get('/users/email/:email', userController.getUserByEmail);
+routes.delete('/users/:id', userController.delete);
 
 routes.get('/products', productController.index);
 routes.get('/products/select', productController.selectField);
