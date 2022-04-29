@@ -1,23 +1,23 @@
 const connection = require('../database/connection');
 const bcrypt = require('bcrypt');
 
-async function geraSenhaHash(senha) {
-    // TO DO
-}
-
 module.exports = {
     async create(request, response) {
         try {
             const { nome, admin, email, senha } = request.body;
+            const custoHash = 12;
 
             /* verifica se o user já existe */
             const user = await connection('usuarios').select('id').where('email', email);
-            
-            if (user) {
-                throw new Error('Email já cadastrado');
+            if (user.length !== 0) {
+                return response.status(500).json('Email já cadastrado');
             }
-            
+            /* verificações da senha */
+            if (typeof senha !== 'string' || senha === '' || senha.length < 6) {
+                return response.status(500).json('A senha deve possuir pelo menos 6 caracteres');
+            }
 
+            const senhaHash = await bcrypt.hash(senha, custoHash);
 
             const dados = {
                 nome,
@@ -30,8 +30,13 @@ module.exports = {
 
             return response.status(200).json({ id, email });
         } catch (err) {
+            console.log(err);
             return response.status(500).json(err);
         }        
+    },
+
+    async login(request, response) {
+        // TO DO
     },
 
     async index(request, response)  {
