@@ -10,11 +10,11 @@ module.exports = {
             /* verifica se o user já existe */
             const user = await connection('usuarios').select('id').where('email', email);
             if (user.length !== 0) {
-                return response.status(500).json('Email já cadastrado');
+                return response.status(422).json('Email já cadastrado');
             }
             /* verificações da senha */
             if (typeof senha !== 'string' || senha === '' || senha.length < 6) {
-                return response.status(500).json('A senha deve possuir pelo menos 6 caracteres');
+                return response.status(422).json('A senha deve possuir pelo menos 6 caracteres');
             }
 
             const senhaHash = await bcrypt.hash(senha, custoHash);
@@ -24,19 +24,38 @@ module.exports = {
                 admin,
                 email,
                 senhaHash
-            }
+            };
 
             const [ id ] = await connection('usuarios').insert(dados);
 
             return response.status(200).json({ id, email });
         } catch (err) {
-            console.log(err);
             return response.status(500).json(err);
         }        
     },
 
     async login(request, response) {
-        // TO DO
+        try {
+            const { email, senha } = request.body;
+
+            const usuario = await connection('usuarios').select('senhaHash').where('email', email);
+
+            if (usuario.length === 0) {
+                return response.status(404).json('Usuário não encontrado');
+            }
+            
+            const senhaHash = usuario[0].senhaHash;
+            const senhaValida = await bcrypt.compare(senha, senhaHash);
+
+            if (!senhaValida) {
+                return response.status(500).json('Email ou senha incorretos');
+            } else {
+                return response.status(204).send();
+            }
+
+        } catch (err) {
+            return response.status(500).json(err);
+        }  
     },
 
     async index(request, response)  {
