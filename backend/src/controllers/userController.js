@@ -84,5 +84,15 @@ module.exports = {
         } catch (err) {
             return response.status(500).json(err);
         } 
+    },
+
+    async getUserByEmailAuth(email) {
+        try {
+            const user = await connection('usuarios').select('*').where('email', email);
+            
+            return user;
+        } catch (err) {
+            return err;
+        }
     }
 }

@@ -1,7 +1,7 @@
 const passport = require('passport');
 const localStrategy = require('passport-local').Strategy;
 const bcrypt = require('bcrypt');
-const connection = require('../database/connection');
+const { getUserByEmailAuth } = require('./userController');
 
 passport.use(
     new localStrategy(
@@ -12,17 +12,14 @@ passport.use(
         },
         async (email, senha, done) => {
             try {
-                var usuario = await connection('usuarios').select('senhaHash').where('email', email);
-                
+                var usuario = await getUserByEmailAuth(email);
                 if (usuario.length === 0) {
                     throw new Error('Usuário não encontrado');
                 } else {
                     usuario = usuario[0];
                 }
-                
-                const senhaHash = usuario.senhaHash;
-                const senhaValida = await bcrypt.compare(senha, senhaHash);
 
+                const senhaValida = await bcrypt.compare(senha, usuario.senhaHash);
                 if (!senhaValida) {
                     throw new Error('Email ou senha incorretos');
                 }
