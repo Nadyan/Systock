@@ -34,28 +34,8 @@ module.exports = {
         }        
     },
 
-    async login(request, response) {
-        try {
-            const { email, senha } = request.body;
-
-            const usuario = await connection('usuarios').select('senhaHash').where('email', email);
-
-            if (usuario.length === 0) {
-                return response.status(404).json('Usuário não encontrado');
-            }
-            
-            const senhaHash = usuario[0].senhaHash;
-            const senhaValida = await bcrypt.compare(senha, senhaHash);
-
-            if (!senhaValida) {
-                return response.status(500).json('Email ou senha incorretos');
-            } else {
-                return response.status(204).send();
-            }
-
-        } catch (err) {
-            return response.status(500).json(err);
-        }  
+    login(request, response) {
+        response.status(204).send();
     },
 
     async index(request, response)  {
