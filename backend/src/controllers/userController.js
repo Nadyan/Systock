@@ -1,5 +1,17 @@
 const connection = require('../database/connection');
 const bcrypt = require('bcrypt');
+const jwt = require('jsonwebtoken');
+const crypto = require('crypto');
+
+function geraTokenJWT(usuario) {
+    const payload = {
+        id: usuario.id
+    };
+    const senha = crypto.randomBytes(256).toString('base64');
+    const token = jwt.sign(payload, senha);
+
+    return token;
+}
 
 module.exports = {
     async create(request, response) {
@@ -35,7 +47,10 @@ module.exports = {
     },
 
     login(request, response) {
-        response.status(204).send();
+        const token = geraTokenJWT(request.user);
+
+        response.set('Authorization', token);
+        response.status(204).send(); // header útil
     },
 
     async index(request, response)  {

@@ -12,6 +12,13 @@ passport.use(
         },
         async (email, senha, done) => {
             try {
+
+                if (email === '') {
+                    throw new Error('Campo email vazio');
+                } else if (senha === '') {
+                    throw new Error('Campo senha vazio');
+                }
+
                 var usuario = await getUserByEmailAuth(email);
                 if (usuario.length === 0) {
                     throw new Error('Usuário não encontrado');
