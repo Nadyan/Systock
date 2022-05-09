@@ -1,15 +1,14 @@
 const connection = require('../database/connection');
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
-const crypto = require('crypto');
 
 function geraTokenJWT(usuario) {
     const payload = {
         id: usuario.id
     };
-    const senha = crypto.randomBytes(256).toString('base64');
-    const token = jwt.sign(payload, senha);
-
+    
+    const token = jwt.sign(payload, process.env.CHAVE_JWT);
+    
     return token;
 }
 
