@@ -10,13 +10,15 @@ const servicosController = require('./controllers/servicoController');
 const tiposProdController = require('./controllers/tiposProdController');
 const userController = require('./controllers/userController');
 
-routes.post('/users', userController.create);
+routes.post('/users', 
+            passport.authenticate('bearer', {session: false}), 
+            userController.create);
 routes.get('/users', userController.index);
 routes.get('/users/id/:id', userController.getUserById);
 routes.get('/users/email/:email', userController.getUserByEmail);
 routes.delete('/users/:id', userController.delete);
 routes.post('/users/login', 
-            passport.authenticate('local', { session: false, failureMessage: true }), 
+            passport.authenticate('local', { session: false}), 
             userController.login);
 
 routes.get('/products', productController.index);

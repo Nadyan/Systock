@@ -24,9 +24,17 @@ export default function Logon() {
             //localStorage.setItem('userId', usuario);
             //localStorage.setItem('userName', reponse.data.nome); 
 
-            history.push('/home');
+            api.post('users/login').then(response => {
+                if (response.value === 204) {
+                    history.push('/home');
+                } else {
+                    throw new Error(response.Error);
+                }
+            });
+
+            //history.push('/home');
         } catch (err) {
-            alert('Erro ao logar, tente novamente.');
+            alert(err);
         }
     }
 

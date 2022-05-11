@@ -1,10 +1,14 @@
+const LocalStrategy = require('passport-local').Strategy;
+const BearerStrategy = require('passport-http-bearer').Strategy;
+
 const passport = require('passport');
-const localStrategy = require('passport-local').Strategy;
 const bcrypt = require('bcrypt');
-const { getUserByEmailAuth } = require('./userController');
+const jwt = require('jsonwebtoken');
+
+const { getUserByEmailAuth, getUserByIdAuth } = require('./userController');
 
 passport.use(
-    new localStrategy(
+    new LocalStrategy(
         {
             usernameField: 'email',
             passwordField: 'senha',
@@ -35,6 +39,21 @@ passport.use(
             } catch (err) {
                 done(err);
             }
+        }
+    )
+);
+
+passport.use(
+    new BearerStrategy(
+        async (token, done) => {
+            try {
+                const payload = jwt.verify(token, process.env.CHAVE_JWT);
+                const usuario = await getUserByIdAuth(payload.id);
+
+                done(null, usuario);
+            } catch (err) {
+                done(err);
+            }            
         }
     )
 );

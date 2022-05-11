@@ -108,5 +108,15 @@ module.exports = {
         } catch (err) {
             return err;
         }
+    },
+
+    async getUserByIdAuth(id) {
+        try {
+            const user = await connection('usuarios').select('*').where('id', id);
+            
+            return user;
+        } catch (err) {
+            return err;
+        }
     }
 }
