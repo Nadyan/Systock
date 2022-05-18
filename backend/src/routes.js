@@ -2,6 +2,8 @@ const express = require('express');
 const passport = require('passport');
 const routes = express.Router();
 
+const middlewares = require('./authentication/middlewares');
+
 const productController = require('./controllers/productController');
 const clientController = require('./controllers/clientController');
 const negotiationController = require('./controllers/negotiationController');
@@ -11,14 +13,14 @@ const tiposProdController = require('./controllers/tiposProdController');
 const userController = require('./controllers/userController');
 
 routes.post('/users', 
-            passport.authenticate('bearer', {session: false}), 
+            middlewares.bearer, 
             userController.create);
 routes.get('/users', userController.index);
 routes.get('/users/id/:id', userController.getUserById);
 routes.get('/users/email/:email', userController.getUserByEmail);
 routes.delete('/users/:id', userController.delete);
 routes.post('/users/login', 
-            passport.authenticate('local', { session: false}), 
+            middlewares.local,
             userController.login);
 
 routes.get('/products', productController.index);
