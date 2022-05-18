@@ -26,11 +26,11 @@ export default function Logon() {
 
             const response = await api.post('users/login', { email, senha });
             
-            if (response.status === 204) {
-                //localStorage.setItem('auth-token', response.data)
-                //history.push('/home');
+            const token = response.headers.authorization;
+            if (token) {
+                localStorage.setItem('auth-token', token);
+                history.push('/home');
             }
-            
         } catch (err) {
             alert(err);
         }

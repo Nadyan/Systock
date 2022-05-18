@@ -7,7 +7,7 @@ const estrategiasAutenticacao = require('./authentication/strategy');
 
 const app = express();
 
-app.use(cors()); // dev
+app.use(cors({ exposedHeaders: 'Authorization' })); // dev
 /* se for em prod, usar o cors assim:
     app.use(cors({
         origin: "http://meusite.com"
