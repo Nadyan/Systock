@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { Link, useHistory } from 'react-router-dom';
+import Swal from 'sweetalert2';
 
 import './style.css';
 import systock_logo from '../../assets/systock_logo.png';
@@ -16,23 +17,23 @@ export default function Logon() {
         event.preventDefault();
 
         try {
-            // FAZER
-
-            //const response = await api.post('sessions', { usuario, senha });
-
-            // salva no storage do navegador
-            //localStorage.setItem('userId', usuario);
-            //localStorage.setItem('userName', reponse.data.nome); 
-
             const response = await api.post('users/login', { email, senha });
             
             const token = response.headers.authorization;
             if (token) {
-                localStorage.setItem('auth-token', token);
+                localStorage.setItem('user-email', email);
+                sessionStorage.setItem('auth-token', token);
                 history.push('/home');
             }
         } catch (err) {
-            alert(err);
+            const erro = err.response.data.err;
+            Swal.fire({
+                type: 'warning',
+                title: `${erro}`,
+                text: `Tente novamente`,
+                showConfirmButton: true,
+                confirmButtonText: "OK"
+            });
         }
     }
 

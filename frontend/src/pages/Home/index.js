@@ -7,6 +7,9 @@ import './style.css'
 
 export default function Home() {
     //const userName = localStorage.getItem('userName');
+    const token = sessionStorage.getItem('auth-token');
+
+    // TO DO: Verificar validade do token
 
     return(
         <div>
