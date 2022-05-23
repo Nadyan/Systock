@@ -22,6 +22,7 @@ routes.delete('/users/:id', userController.delete);
 routes.post('/users/login', 
             middlewares.local,
             userController.login);
+routes.post('/verifytoken', userController.verifyToken);
 
 routes.get('/products', productController.index);
 routes.get('/products/select', productController.selectField);

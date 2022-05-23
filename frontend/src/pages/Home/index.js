@@ -1,15 +1,23 @@
-import React from 'react';
+import React, { useEffect } from 'react';
+import { useHistory } from 'react-router-dom';
 
 import Menu from '../Menu';
 import logo from '../../assets/rocket_black.png';
+import verifyToken from '../../services/verifyToken';
 
 import './style.css'
 
 export default function Home() {
-    //const userName = localStorage.getItem('userName');
-    const token = sessionStorage.getItem('auth-token');
+    const history = useHistory();
 
-    // TO DO: Verificar validade do token
+    useEffect(() => {  
+        (async () => {
+            const validToken = await verifyToken();
+            if (!validToken) {
+                history.push('/ErrorPage');
+            }
+        })();
+    }, []);
 
     return(
         <div>

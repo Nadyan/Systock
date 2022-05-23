@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import 'materialize-css/dist/css/materialize.min.css';
 import M from "materialize-css";
 import { Link, useHistory } from 'react-router-dom';
@@ -11,6 +11,12 @@ import rocket_white from '../../assets/rocket_white.png';
 export default function Menu() {
 
     const history = useHistory();
+
+    const [user, setUser] = useState('');
+
+    useEffect(() => {
+        setUser(localStorage.getItem('user-email') || '');
+    }, [user]);
 
     document.addEventListener('DOMContentLoaded', function() {
         var elems = document.querySelectorAll('.sidenav');
@@ -29,6 +35,7 @@ export default function Menu() {
 
     function handleLogout() {
         localStorage.clear();
+        sessionStorage.clear();
         history.push('/');
     }
 
@@ -41,6 +48,7 @@ export default function Menu() {
                         <li><img src={logo} className="navbar-logo"/></li>
                     </ul>
                     <ul className="right" style={{marginRight: "25px"}}>
+                        <li><a href="" className="tooltipped" data-position="bottom" data-tooltip={user}><i className="material-icons">account_circle</i></a></li>
                         <li><a href="/home" className="tooltipped" data-position="bottom" data-tooltip="Ir para a página inicial"><i className="material-icons">home</i></a></li>
                         <li><a href="" className="tooltipped" data-position="bottom" data-tooltip="Pesquisar"><i className="material-icons">search</i></a></li>
                         <li><button onClick={handleLogout} className="tooltipped" data-position="bottom" data-tooltip="Sair"><i className="material-icons">power_settings_new</i></button></li>

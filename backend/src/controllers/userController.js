@@ -100,6 +100,24 @@ module.exports = {
         } 
     },
 
+    verifyToken(request, response) {
+        try {
+            const { token } = request.body;
+            let isValid = false;
+            
+            if (token !== "") {
+                const payload = jwt.verify(token, process.env.CHAVE_JWT);
+                if (payload.id) {
+                    isValid = true;
+                }
+            }
+
+            response.status(200).json(isValid);
+        } catch (err) {
+            response.status(500).json(false);
+        }
+    },
+
     async getUserByEmailAuth(email) {
         try {
             const user = await connection('usuarios').select('*').where('email', email);

@@ -8,6 +8,7 @@ import Products from './pages/Products';
 import Customers from './pages/Customers';
 import Negotiation from './pages/Negotiation';
 import Parameters from './pages/Parameters';
+import ErrorPage from './pages/ErrorPage';
 
 export default function Routes() {
     return (
@@ -20,6 +21,7 @@ export default function Routes() {
                 <Route path="/customers" component={Customers} />
                 <Route path="/negotiation" component={Negotiation} />
                 <Route path="/parameters" component={Parameters} />
+                <Route path="/ErrorPage" component={ErrorPage} />
             </Switch>
         </BrowserRouter>
     );

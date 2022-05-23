@@ -16,24 +16,39 @@ export default function Logon() {
     async function handleLogin(event) {
         event.preventDefault();
 
-        try {
-            const response = await api.post('users/login', { email, senha });
-            
-            const token = response.headers.authorization;
-            if (token) {
-                localStorage.setItem('user-email', email);
-                sessionStorage.setItem('auth-token', token);
-                history.push('/home');
-            }
-        } catch (err) {
-            const erro = err.response.data.err;
+        if (email === '' || senha === '') {
             Swal.fire({
                 type: 'warning',
-                title: `${erro}`,
-                text: `Tente novamente`,
-                showConfirmButton: true,
-                confirmButtonText: "OK"
+                title: 'Email e Senha obrigatórios',
+                showConfirmButton: false,
+                timer: 1500
             });
+        } else {
+            try {
+                const response = await api.post('users/login', { email, senha });
+                
+                const token = response.headers.authorization;
+                if (token) {
+                    localStorage.setItem('user-email', email);
+                    sessionStorage.setItem('auth-token', token);
+                    Swal.fire({
+                        type: 'success',
+                        title: 'Login efetuado com sucesso!',
+                        showConfirmButton: false,
+                        timer: 1500
+                    });
+                    history.push('/home');
+                }
+            } catch (err) {
+                const erro = err.response.data.err;
+                Swal.fire({
+                    type: 'warning',
+                    title: `${erro}`,
+                    text: `Tente novamente`,
+                    showConfirmButton: true,
+                    confirmButtonText: "OK"
+                });
+            }
         }
     }
 
@@ -61,7 +76,7 @@ export default function Logon() {
                             value={senha}
                             onChange={e => setSenha(e.target.value)}
                         />
-                        <label for="senha">Senha</label>
+                        <label htmlFor="senha">Senha</label>
                     </div>
                     <div className="buttons-div">
                         <Link className="button btn waves-effect waves-light blue darken-1" to="/register" >Cadastrar
