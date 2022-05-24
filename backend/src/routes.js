@@ -18,6 +18,7 @@ routes.post('/users',
 routes.get('/users', userController.index);
 routes.get('/users/id/:id', userController.getUserById);
 routes.get('/users/email/:email', userController.getUserByEmail);
+routes.get('/users/email/validate/:id', userController.validateEmail);
 routes.delete('/users/:id', userController.delete);
 routes.post('/users/login', 
             middlewares.local,

@@ -6,6 +6,7 @@ exports.up = function(knex) {
         table.boolean('admin').defaultTo(false).notNullable();
         table.string('email').unique().notNullable();
         table.string('senhaHash').notNullable();
+        table.boolean('emailVerificado').defaultTo(false).notNullable();
         
         table.timestamps(true, true);
     });

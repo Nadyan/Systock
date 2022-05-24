@@ -1,4 +1,5 @@
 const connection = require('../database/connection');
+const { EmailVerificacao } = require('../authentication/emails');
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 
@@ -7,7 +8,11 @@ function geraTokenJWT(usuario) {
         id: usuario.id
     };
     
-    const token = jwt.sign(payload, process.env.CHAVE_JWT, { expiresIn: '60m' });
+    const token = jwt.sign(
+        payload, 
+        process.env.CHAVE_JWT, 
+        { expiresIn: '60m' }
+    );
     
     return token;
 }
@@ -39,17 +44,24 @@ module.exports = {
 
             const [ id ] = await connection('usuarios').insert(dados);
 
-            return response.status(200).json({ id, email });
+            const emailVerificacao = new EmailVerificacao({nome, email, id});
+            emailVerificacao.enviaEmail().catch(console.log);
+
+            return response.status(201).json({ id, email });
         } catch (err) {
             return response.status(500).json(err);
         }        
     },
 
     login(request, response) {
-        const token = geraTokenJWT(request.user);
+        try {
+            const accessToken = geraTokenJWT(request.user);
 
-        response.set('Authorization', token);
-        response.status(204).send(); // header útil
+            response.set('Authorization', accessToken);
+            return response.status(204).send(); // header útil
+        } catch (err) {
+            return response.status(500).json(err);
+        }
     },
 
     async index(request, response)  {
@@ -112,9 +124,28 @@ module.exports = {
                 }
             }
 
-            response.status(200).json(isValid);
+            return response.status(200).json(isValid);
         } catch (err) {
-            response.status(500).json(false);
+            return response.status(500).json(false);
+        }
+    },
+
+    async validateEmail(request, response) {
+        try {
+            const { id } = request.params;
+            const user = await connection('usuarios').select('*').where('id', id);
+            
+            if (user.length === 0) {
+                return response.status(422).json('Usuário não encontrado');
+            } else if (user[0].emailVerificado === 1) {
+                return response.status(422).json('Email já confirmado');
+            }
+
+            await connection('usuarios').update({ emailVerificado: 1 }).where('id', id);
+
+            return response.status(204).send();
+        } catch (err) {
+            return response.status(500).json(err);
         }
     },
 
