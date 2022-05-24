@@ -36,6 +36,9 @@ module.exports = {
                 if (err && err.name === 'JsonWebTokenError') {
                     return res.status(401).json({err: 'Token de autenticação inválido'});
                 }
+                if (err && err.name === 'TokenExpiredError') {
+                    return res.status(401).json({err: 'Tempo de login expirado', expiredAt: err.expiredAt});
+                }
                 if (err) {
                     return res.status(500).json({err: err.message});
                 }
