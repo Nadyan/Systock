@@ -21,9 +21,16 @@ class EmailVerificacao extends Email {
         this.from = '"SYStock" <noreply@systock.com.br>';
         this.to = usuario.email;
         this.subject = 'Verificação de email';
-        this.text = `Olá, ${usuario.nome}. Confirme seu endereço de email clicando aqui: localhost:3333/users/email/validate/${usuario.id}`;
-        this.html = `<h1>Olá, ${usuario.nome}</h1> <p>Confirme seu endereço de email clicando <a href="localhost:3333/users/email/validate/${usuario.id}">aqui</a></p>`;
+        this.text = `Olá, ${usuario.nome}. Confirme seu endereço de email clicando aqui: ${geraURL('/users/email/validate/', usuario.tokenEmail)}`;
+        this.html = `<h1>Olá, ${usuario.nome}</h1> <p>Confirme seu endereço de email clicando <a href="${geraURL('/users/email/validate/', usuario.tokenEmail)}">aqui</a></p>`;
     }
+}
+
+function geraURL(rota, token) {
+    const baseURL = process.env.BASE_URL;
+    const url = `${baseURL}${rota}${token}`;
+
+    return url;
 }
 
 module.exports = {

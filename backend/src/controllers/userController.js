@@ -1,9 +1,10 @@
 const connection = require('../database/connection');
 const { EmailVerificacao } = require('../authentication/emails');
+
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 
-function geraTokenJWT(usuario) {
+function geraTokenJWTAcesso(usuario) {
     const payload = {
         id: usuario.id
     };
@@ -12,6 +13,19 @@ function geraTokenJWT(usuario) {
         payload, 
         process.env.CHAVE_JWT, 
         { expiresIn: '60m' }
+    );
+    
+    return token;
+}
+
+function geraTokenJWTEmail(id) {
+    const payload = {
+        id: id
+    };
+    
+    const token = jwt.sign(
+        payload, 
+        process.env.CHAVE_JWT
     );
     
     return token;
@@ -44,7 +58,8 @@ module.exports = {
 
             const [ id ] = await connection('usuarios').insert(dados);
 
-            const emailVerificacao = new EmailVerificacao({nome, email, id});
+            const tokenEmail = geraTokenJWTEmail(id);
+            const emailVerificacao = new EmailVerificacao({nome, email, tokenEmail});
             emailVerificacao.enviaEmail().catch(console.log);
 
             return response.status(201).json({ id, email });
@@ -55,7 +70,7 @@ module.exports = {
 
     login(request, response) {
         try {
-            const accessToken = geraTokenJWT(request.user);
+            const accessToken = geraTokenJWTAcesso(request.user);
 
             response.set('Authorization', accessToken);
             return response.status(204).send(); // header útil
@@ -132,7 +147,10 @@ module.exports = {
 
     async validateEmail(request, response) {
         try {
-            const { id } = request.params;
+            const { token } = request.params;
+            const payload = jwt.verify(token, process.env.CHAVE_JWT);
+            const id = payload.id;
+
             const user = await connection('usuarios').select('*').where('id', id);
             
             if (user.length === 0) {
