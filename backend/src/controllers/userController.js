@@ -1,5 +1,5 @@
 const connection = require('../database/connection');
-const { EmailVerificacao } = require('../authentication/emails');
+const { EmailVerificacao } = require('../authentication/emails/emails');
 
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
@@ -31,6 +31,20 @@ function geraTokenJWTEmail(id) {
     return token;
 }
 
+function enviaEmailConfirmacao(id, nome, email) {
+    try {
+        const tokenEmail = geraTokenJWTEmail(id);
+        const emailVerificacao = new EmailVerificacao({
+            nome: nome,
+            email: email, 
+            tokenEmail: tokenEmail
+        });
+        emailVerificacao.enviaEmail().catch(console.log);
+    } catch (err) {
+        console.log('Erro ao enviar email de confirmação.' + err);
+    }
+}
+
 module.exports = {
     async create(request, response) {
         try {
@@ -58,9 +72,7 @@ module.exports = {
 
             const [ id ] = await connection('usuarios').insert(dados);
 
-            const tokenEmail = geraTokenJWTEmail(id);
-            const emailVerificacao = new EmailVerificacao({nome, email, tokenEmail});
-            emailVerificacao.enviaEmail().catch(console.log);
+            enviaEmailConfirmacao(id, nome, email);
 
             return response.status(201).json({ id, email });
         } catch (err) {
@@ -154,16 +166,20 @@ module.exports = {
             const user = await connection('usuarios').select('*').where('id', id);
             
             if (user.length === 0) {
-                return response.status(422).json('Usuário não encontrado');
+                return response.status(500).sendFile('confirmationPageErro.html', {root: 'src/authentication/confirmationPage/'});
+                //return response.status(422).json('Usuário não encontrado');
             } else if (user[0].emailVerificado === 1) {
-                return response.status(422).json('Email já confirmado');
+                //return response.status(422).json('Email já confirmado');
+                return response.status(200).sendFile('confirmationPageJaConfirmado.html', {root: 'src/authentication/confirmationPage/'});
             }
 
             await connection('usuarios').update({ emailVerificado: 1 }).where('id', id);
-
-            return response.status(204).send();
+            
+            //return response.status(200).json('Email confirmado com sucesso!'); 
+            return response.status(200).sendFile('confirmationPage.html', {root: 'src/authentication/confirmationPage/'});
         } catch (err) {
-            return response.status(500).json(err);
+            return response.status(500).sendFile('confirmationPageErro.html', {root: 'src/authentication/confirmationPage/'});
+            //return response.status(500).json(err);
         }
     },
 
