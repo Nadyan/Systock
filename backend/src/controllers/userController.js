@@ -166,19 +166,19 @@ module.exports = {
             const user = await connection('usuarios').select('*').where('id', id);
             
             if (user.length === 0) {
-                return response.status(500).sendFile('confirmationPageErro.html', {root: 'src/authentication/confirmationPage/'});
+                return response.status(500).sendFile('confirmationPageErro.html', {root: process.env.ROOT_PATH_EMAIL});
                 //return response.status(422).json('Usuário não encontrado');
             } else if (user[0].emailVerificado === 1) {
                 //return response.status(422).json('Email já confirmado');
-                return response.status(200).sendFile('confirmationPageJaConfirmado.html', {root: 'src/authentication/confirmationPage/'});
+                return response.status(200).sendFile('confirmationPageJaConfirmado.html', {root: process.env.ROOT_PATH_EMAIL});
             }
 
             await connection('usuarios').update({ emailVerificado: 1 }).where('id', id);
             
             //return response.status(200).json('Email confirmado com sucesso!'); 
-            return response.status(200).sendFile('confirmationPage.html', {root: 'src/authentication/confirmationPage/'});
+            return response.status(200).sendFile('confirmationPage.html', {root: process.env.ROOT_PATH_EMAIL});
         } catch (err) {
-            return response.status(500).sendFile('confirmationPageErro.html', {root: 'src/authentication/confirmationPage/'});
+            return response.status(500).sendFile('confirmationPageErro.html', {root: process.env.ROOT_PATH_EMAIL});
             //return response.status(500).json(err);
         }
     },
