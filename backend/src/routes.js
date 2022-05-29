@@ -12,10 +12,10 @@ const servicosController = require('./controllers/servicoController');
 const tiposProdController = require('./controllers/tiposProdController');
 const userController = require('./controllers/userController');
 
-routes.post('/users', 
-            middlewares.bearer, 
-            userController.create);
-routes.get('/users', userController.index);
+routes.post('/users', userController.create);
+routes.get('/users', 
+            //middlewares.bearer, 
+            userController.index);
 routes.get('/users/id/:id', userController.getUserById);
 routes.get('/users/email/:email', userController.getUserByEmail);
 routes.get('/users/email/validate/:token', userController.validateEmail);

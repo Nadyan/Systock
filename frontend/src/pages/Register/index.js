@@ -10,24 +10,33 @@ export default function Register() {
 
     const [nome, setNome] = useState('');
     const [email, setEmail] = useState('');
-    const [telefone, setTelefone] = useState('');
     const [senha, setSenha] = useState('');
     const [confSenha, setConfSenha] = useState('');
 
     function handleRegister(event) {
-        event.preventDefault(); // não atualiza a pagina após enviar formulario
+        event.preventDefault();
 
-        if(senha !== confSenha) {
-            alert('Campo de confirmação de senha não confere com campo senha!');
-        } else {
+        try {
+            const admin = 0;
+
+            if (senha !== confSenha) {
+                alert('Campo de confirmação de senha não confere com campo senha!');
+                return;
+            } else if (nome === '' || email === '') {
+                alert('Preencha todos os campos');
+                return;
+            }
+
             const data = {
                 nome,
                 email,
-                telefone,
-                senha
+                senha,
+                admin
             };
 
-            api.post('users', data); // FAZER
+            const response = api.post('users', data);
+        } catch (err) {
+            alert(err);
         }
     }
 
@@ -66,15 +75,6 @@ export default function Register() {
                             onChange={e => setEmail(e.target.value)}/>
                         <label for="email">e-mail</label>
                     </div>
-                    <div className="input-field">
-                        <i className="material-icons prefix">local_phone</i>
-                        <input 
-                            id="telefone" 
-                            className="validate"
-                            value={telefone}
-                            onChange={e => setTelefone(e.target.value)}/>
-                        <label for="telefone">Telefone</label>
-                    </div>
                     <div className="input-group">
                         <div className="input-field">
                             <i className="material-icons prefix">lock</i>
@@ -82,6 +82,7 @@ export default function Register() {
                                 id="senha" 
                                 type="password"
                                 value={senha}
+                                className="validate"
                                 onChange={e => setSenha(e.target.value)}/>
                             <label for="senha">Senha</label>
                         </div>
@@ -90,6 +91,7 @@ export default function Register() {
                                 id="confSenha" 
                                 type="password"
                                 value={confSenha}
+                                className="validate"
                                 onChange={e => setConfSenha(e.target.value)}/>
                             <label for="confSenha">Confirmar Senha</label>
                         </div>

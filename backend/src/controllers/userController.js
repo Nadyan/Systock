@@ -48,9 +48,15 @@ function enviaEmailConfirmacao(id, nome, email) {
 module.exports = {
     async create(request, response) {
         try {
-            const { nome, admin, email, senha } = request.body;
+            const { nome, email, senha, admin } = request.body;
             const custoHash = 12;
 
+            if (email === '') {
+                return response.status(422).json('Campo email obrigatório');
+            }
+            if (nome === '') {
+                return response.status(422).json('Campo nome obrigatório');
+            }
             /* verifica se o user já existe */
             const user = await connection('usuarios').select('id').where('email', email);
             if (user.length !== 0) {
