@@ -6,8 +6,6 @@ import systock_logo from '../../assets/systock_logo.png';
 
 export default function Logon() {
 
-    const history = useHistory();
-
     return (
         <div className="error-container">
             <div>

@@ -80,7 +80,7 @@ module.exports = {
 
             enviaEmailConfirmacao(id, nome, email);
 
-            return response.status(201).json({ id, email });
+            return response.status(201).json({ id, email, nome });
         } catch (err) {
             return response.status(500).json(err);
         }        

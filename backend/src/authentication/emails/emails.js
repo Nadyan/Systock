@@ -1,16 +1,44 @@
 const nodemailer = require('nodemailer');
 
-class Email {
-    async enviaEmail() {
+async function criaConfiguracaoEmail() {
+    let dados;
+    
+    if (process.env.NODE_ENV === 'production') {
+        dados = {
+            host: process.env.EMAIL_HOST,
+            auth: {
+                user: process.env.EMAIL_USER,
+                pass: process.env.EMAIL_PASSWORD
+            },
+            secure: true
+        }
+    } else {
         const contaTeste = await nodemailer.createTestAccount();
-        const transportador = nodemailer.createTransport({
+        dados = {
             host: 'smtp.ethereal.email',
             auth: contaTeste
+        };
+    }
+
+    return dados;
+}
+
+class Email {
+    async enviaEmail() {
+        const config = await criaConfiguracaoEmail();
+
+        console.log(config);
+        const transportador = nodemailer.createTransport(config);
+        const info = await transportador.sendMail(this, function(error, info) {
+            if (error) {
+                console.log(error);
+            }
         });
-        const info = await transportador.sendMail(this);
-    
-        const url = nodemailer.getTestMessageUrl(info);
-        console.log('Link do email teste: ' + url);
+        
+        if (process.env.NODE_ENV !== 'production') {
+            console.log('Link do email teste: '
+                        + nodemailer.getTestMessageUrl(info));
+        }
     }
 }
 

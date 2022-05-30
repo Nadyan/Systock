@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
+import Swal from 'sweetalert2';
 
 import api from '../../services/api';
 import systock_logo from '../../assets/systock_logo.png';
@@ -13,18 +14,24 @@ export default function Register() {
     const [senha, setSenha] = useState('');
     const [confSenha, setConfSenha] = useState('');
 
-    function handleRegister(event) {
+    async function handleRegister(event) {
         event.preventDefault();
 
         try {
             const admin = 0;
+            var msg = '';
 
             if (senha !== confSenha) {
-                alert('Campo de confirmação de senha não confere com campo senha!');
-                return;
+                msg = 'Campo de confirmação de senha não confere com campo senha!';
             } else if (nome === '' || email === '') {
-                alert('Preencha todos os campos');
-                return;
+                msg = 'Preencha todos os campos para cadastrar';
+            }
+            if (msg !== '') {
+                Swal.fire({
+                    title: msg,
+                    type: 'warning',
+                    showConfirmButton: true
+                });
             }
 
             const data = {
@@ -34,9 +41,28 @@ export default function Register() {
                 admin
             };
 
-            const response = api.post('users', data);
+            const response = await api.post('users', data);
+            
+            Swal.fire({
+                text: `Usuário ${response.data.nome} cadastrado com sucesso!`,
+                type: 'success',
+                showConfirmButton: true
+            });
         } catch (err) {
-            alert(err);
+            var erro = '';
+
+            if (err.response !== undefined) {
+                erro = err.response.data;
+            } else {
+                erro = err;
+            }
+
+            Swal.fire({
+                title: 'Probelmas no cadastro',
+                text: erro,
+                type: 'warning',
+                showConfirmButton: true
+            });
         }
     }
 
