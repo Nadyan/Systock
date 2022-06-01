@@ -26,19 +26,19 @@ async function criaConfiguracaoEmail() {
 class Email {
     async enviaEmail() {
         const config = await criaConfiguracaoEmail();
-
-        console.log(config);
         const transportador = nodemailer.createTransport(config);
-        const info = await transportador.sendMail(this, function(error, info) {
-            if (error) {
-                console.log(error);
+
+        await transportador.sendMail(this, 
+            function(error, info) {
+                if (error) {
+                    console.log('Erro ao enviar email: \n' + error);
+                } else {
+                    if (process.env.NODE_ENV !== 'production') {
+                        console.log(`Link email teste: ${nodemailer.getTestMessageUrl(info)}`);
+                    }
+                }
             }
-        });
-        
-        if (process.env.NODE_ENV !== 'production') {
-            console.log('Link do email teste: '
-                        + nodemailer.getTestMessageUrl(info));
-        }
+        );        
     }
 }
 
@@ -50,14 +50,22 @@ class EmailVerificacao extends Email {
         this.to = usuario.email;
         this.subject = 'Verificação de email';
         this.text = `Olá, ${usuario.nome}. Confirme seu endereço de email clicando aqui: ${geraURL('/users/email/validate/', usuario.tokenEmail)}`;
-        this.html = `<h1>Olá, ${usuario.nome}</h1> <p>Confirme seu endereço de email clicando <a href="${geraURL('/users/email/validate/', usuario.tokenEmail)}">aqui</a></p>`;
+        this.html = `<h1>
+                        Olá, ${usuario.nome}
+                    </h1>
+                    <div>
+                        <p>
+                            Confirme seu endereço de email para ter acesso à todas as funcionalidades do sistema.
+                        </p>
+                        <a href="${geraURL('/users/email/validate/', usuario.tokenEmail)}">
+                            Clique aqui para confirmar
+                        </a>
+                    </div>`
     }
 }
 
 function geraURL(rota, token) {
-    const baseURL = process.env.BASE_URL;
-    const url = `${baseURL}${rota}${token}`;
-
+    const url = `${process.env.BASE_URL}${rota}${token}`;
     return url;
 }
 
