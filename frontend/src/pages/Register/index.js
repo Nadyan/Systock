@@ -58,7 +58,7 @@ export default function Register() {
             }
 
             Swal.fire({
-                title: 'Probelmas no cadastro',
+                title: 'Problemas no cadastro',
                 text: erro,
                 type: 'warning',
                 showConfirmButton: true

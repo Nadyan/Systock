@@ -40,7 +40,11 @@ export default function Logon() {
                     history.push('/home');
                 }
             } catch (err) {
-                const erro = err.response.data.err;
+                var erro = 'Falha de comunicação com o servidor'
+                if (err.response.data) {
+                    erro = err.response.data.err;
+                }
+                
                 Swal.fire({
                     type: 'warning',
                     title: `${erro}`,

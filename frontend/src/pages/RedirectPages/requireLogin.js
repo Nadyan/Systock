@@ -1,10 +1,10 @@
 import React from 'react';
-import { Link, useHistory } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 
 import './style.css';
 import systock_logo from '../../assets/systock_logo.png';
 
-export default function Logon() {
+export default function RequireLogin() {
 
     return (
         <div className="error-container">
