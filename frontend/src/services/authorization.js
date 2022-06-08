@@ -13,7 +13,6 @@ async function verifyToken() {
 export async function requireLogin (to, from, next) {
     if (to.meta.authenticate) {
         const verificado = await verifyToken();
-
         if (!verificado) {
             next.redirect('/');
         }

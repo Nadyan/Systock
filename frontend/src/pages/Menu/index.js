@@ -1,9 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import 'materialize-css/dist/css/materialize.min.css';
-import M from "materialize-css";
-import { Link, useHistory } from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
 
 import './style.css';
+
+import M from "materialize-css";
 
 import logo from '../../assets/SYStock_logo_branco.png';
 import rocket_white from '../../assets/rocket_white.png';
@@ -15,22 +16,25 @@ export default function Menu() {
     const [user, setUser] = useState('');
 
     useEffect(() => {
-        setUser(localStorage.getItem('user-email') || '');
-    }, [user]);
-
-    document.addEventListener('DOMContentLoaded', function() {
+        setUser(localStorage.getItem('user-email') || '');       
+    }, []);
+    
+    // inicialização dos componentes do materialize
+    document.addEventListener('DOMContentLoaded', () => {
         var elems = document.querySelectorAll('.sidenav');
-        var instances = M.Sidenav.init(elems, {});
+        M.Sidenav.init(elems, {});
 
         var elems = document.querySelectorAll('.tooltipped');
         var options = {
-            inDuration: 100, 
+            inDuration: 100,
             outDuration: 100,
             margin: 0,
             exitDelay: 0,
             enterDelay: 0
         }
-        var instances = M.Tooltip.init(elems, options);
+        M.Tooltip.init(elems, options);
+
+        console.log('init do materialize /')
     });
 
     function handleLogout() {
@@ -44,7 +48,7 @@ export default function Menu() {
             <nav>
                 <div className="nav-wrapper">
                     <ul className="left">
-                        <li><a href=""><i data-target="slide-out" className="material-icons sidenav-trigger">menu</i></a></li>
+                        <li><a href="#"><i className="sidenav-trigger material-icons" data-target="slide-out">menu</i></a></li>
                         <li><img src={logo} className="navbar-logo"/></li>
                     </ul>
                     <ul className="right" style={{marginRight: "25px"}}>

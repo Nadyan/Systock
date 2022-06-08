@@ -16,11 +16,11 @@ import Loading from './pages/RedirectPages/loading';
 export default function Routes() {
     return (
         <BrowserRouter>
-            <GuardProvider guards={[requireLogin]} error={NotFound} loading={Loading}>
+            <GuardProvider guards={[]} error={NotFound} loading={Loading}>
                 <Switch>
                     <Route path="/" exact component={Logon} />
                     <Route path="/register" component={Register} />
-                    <GuardedRoute  path="/home" meta={{ authenticate: true }} component={Home} />
+                    <GuardedRoute path="/home" meta={{ authenticate: true }} component={Home} />
                     <GuardedRoute path="/products" meta={{ authenticate: true }} component={Products} />
                     <GuardedRoute path="/customers" meta={{ authenticate: true }} component={Customers} />
                     <GuardedRoute path="/negotiation" meta={{ authenticate: true }} component={Negotiation} />
