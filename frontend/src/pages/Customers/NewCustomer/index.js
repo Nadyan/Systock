@@ -1,8 +1,6 @@
 import React, { useState } from 'react';
 import Swal from 'sweetalert2';
-import M from "materialize-css";
 
-import './style.css';
 import api from '../../../services/api';
 
 export default function NewCustomer(props) {
@@ -20,11 +18,6 @@ export default function NewCustomer(props) {
     const [telefone, setTelefone] = useState('');
     const [labelNomeRazaoSocial, setLabelNomeRazao] = useState('Nome');
 
-    document.addEventListener('DOMContentLoaded', function() {
-        var elems = document.querySelectorAll('select');
-        var instances = M.FormSelect.init(elems, '');
-    });
-
     function resetFields() {
         setNome('');
         setTipo('F');
@@ -39,8 +32,6 @@ export default function NewCustomer(props) {
         setInsricaoEst('');
         setTelefone('');
         setLabelNomeRazao('Nome');
-
-        M.updateTextFields();
     }
 
     function verifyFields(pNome, pTipo, pCpf, pCnpj, pEmail, pEndereco, pBairro, pCidade, pCep, pUf, pInscr_estadual, pTelefone) {

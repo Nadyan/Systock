@@ -1,10 +1,21 @@
 import React, { useState } from 'react';
-import { Link, useHistory } from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
 import Swal from 'sweetalert2';
 
-import './style.css';
+import Button from '@mui/material/Button';
+import CssBaseline from '@mui/material/CssBaseline';
+import TextField from '@mui/material/TextField';
+import Box from '@mui/material/Box';
+import Link from '@mui/material/Link';
+import Container from '@mui/material/Container';
+import CardMedia from '@mui/material/CardMedia';
+import Alert from '@mui/material/Alert';
+import { createTheme, ThemeProvider } from '@mui/material/styles';
+
 import systock_logo from '../../assets/systock_logo.png';
 import api from '../../services/api';
+
+const theme = createTheme();
 
 export default function Logon() {
 
@@ -57,41 +68,71 @@ export default function Logon() {
     }
 
     return (
-        <div className="logon-container">
-            <section>
-                <img src={systock_logo} alt="Systock" />
-                <form onSubmit={handleLogin}>
-                    <h1>Faça seu login</h1>
-                    <div className="input-field">
-                        <i className="material-icons prefix">account_circle</i>
-                        <input 
+        <ThemeProvider theme={theme}>
+            <Container component="main" maxWidth="xs">
+                <CssBaseline />
+                <Box 
+                    sx={{
+                        marginTop: 8,
+                        display: 'flex',
+                        flexDirection: 'column',
+                        alignItems: 'center'
+                    }}
+                >
+                    <Box component="form" onSubmit={handleLogin} noValidate>
+                        
+                        <CardMedia
+                            component="img"
+                            height="80"
+                            image={systock_logo}
+                            alt="SYStock"
+                        />
+
+                        <Alert severity="warning" sx={{ mt: 5, mb: 1 }}>
+                            Acesso restrito - Faça o login para continuar
+                        </Alert>
+                        
+                        <TextField 
+                            margin="normal" 
+                            required 
+                            fullWidth 
                             id="email" 
-                            type="text"
+                            label="e-mail" 
+                            name="email" 
+                            autoComplete="email" 
+                            autoFocus
                             value={email}
                             onChange={e => setEmail(e.target.value)}
                         />
-                        <label htmlFor="email">Email</label>
-                    </div>
-                    <div className="input-field">
-                        <i className="material-icons prefix">lock</i>
-                        <input 
-                            id="senha" 
+
+                        <TextField
+                            margin="normal"
+                            required
+                            fullWidth
+                            name="senha"
+                            label="senha"
                             type="password"
+                            id="senha"
+                            autoComplete="current-password"
                             value={senha}
                             onChange={e => setSenha(e.target.value)}
                         />
-                        <label htmlFor="senha">Senha</label>
-                    </div>
-                    <div className="buttons-div">
-                        <Link className="button btn waves-effect waves-light blue darken-1" to="/register" >Cadastrar
-                            <i className="material-icons left">exit_to_app</i>
-                        </Link>
-                        <button className="button btn waves-effect waves-light green darken-1" onClick={handleLogin} >Entrar
-                            <i className="material-icons left">check</i>
-                        </button>
-                    </div>
-                </form>
-            </section>
-        </div>
-    );
+
+                        <Button type="submit" fullWidth variant="contained" sx={{ mt: 1, mb: 2 }}> 
+                            Entrar
+                        </Button>
+
+                        <Alert severity="info" sx={{ mt: 3 }}>
+                            <strong>
+                                <Link href="/register" variant="body2">
+                                    Ou clique aqui para registrar uma conta
+                                </Link>
+                            </strong>
+                        </Alert>
+
+                    </Box>
+                </Box>
+            </Container>
+        </ThemeProvider>
+    );       
 }

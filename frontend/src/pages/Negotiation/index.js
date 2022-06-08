@@ -1,13 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import Select from 'react-select';
 import Swal from 'sweetalert2';
-import M from "materialize-css";
 
 import AddProduct from './AddProduct';
 import Menu from '../Menu';
 import api from '../../services/api';
-
-import './style.css'
 
 export default function Negotiation() {
 
@@ -20,11 +17,6 @@ export default function Negotiation() {
     const [valorTotal, setValorTotal] = useState(0);
     const [valorProdutos, setValorProdutos] = useState(0);
     const [valorServicos, setValorServicos] = useState(0);
-
-    document.addEventListener('DOMContentLoaded', function() {
-        var elems = document.querySelectorAll('.modal');
-        var instances = M.Modal.init(elems, {dismissible: false});
-    });
 
     useEffect(() => {
         api.get('clients/select').then(response => {

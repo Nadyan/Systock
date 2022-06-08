@@ -3,7 +3,6 @@ import Select from 'react-select';
 import Swal from 'sweetalert2';
 import CurrencyInput from 'react-currency-masked-input';
 
-import './style.css';
 import api from '../../../services/api';
 
 export default function NewProduct(props) {

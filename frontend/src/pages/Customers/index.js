@@ -1,38 +1,16 @@
 import React, { useState, useEffect } from 'react';
-import M from "materialize-css";
 import Swal from 'sweetalert2';
 
 import Menu from '../Menu';
 //import NewCustomer from './NewCustomer';
 import api from '../../services/api';
 
-import './style.css'
+//import './style.css'
 import NewCustomer from './NewCustomer';
 
 export default function Customers() {
     const [clientes, setCustomers] = useState([]);
     const [atualizaClientes, setAtualizaClientes] = useState(false);
-
-    document.addEventListener('DOMContentLoaded', function() {
-        var elems = document.querySelectorAll('.fixed-action-btn');
-        var instances = M.FloatingActionButton.init(elems, {direction: 'up', hoverEnabled: true});
-
-        var elems = document.querySelectorAll('.modal');
-        var instances = M.Modal.init(elems, {dismissible: false});
-
-        var elems = document.querySelectorAll('.tooltipped');
-        var options = {
-            inDuration: 100, 
-            outDuration: 100,
-            margin: 0,
-            exitDelay: 0,
-            enterDelay: 0
-        }
-        var instances = M.Tooltip.init(elems, options);
-
-        var elems = document.querySelectorAll('select');
-        var instances = M.FormSelect.init(elems, '');
-    });
 
     function refreshCustomerList() {
         api.get('clients').then(response => {

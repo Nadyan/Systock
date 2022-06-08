@@ -4,8 +4,6 @@ import Swal from 'sweetalert2';
 import Menu from '../Menu';
 import api from '../../services/api';
 
-import './style.css'
-
 export default function Products() {
 
     const [profitMargin, setProfitMargin] = useState('');

@@ -1,17 +1,24 @@
 import React from 'react';
 
-import './style.css';
-import systock_logo from '../../assets/systock_logo.png';
+import Box from '@mui/material/Box';
+import CssBaseline from '@mui/material/CssBaseline';
+import Container from '@mui/material/Container';
+import CircularProgress from '@mui/material/CircularProgress';
 
 export default function NotFound() {
-
     return (
-        <div className="error-container">
-            <div>
-                <img src={systock_logo} alt="Systock" />
-            </div> 
-            
-            <div className="loader"></div>
-        </div>
+        <Container component="main" maxWidth="xs">
+            <CssBaseline />
+            <Box 
+                sx={{
+                    marginTop: 10,
+                    display: 'flex',
+                    flexDirection: 'column',
+                    alignItems: 'center'
+                }}
+            >
+                <CircularProgress color="inherit" />
+            </Box>
+        </Container>
     );
 }

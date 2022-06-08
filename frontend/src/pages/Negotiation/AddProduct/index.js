@@ -1,9 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import Swal from 'sweetalert2';
 import Select from 'react-select';
-import M from "materialize-css";
-
-import './style.css';
 import api from '../../../services/api';
 
 export default function AddProduct(props) {
@@ -24,8 +21,6 @@ export default function AddProduct(props) {
         for (var i = 0; i < elems.length; i++) {
             elems[i].style.border = '2px solid #ebebeb';
         }
-
-        M.updateTextFields();
     }
 
     useEffect(() => {

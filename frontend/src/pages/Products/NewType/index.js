@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import Swal from 'sweetalert2';
 
-import './style.css';
 import api from '../../../services/api';
 
 export default function NewType(props) {

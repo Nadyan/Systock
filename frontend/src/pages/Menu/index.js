@@ -1,10 +1,24 @@
 import React, { useEffect, useState } from 'react';
-import 'materialize-css/dist/css/materialize.min.css';
-import { useHistory } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 
-import './style.css';
+import CssBaseline from '@mui/material/CssBaseline';
+import Button from '@mui/material/Button';
+import Drawer from '@mui/material/Drawer';
+import ListItem from '@mui/material/ListItem';
+import ListItemText from '@mui/material/ListItemText';
+import ListItemIcon from '@mui/material/ListItemIcon';
+import Box from '@mui/material/Box';
+import AppBar from '@mui/material/AppBar';
+import Toolbar from '@mui/material/Toolbar';
+import Typography from '@mui/material/Typography';
+import MenuIcon from '@mui/icons-material/Menu';
 
-import M from "materialize-css";
+import {
+    CheckBoxOutlineBlankOutlined,
+    HomeOutlined,
+    InboxOutlined,
+    MailOutline
+} from "@mui/icons-material";
 
 import logo from '../../assets/SYStock_logo_branco.png';
 import rocket_white from '../../assets/rocket_white.png';
@@ -14,28 +28,45 @@ export default function Menu() {
     const history = useHistory();
 
     const [user, setUser] = useState('');
+    const [menuOpen, setMenuOpen] = useState(false);
+
+    const data = [
+        {
+            name: "Home",
+            icon: <HomeOutlined />,
+            route: "/home"
+        },
+        { 
+            name: "Produtos",
+            icon: <InboxOutlined />,
+            route: "/products"
+        },
+        { 
+            name: "Clientes",
+            icon: <CheckBoxOutlineBlankOutlined />,
+            route: "/customers"
+        },
+        { 
+            name: "Negociação",
+            icon: <MailOutline />,
+            route: "/negotiation"
+        }
+    ];
+
+    const getList = () => (
+        <div style={{ width: 300 }} onClick={() => setMenuOpen(false)}>
+            {data.map((item, index) => (
+                <ListItem button key={index} component={Link} to={item.route} sx={{ mt: 1 }}>
+                    <ListItemIcon>{item.icon}</ListItemIcon>
+                    <ListItemText>{item.name}</ListItemText>
+                </ListItem>
+            ))}
+        </div>
+    );
 
     useEffect(() => {
         setUser(localStorage.getItem('user-email') || '');       
     }, []);
-    
-    // inicialização dos componentes do materialize
-    document.addEventListener('DOMContentLoaded', () => {
-        var elems = document.querySelectorAll('.sidenav');
-        M.Sidenav.init(elems, {});
-
-        var elems = document.querySelectorAll('.tooltipped');
-        var options = {
-            inDuration: 100,
-            outDuration: 100,
-            margin: 0,
-            exitDelay: 0,
-            enterDelay: 0
-        }
-        M.Tooltip.init(elems, options);
-
-        console.log('init do materialize /')
-    });
 
     function handleLogout() {
         localStorage.clear();
@@ -44,7 +75,35 @@ export default function Menu() {
     }
 
     return(
-        <div className="menu-container">
+        <Box sx={{ flexGrow: 1 }}>
+            <CssBaseline />
+            <AppBar position="static">
+                <Toolbar>
+                <Button
+                    size="large"
+                    edge="start"
+                    color="inherit"
+                    aria-label="menu"
+                    sx={{ mr: 2 }}
+                    onClick={() => setMenuOpen(true)}
+                >
+                    <MenuIcon />
+                </Button>
+                <Drawer open={menuOpen} anchor={"left"} onClose={() => setMenuOpen(false)}>
+                    {getList()}
+                </Drawer>
+                <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
+                    News
+                </Typography>
+                <Button color="inherit">Login</Button>
+                </Toolbar>
+            </AppBar>
+        </Box>
+    );
+
+        {
+            /*
+                <div className="menu-container">
             <nav>
                 <div className="nav-wrapper">
                     <ul className="left">
@@ -76,18 +135,8 @@ export default function Menu() {
                 <li><a className="subheader">Configuração</a></li>
                 <li><a href="/parameters" className="waves-effect"><i className="material-icons">settings</i>Parâmetros</a></li>
 
-                {
-                    /*
-                        <li><a href="" className="waves-effect"><i className="material-icons">shopping_cart</i>Venda</a></li>
-                        <li><a href="" className="waves-effect"><i className="material-icons">play_for_work</i>Entrada</a></li>
-                        
-                        <li><a className="subheader">Relatório</a></li>
-                        <li><a href="" className="waves-effect"><i className="material-icons">timeline</i>Vendas</a></li>
-                        <li><a href="" className="waves-effect"><i className="material-icons">toc</i>Clientes</a></li>
-                        <li><a href="" className="waves-effect"><i className="material-icons">view_comfy</i>Estoque</a></li>
-                    */
-                }
-            </ul>
-        </div>
-    );
+                    </ul>
+                </div>
+            */
+        }
 }
