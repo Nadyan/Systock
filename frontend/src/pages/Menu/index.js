@@ -34,8 +34,7 @@ const styles = {
     },
     drawer: {
         sx: {
-            backgroundColor: "#232931",
-            width: 280
+            backgroundColor: "#232931"
         }
     }
 };
@@ -71,7 +70,7 @@ export default function Menu() {
     const [menuOpen, setMenuOpen] = useState(false);
 
     const getList = () => (
-        <div style={{ width: 300 }} onClick={() => setMenuOpen(false)}>
+        <div style={{ width: 200 }} onClick={() => setMenuOpen(false)}>
             {links.map((item, index) => (
                 <ListItem button key={index} component={Link} to={item.route} sx={{ mt: 1 }}>
                     <ListItemIcon sx={{ color: 'white' }}>{item.icon}</ListItemIcon>
@@ -120,14 +119,13 @@ export default function Menu() {
             <Drawer open={menuOpen} anchor={"left"} onClose={() => setMenuOpen(false)} PaperProps={styles.drawer}>   
                 <Container component="main" maxWidth="xs" sx={{ mt: 3 }}>
                     {getList()}
-                    <Grid container>
+                    <Grid container sx={{ mt: 5}}>
                         <Tooltip title={user}>
                             <Button
                                 size="large"
                                 edge="start"
                                 color="inherit"
                                 aria-label="menu"
-                                sx={{ mt: 5 }}
                                 onClick={handleLogout}
                             >
                                 <AccountCircleIcon sx={{ color: 'white' }}/>
@@ -139,7 +137,6 @@ export default function Menu() {
                                 edge="start"
                                 color="inherit"
                                 aria-label="menu"
-                                sx={{ mt: 5 }}
                             >
                                 <SearchIcon sx={{ color: 'white' }}/>
                             </Button>
@@ -150,7 +147,6 @@ export default function Menu() {
                                 edge="start"
                                 color="inherit"
                                 aria-label="menu"
-                                sx={{ mt: 5 }}
                                 onClick={handleLogout}
                             >
                                 <PowerSettingsNewIcon sx={{ color: 'white' }}/>
