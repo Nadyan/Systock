@@ -16,7 +16,7 @@ import Loading from './pages/RedirectPages/loading';
 export default function Routes() {
     return (
         <BrowserRouter>
-            <GuardProvider guards={[]} error={NotFound} loading={Loading}>
+            <GuardProvider guards={[requireLogin]} error={NotFound} loading={Loading}>
                 <Switch>
                     <Route path="/" exact component={Logon} />
                     <Route path="/register" component={Register} />
