@@ -132,16 +132,6 @@ export default function Menu() {
                                 <AccountCircleIcon sx={{ color: 'white' }}/>
                             </Button>
                         </Tooltip>
-                        <Tooltip title="Pesquisar">
-                            <Button
-                                size="large"
-                                edge="start"
-                                color="inherit"
-                                aria-label="menu"
-                            >
-                                <SearchIcon sx={{ color: 'white' }}/>
-                            </Button>
-                        </Tooltip>
                         <Tooltip title="Sair">
                             <Button
                                 size="large"
