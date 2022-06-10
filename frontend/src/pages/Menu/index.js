@@ -119,15 +119,8 @@ export default function Menu() {
                         alt="SYStock"
                         src={logo}
                     />
-                </Toolbar>
-            </AppBar>
 
-            <Drawer open={menuOpen} anchor={"left"} onClose={() => setMenuOpen(false)} PaperProps={styles.drawer}>   
-                <Container component="main" maxWidth="xs" sx={{ mt: 3 }}>
-                    
-                    {getList()}
-                    
-                    <Grid container sx={{ mt: 5}}>
+                    <Grid container justifyContent="flex-end">
                         <Tooltip title={user}>
                             <Button
                                 size="large"
@@ -161,6 +154,14 @@ export default function Menu() {
                             </Button>
                         </Tooltip>
                     </Grid>
+                </Toolbar>
+            </AppBar>
+
+            <Drawer open={menuOpen} anchor={"left"} onClose={() => setMenuOpen(false)} PaperProps={styles.drawer}>   
+                <Container component="main" maxWidth="xs" sx={{ mt: 3 }}>
+                    
+                    {getList()}
+                    
                 </Container>
             </Drawer>
         </Box>
