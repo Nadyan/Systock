@@ -124,9 +124,6 @@ export default function Menu() {
 
             <Drawer open={menuOpen} anchor={"left"} onClose={() => setMenuOpen(false)} PaperProps={styles.drawer}>   
                 <Container component="main" maxWidth="xs" sx={{ mt: 3 }}>
-                    <Box width="xs">
-                        
-                    </Box>
                     
                     {getList()}
                     

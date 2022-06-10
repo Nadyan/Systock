@@ -2,27 +2,73 @@ import React, { useState, useEffect } from 'react';
 import Swal from 'sweetalert2';
 
 import Menu from '../Menu';
-//import NewCustomer from './NewCustomer';
 import api from '../../services/api';
-
-//import './style.css'
 import NewCustomer from './NewCustomer';
+
+import Container from '@mui/material/Container';
+import Divider from '@mui/material/Divider';
+import ListItem from '@mui/material/ListItem';
+import List from '@mui/material/List';
+import Box from '@mui/material/Box';
+import Accordion from '@mui/material/Accordion';
+import AccordionDetails from '@mui/material/AccordionDetails';
+import AccordionSummary from '@mui/material/AccordionSummary';
+import Typography from '@mui/material/Typography';
+import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
+import HomeIcon from '@mui/icons-material/Home';
+import ListItemIcon from '@mui/material/ListItemIcon';
+import ListItemText from '@mui/material/ListItemText';
+import Chip from '@mui/material/Chip';
+import Grid from '@mui/material/Grid';
+import Tooltip from '@mui/material/Tooltip';
+import Modal from '@mui/material/Modal';
+import Button from '@mui/material/Button';
+import SpeedDial from '@mui/material/SpeedDial';
+import SpeedDialAction from '@mui/material/SpeedDialAction';
+import DeleteIcon from '@mui/icons-material/Delete';
+import EditIcon from '@mui/icons-material/Edit';
+import EmailIcon from '@mui/icons-material/Email';
+import PhoneIcon from '@mui/icons-material/Phone';
+import AssignmentIndIcon from '@mui/icons-material/AssignmentInd';
+import AddIcon from '@mui/icons-material/Add';
+import MenuOpenIcon from '@mui/icons-material/MenuOpen';
 
 export default function Customers() {
     const [clientes, setCustomers] = useState([]);
     const [atualizaClientes, setAtualizaClientes] = useState(false);
-
-    function refreshCustomerList() {
-        api.get('clients').then(response => {
-            setCustomers(response.data);
-        })
-    }
+    const [expanded, setExpanded] = useState(false);
+    const [openModalAdd, setopenModalAdd] = useState(false);
 
     useEffect(() => {
         api.get('clients').then(response => {
-            setCustomers(response.data);
-        })
+            const data = response.data.sort((a, b) => a.nome.localeCompare(b.nome))
+            setCustomers(data);
+        });
     }, [atualizaClientes]);
+
+    const speedDialActions = [
+        { icon: <AddIcon />, name: 'Adicionar Cliente' },
+    ];
+
+    const handleOpenModalAdd = () => setopenModalAdd(true);
+    const handleCloseModalAdd = () => setopenModalAdd(false);
+
+    const handleExpand = (panel) => (event, isExpanded) => {
+        setExpanded(isExpanded ? panel : false);
+    };
+
+    function refreshCustomerList() {
+        setAtualizaClientes(!atualizaClientes);
+    }
+
+    function handleEditCustomer(customer) {
+        Swal.fire({
+            type: 'error',
+            title: 'Função não implementada',
+            showConfirmButton: true,
+            confirmButtonText: "OK"
+        });
+    }
 
     function handleDeleteCustomer(id) {
         try {
@@ -59,62 +105,142 @@ export default function Customers() {
         }
     }
 
-    function handleLocateOnMap(endereco, bairro, cidade, uf) {
-        // TO DO
-        // Locate customer address on google maps and show on screen
-    }
+    const getCustomers = () => (
+        clientes.map(cliente => (
+            <Accordion expanded={expanded === cliente.id} 
+                onChange={handleExpand(cliente.id)} TransitionProps={{ unmountOnExit: true }}>
+
+                <AccordionSummary expandIcon={<ExpandMoreIcon />} 
+                    aria-controls={`${cliente.id}bh-content`} id={`${cliente.id}bh-header`}
+                >
+                    <Typography sx={{ width: '50%', flexShrink: 0 }} variant="h6">
+                        <strong>
+                            {cliente.nome}
+                        </strong>
+                    </Typography>
+                    <Grid container justifyContent="flex-end" sx={{ mr:1 }}>
+                        <Chip label={cliente.tipo === 'F' ? "Pessoa física" : "Pessoa Jurídica"} />
+                    </Grid>
+                </AccordionSummary>
+
+                <AccordionDetails>
+                    <List>
+                        <Divider><Chip label="Dados" variant="outlined"/></Divider>
+                        <ListItem disablePadding>
+                            <ListItemIcon>
+                                <HomeIcon />
+                            </ListItemIcon>
+                            <ListItemText 
+                                primary={`${cliente.endereco} - ${cliente.bairro} - ${cliente.cidade} - ${cliente.uf}`} />
+                        </ListItem>
+                        {(
+                            () => {
+                                var dado='', label='';
+                                cliente.tipo === 'F' ? dado = cliente.cpf : dado = cliente.cnpj;
+                                cliente.tipo === 'F' ? label = 'CPF' : label = 'CNPJ';
+                                if (cliente.tipo !== 'F' && cliente.inscr_estadual!=='') { 
+                                    dado = `${dado} - Insc. Estadual: ${cliente.inscr_estadual}` 
+                                }
+                                return (
+                                    <ListItem disablePadding>
+                                        <ListItemIcon>
+                                            <AssignmentIndIcon />
+                                        </ListItemIcon>
+                                        <ListItemText 
+                                            primary={dado !== '' ? `${label} ${dado}` : `${label} não informado`} />
+                                    </ListItem>
+                                );
+                            }
+                        )()}
+                        <ListItem disablePadding>
+                            <ListItemIcon>
+                                <EmailIcon />
+                            </ListItemIcon>
+                            <ListItemText 
+                                primary={cliente.email !== '' ? cliente.email : 'E-mail não informado'} />
+                        </ListItem>
+                        <ListItem disablePadding>
+                            <ListItemIcon>
+                                <PhoneIcon />
+                            </ListItemIcon>
+                            <ListItemText 
+                                primary={cliente.telefone !== '' ? cliente.telefone : 'Telefone não informado'} />
+                        </ListItem>
+                    </List>
+
+                    <Divider><Chip label="Ações" variant="outlined"/></Divider>
+
+                    <Grid container sx={{display: 'flex', alignItems: 'center', justifyContent: 'center', mt: 1}}>
+                        <Tooltip title={`Excluír ${cliente.nome}`}>
+                            <Button
+                                size="large"
+                                edge="start"
+                                color="inherit"
+                                aria-label="delete"
+                                onClick={() => handleDeleteCustomer(cliente.id)}
+                            >
+                                <DeleteIcon />
+                            </Button>
+                        </Tooltip>
+                        <Tooltip title={`Editar ${cliente.nome}`}>
+                            <Button
+                                size="large"
+                                edge="start"
+                                color="inherit"
+                                aria-label="delete"
+                                onClick={() => handleEditCustomer(cliente)}
+                            >
+                                <EditIcon />
+                            </Button>
+                        </Tooltip>
+                    </Grid>
+                </AccordionDetails>
+            </Accordion>
+        ))
+    );
 
     return(
         <div>
             <Menu />
             
-            <div className="customer-container">
+            <Container sx={{ mt: 4 }}>
+                <Typography variant="h4" 
+                    sx={{ mb: 2, display: 'flex', alignItems: 'center', justifyContent: 'center' }}
+                >
+                    Clientes
+                </Typography>
+                {getCustomers()}                
+            </Container>
 
-                <h1>Clientes Cadastrados</h1>
+            <SpeedDial ariaLabel="Menu de clientes" 
+                sx={{ position: 'absolute', bottom: 20, right: 20  }} icon={<MenuOpenIcon />}
+            >
+                {
+                    speedDialActions.map((action) => (
+                        <SpeedDialAction
+                            key={action.name}
+                            icon={action.icon}
+                            tooltipTitle={action.name}
+                            onClick={handleOpenModalAdd}
+                        />
+                    ))
+                }
+            </SpeedDial>
 
-                <ul>
-                    {clientes.map(cliente => (
-                        <li key={cliente.id}>
-                            <strong className="header-info">{cliente.nome}</strong>
-                            <div className="divider"></div>
-                            <div className="info-container">
-                                <strong>Endereço:</strong>
-                                <p>{`${cliente.endereco} - ${cliente.bairro} - ${cliente.cidade} - ${cliente.uf}`}</p>
-                            </div>
-                            <div className="info-container">
-                                {(
-                                    () => {
-                                        if (cliente.tipo === 'F') {
-                                            return <div><strong>CPF:</strong><p>{cliente.cpf}</p></div>
-                                        } else {
-                                            return <div><strong>CNPJ:</strong><p>{cliente.cnpj}</p></div>
-                                        }
-                                    }
-                                )()}
-                            </div>
-                            <p>{cliente.email}</p>
-                            <div className="option-button">
-                                <button title="Localizar no mapa" onClick={() => handleLocateOnMap(cliente.endereco, cliente.bairro, cliente.cidade, cliente.uf)} className="tooltipped" data-position="bottom" data-tooltip="I am a tooltip">
-                                    <i className="material-icons location">location_on</i>
-                                </button>
-                                <button title="Editar">
-                                    <i className="material-icons edit tooltiped">create</i>
-                                </button>
-                                <button onClick={() => handleDeleteCustomer(cliente.id)} title="Excluir">
-                                    <i className="material-icons delete">delete</i>
-                                </button>
-                            </div>
-                        </li>
-                    ))}
-                </ul>
-            </div>
-
-            <div className="fixed-action-btn">
-                    <a className="btn-floating btn-large fab modal-trigger tooltipped" href="#modalNewCustomer" data-position="left" data-tooltip="Cadastrar novo cliente">
-                        <i className="material-icons">library_add</i>
-                    </a>
-                <NewCustomer refreshCustomerList={refreshCustomerList}/>
-            </div>
+            <Modal
+                open={openModalAdd}
+                onClose={handleCloseModalAdd}
+                aria-labelledby="modal-modal-title"
+                aria-describedby="modal-modal-description"
+            >
+                <Box sx={{
+                        display: 'flex',
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                    }}>
+                    <NewCustomer refreshCustomerList={refreshCustomerList} />
+                </Box>
+            </Modal>
         </div>
     );
 }
