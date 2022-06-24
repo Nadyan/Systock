@@ -7,6 +7,7 @@ const passport = require('passport');
 
 module.exports = {
     local: (req, res, next) => {
+        console.log(req.body)
         passport.authenticate(
             'local',
             { session: false },

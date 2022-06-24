@@ -13,7 +13,7 @@ const userController = require('./controllers/userController');
 
 routes.post('/users', userController.create);
 routes.get('/users', 
-            //middlewares.bearer, 
+            middlewares.bearer, 
             userController.index);
 routes.get('/users/id/:id', userController.getUserById);
 routes.get('/users/email/:email', userController.getUserByEmail);
