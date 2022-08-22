@@ -19,7 +19,7 @@
     "knex": "^0.21.1",
     "moment": "^2.29.3",
     "nodemailer": "^6.7.5",
-    "passport": "^0.5.2",
+    "passport": "^0.6.0",
     "passport-http-bearer": "^1.0.1",
     "passport-local": "^1.0.0",
     "sqlite3": "^5.0.6"
