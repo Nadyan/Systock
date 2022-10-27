@@ -6,6 +6,20 @@ import NewProduct from './NewProduct';
 import NewType from './NewType';
 import api from '../../services/api';
 
+import Card from '@mui/material/Card';
+import CardActions from '@mui/material/CardActions';
+import CardContent from '@mui/material/CardContent';
+import Button from '@mui/material/Button';
+import Typography from '@mui/material/Typography';
+import Tooltip from '@mui/material/Tooltip';
+import EditIcon from '@mui/icons-material/Edit';
+import DeleteIcon from '@mui/icons-material/Delete';
+import List from '@mui/material/List';
+import ListItem from '@mui/material/ListItem';
+import Box from '@mui/material/Box';
+
+import "./style.css"
+
 export default function Products() {
 
     const [produtos, setProdutos] = useState([]);
@@ -22,6 +36,15 @@ export default function Products() {
             setProdutos(response.data);
         });
     }, [atualizaProdutos]);
+
+    function handleEditProduct(id) {
+        Swal.fire({
+            type: 'info',
+            title: 'Funcionalidade indisponível',
+            showConfirmButton: true,
+            confirmButtonText: "OK"
+        });
+    }
 
     function handleDeleteProduct(id) {
         try {
@@ -65,47 +88,74 @@ export default function Products() {
             <div className="product-container">
 
                 <h1>Produtos Cadastrados</h1>
-
-                <ul>
+                <List>
                     {produtos.map(produto => (
-                        <li key={produto.id}>
-                            <strong className="header-info">{produto.codigo}</strong>
-                            <strong className="header-info">{`${produto.marca} ${produto.modelo}`}</strong>
-                            <div className="divider"></div>
-                            <div className="info-container">
-                                <strong>Tipo:</strong>
-                                <p>{produto.tipo}</p>
-                            </div>
-                            <div className="info-container">
-                                <strong>Fornecedores:</strong>
-                                <p>{produto.fornecedor}</p>
-                            </div>
-                            <div className="info-container">
-                                <strong>Valor Compra:</strong>
-                                <p>
-                                    {
-                                        Intl.NumberFormat(
-                                            'pt-BR', 
-                                            {
-                                                style: 'currency',
-                                                currency:'BRL'
-                                            }
-                                        ).format(produto.valor_compra)
-                                    }
-                                </p>
-                            </div>
-                            <p>{produto.descricao}</p>
-                            <div className="option-button">
-                                <button>
-                                    <i className="material-icons edit tooltiped">create</i>
-                                </button>
-                                <button onClick={() => handleDeleteProduct(produto.id)}>
-                                    <i className="material-icons delete">delete</i>
-                                </button>
-                            </div>
-                        </li>
+                        <ListItem key={produto.id}>
+                            <Card sx={
+                                        {
+                                            width: '100%',
+                                            borderRight: 5,
+                                            borderColor: "#007bff",
+                                            backgroundColor: "#f5f4f4"
+                                        }
+                                    }>
+                                <CardContent>
+                                    <Typography gutterBottom variant="h5" component="div">
+                                        {produto.codigo}
+                                    </Typography>
+                                    <Typography gutterBottom variant="h6" component="div">
+                                        {produto.marca} - {produto.modelo}
+                                    </Typography>
+                                    <Typography variant="body2" color="text.secondary">
+                                        <b>Categoria:</b> {produto.tipo}
+                                    </Typography>
+                                    <Typography variant="body2" color="text.secondary">
+                                        <b>Fornecedores:</b> {produto.fornecedor}
+                                    </Typography>
+                                    <Typography variant="body2" color="text.secondary">
+                                        <b>Valor compra: </b>  
+                                        {
+                                            Intl.NumberFormat(
+                                                'pt-BR', 
+                                                {
+                                                    style: 'currency',
+                                                    currency:'BRL'
+                                                }
+                                            ).format(produto.valor_compra)
+                                        }
+                                    </Typography>
+                                    <Typography sx={{ paddingTop: 2 }}>
+                                        {produto.descricao}
+                                    </Typography>
+                                </CardContent>
+                                <CardActions disableSpacing>
+                                    <Tooltip title={`Excluír ${produto.codigo}`}>
+                                        <Button
+                                            size="large"
+                                            edge="start"
+                                            color="inherit"
+                                            aria-label="delete"
+                                            onClick={() => handleDeleteProduct(produto.id)}
+                                        >
+                                            <DeleteIcon />
+                                        </Button>
+                                    </Tooltip>
+                                    <Tooltip title={`Editar ${produto.codigo}`}>
+                                        <Button
+                                            size="large"
+                                            edge="start"
+                                            color="inherit"
+                                            aria-label="delete"
+                                            onClick={() => handleEditProduct(produto.id)}
+                                        >
+                                            <EditIcon />
+                                        </Button>
+                                    </Tooltip>
+                                </CardActions>
+                            </Card>
+                        </ListItem>
                     ))}
-                </ul>
+                </List>
             </div>
 
             <div className="fixed-action-btn">

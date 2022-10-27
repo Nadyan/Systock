@@ -80,7 +80,7 @@ export default function NewProduct(props) {
             if (blancField !== '') {
                 blancField += ', ';
             }
-            blancField += 'CFOP';
+            //blancField += 'CFOP';
         }
 
         return blancField;
