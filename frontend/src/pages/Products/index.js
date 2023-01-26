@@ -16,7 +16,11 @@ import EditIcon from '@mui/icons-material/Edit';
 import DeleteIcon from '@mui/icons-material/Delete';
 import List from '@mui/material/List';
 import ListItem from '@mui/material/ListItem';
+import Fab from '@mui/material/Fab';
 import Box from '@mui/material/Box';
+import AddIcon from '@mui/icons-material/Add';
+import ManageSearchIcon from '@mui/icons-material/ManageSearch';
+import TextField from '@mui/material/TextField';
 
 import "./style.css"
 
@@ -24,6 +28,12 @@ export default function Products() {
 
     const [produtos, setProdutos] = useState([]);
     const [atualizaProdutos, setAtualizaProdutos] = useState(false);
+    const [search, setSearch] = useState('');
+
+    const fabStyle = {
+        position: "relative",
+        bgcolor: "#b6b6b6"
+      };
 
     function refreshProductList() {
         api.get('products').then(response => {
@@ -33,9 +43,27 @@ export default function Products() {
 
     useEffect(() => {
         api.get('products').then(response => {
-            setProdutos(response.data);
+            let retorno = response.data;
+            if (search !== '') {
+                var search_lower = search.toLowerCase();
+                setProdutos(
+                    retorno.filter(produto => (
+                            produto.codigo.toLowerCase().includes(search_lower)
+                            || produto.marca.toLowerCase().includes(search_lower)
+                            || produto.modelo.toLowerCase().includes(search_lower)
+                            || produto.descricao.toLowerCase().includes(search_lower)
+                        )
+                    )
+                );
+            } else {
+                setProdutos(retorno);
+            }
         });
-    }, [atualizaProdutos]);
+    }, [atualizaProdutos, search]);
+
+    function handleDetailProduct(id) {
+        return
+    }
 
     function handleEditProduct(id) {
         Swal.fire({
@@ -87,7 +115,23 @@ export default function Products() {
             
             <div className="product-container">
 
-                <h1>Produtos Cadastrados</h1>
+                <h1>Produtos</h1>
+                <Box sx={{display: "grid", gridTemplateColumns: 'repeat(4, 1fr)', margin: 3, gap: 3}}>
+                    <TextField id="search_field" label="Pesquisar" variant="outlined" value={search} onChange={e => setSearch(e.target.value)}/>
+                    <Fab variant="extended" sx={fabStyle}>
+                        <AddIcon sx={{ mr: 1 }} />
+                        Novo Tipo
+                    </Fab>
+                    <Fab variant="extended" sx={fabStyle}>
+                        <AddIcon sx={{ mr: 1 }} />
+                        Novo fornecedor
+                    </Fab>
+                    <Fab variant="extended" sx={fabStyle}>
+                        <AddIcon sx={{ mr: 1 }} />
+                        Novo Produto
+                    </Fab>
+                </Box>
+
                 <List>
                     {produtos.map(produto => (
                         <ListItem key={produto.id}>
@@ -129,6 +173,17 @@ export default function Products() {
                                     </Typography>
                                 </CardContent>
                                 <CardActions disableSpacing>
+                                    <Tooltip title="Ver detalhes">
+                                        <Button
+                                            size="large"
+                                            edge="start"
+                                            color="inherit"
+                                            aria-label="delete"
+                                            onClick={() => handleDetailProduct(produto.id)}
+                                        >
+                                            <ManageSearchIcon />
+                                        </Button>
+                                    </Tooltip>
                                     <Tooltip title={`Excluír ${produto.codigo}`}>
                                         <Button
                                             size="large"
@@ -157,7 +212,9 @@ export default function Products() {
                     ))}
                 </List>
             </div>
-
+            
+            
+            
             <div className="fixed-action-btn">
                 <a className="btn-floating btn-large fab">
                     <i className="large material-icons">list</i>
